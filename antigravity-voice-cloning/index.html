@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Antigravity基本功EP08：Agent代理/複製你的聲音！</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+  <!-- 引入 Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* === 全域變數 === */
+    :root {
+      --accent:  #e8643a;   /* 橘紅（主強調） */
+      --accent2: #4fc3f7;   /* 青（次強調） */
+      --success: #81c784;   /* 綠（正面） */
+      --warn:    #ffb74d;   /* 琥珀（提示） */
+    }
+
+    .reveal {
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .reveal h1 { font-size: 2.0em; text-shadow: 0 0 15px rgba(79,195,247,0.3); }
+    .reveal h2 { font-size: 1.4em; color: var(--accent2); margin-bottom: 0.8em; }
+    .reveal .progress { color: var(--accent); }
+    .reveal .fragment { opacity: 0.2; }
+    .reveal .fragment.visible { opacity: 1; }
+
+    /* === 封面 === */
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.55em;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8em;
+      font-weight: 600;
+    }
+    .title-slide .subtitle { font-size: 0.75em; color: #aaa; margin-top: 0.5em; }
+    .title-slide .author   { margin-top: 2em; font-size: 0.5em; color: #888; }
+
+    /* === 優勢卡（3 欄 / 4 欄） === */
+    .adv-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 0.6em; }
+    .adv-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-top: 0.6em; }
+    .adv-card {
+      background: rgba(255,255,255,0.05);
+      border-top: 4px solid var(--accent2);
+      border-radius: 8px;
+      padding: 20px 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .adv-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+    .adv-card .adv-icon {
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .adv-card .adv-icon svg {
+      width: 48px;
+      height: 48px;
+    }
+    .adv-card .adv-title { font-size: 0.52em; font-weight: 700; color: var(--accent2); margin-bottom: 8px; }
+    .adv-card .adv-desc  { font-size: 0.38em; color: #bbb; line-height: 1.6; text-align: left; }
+
+    /* === VS 對比 === */
+    .vs-grid { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; align-items: start; margin-top: 0.6em; }
+    .vs-col { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 18px; }
+    .vs-col.left-col  { border-top: 3px solid var(--warn); }
+    .vs-col.right-col { border-top: 3px solid var(--accent2); }
+    .vs-label { font-size: 0.7em; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.05em; }
+    .vs-label.left  { color: var(--warn); }
+    .vs-label.right { color: var(--accent2); }
+    .vs-center { display: flex; align-items: center; justify-content: center; font-size: 1.4em; font-weight: 900; color: #555; height: 180px; }
+    .vs-col ul { font-size: 0.42em; list-style: none; padding: 0; margin: 0; text-align: left; }
+    .vs-col ul li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .vs-col ul li:last-child { border-bottom: none; }
+    .vs-col ul li::before { content: "✦ "; opacity: 0.6; color: var(--accent2); }
+    .vs-col.left-col ul li::before { color: var(--warn); }
+
+    /* === 結論卡 === */
+    .conclusion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 0.8em; }
+    .conclusion-card { border-radius: 10px; padding: 18px; font-size: 0.44em; text-align: left; }
+    .conclusion-card.positive {
+      background: rgba(79,195,247,0.1);
+      border: 1px solid rgba(79,195,247,0.3);
+    }
+    .conclusion-card.caution {
+      background: rgba(232,100,58,0.08);
+      border: 1px solid rgba(232,100,58,0.25);
+    }
+    .conclusion-card .cc-title { font-size: 1.25em; font-weight: 700; margin-bottom: 8px; }
+    .conclusion-card.positive .cc-title { color: var(--accent2); }
+    .conclusion-card.caution  .cc-title { color: var(--accent); }
+    .conclusion-card ul { list-style: none; padding: 0; margin: 0; color: #ccc; line-height: 1.8; }
+    .conclusion-card ul li::before { content: "→ "; opacity: 0.6; color: var(--accent2); }
+    .conclusion-card.caution ul li::before { color: var(--accent); }
+
+    /* === 封底 === */
+    .end-slide { text-align: center; }
+    .end-slide .big { font-size: 3em; margin-bottom: 0.2em; }
+    .end-slide .tagline { font-size: 0.65em; color: #aaa; }
+
+    /* === LIVE 動畫 === */
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 頁 1：封面 [BG] -> 改為高品質漸層霓虹背景 -->
+    <section data-background-gradient="radial-gradient(circle at center, #1b263b 0%, #0d1b2a 100%)">
+      <div class="title-slide">
+        <div class="tag">Antigravity 基本功 · EP08</div>
+        <h1>Agent 代理 / 複製你的聲音！</h1>
+        <h2 style="color:var(--accent2); margin-top:0.2em; font-size: 1.1em;">完全免費 AI 語音克隆，一鍵生成老師配音的教學影片</h2>
+        <p class="subtitle">讓 AI Agent 自動安裝開源模型並在本地運行聲音克隆</p>
+        <p class="author">三師爸 Sense Bar · 課程導覽簡報</p>
+      </div>
+    </section>
+
+    <!-- 頁 2：開場破冰 [INTERACT:wordcloud] -->
+    <section id="slide-wordcloud" data-background-gradient="radial-gradient(circle at center, #0f172a 0%, #020617 100%)">
+      <h2 style="font-size:1.15em; margin-bottom:0.4em;">你對 AI 聲音克隆（Voice Cloning）的第一印象是什麼？</h2>
+      <div style="display:grid; grid-template-columns:250px 1fr; gap:14px; height:460px;">
+        <!-- 左欄：輸入 + 排行 -->
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px; text-align:left;">
+            <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px;">輸入你的答案</div>
+            <input id="wc-input" type="text" placeholder="輸入關鍵詞 (如：驚艷, 怕被詐騙, 方便)…" maxlength="20"
+              style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid rgba(79,195,247,0.3);
+                     background:rgba(255,255,255,0.08); color:#fff; font-size:13px;
+                     box-sizing:border-box; font-family:inherit; outline:none;" />
+            <button id="wc-btn"
+              style="width:100%; margin-top:8px; padding:9px; background:var(--accent2); color:#0d1117;
+                     border:none; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer;">
+              送出 ↵
+            </button>
+          </div>
+          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px; flex:1; overflow:hidden; display:flex; flex-direction:column; text-align:left;">
+            <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px;">
+              熱門答案
+              <span style="display:inline-block; background:#ff4757; color:#fff; padding:2px 7px;
+                           border-radius:10px; font-size:0.85em; animation:pulse 1.5s infinite;">LIVE</span>
+            </div>
+            <div id="wc-list" style="font-size:0.34em; overflow-y:auto; flex:1; color:#ccc;"></div>
+            <div style="margin-top:8px; font-size:0.32em; color:#666; border-top:1px solid rgba(255,255,255,0.08); padding-top:6px;">
+              總提交：<span id="wc-total" style="color:var(--accent); font-weight:700;">0</span>　
+              不同答案：<span id="wc-unique" style="color:var(--accent2); font-weight:700;">0</span>
+            </div>
+          </div>
+        </div>
+        <!-- 右欄：文字雲 -->
+        <div style="background:rgba(255,255,255,0.04); border-radius:12px; overflow:hidden;
+                    position:relative; border:1px solid rgba(255,255,255,0.07);">
+          <canvas id="wc-canvas" style="width:100%; height:100%; display:block;"></canvas>
+          <div id="wc-empty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                                     color:#666; font-size:0.42em; text-align:center;
+                                     pointer-events:none; line-height:2;">
+            輸入第一個答案<br>文字雲就會即時出現 ✨
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁 3：痛點與對比 [VIZ] -->
+    <section data-background-gradient="linear-gradient(135deg, #0f172a 0%, #020617 100%)">
+      <h2>痛點對比：傳統克隆 vs. Agent 一鍵克隆</h2>
+      <div style="position:relative; height:380px; border-radius:12px; overflow:hidden; border: 1px solid rgba(255,255,255,0.1);">
+        <!-- Before: 傳統方式 -->
+        <div id="viz-before" style="position:absolute; inset:0; background:rgba(20,20,30,0.95); display:flex; align-items:center; justify-content:center; padding:30px;">
+          <div style="width:100%; text-align:left;">
+            <h3 style="color:var(--warn); font-size:0.8em; margin-bottom:10px;">傳統聲音克隆 (付費且繁瑣)</h3>
+            <ul style="font-size:0.42em; color:#ddd; line-height:2;">
+              <li>💸 <strong>費用高昂</strong>：ElevenLabs 等平台收費昂貴，按字符或時數計費</li>
+              <li>🖱️ <strong>操作複雜</strong>：手動切割多段錄音、設定大量參數、網頁 UI 上傳</li>
+              <li>🔒 <strong>隱私隱憂</strong>：生物特徵音訊檔案必須上傳至第三方雲端伺服器</li>
+              <li>🔌 <strong>流程斷軌</strong>：無法跟本地的 AI Agent 開發環境或腳本直接結合</li>
+            </ul>
+          </div>
+        </div>
+        <!-- After: Agent 方式 -->
+        <div id="viz-after" style="position:absolute; inset:0; background:rgba(13,25,35,0.95); display:flex; align-items:center; justify-content:center; padding:30px; clip-path:inset(0 100% 0 0);">
+          <div style="width:100%; text-align:left;">
+            <h3 style="color:var(--accent2); font-size:0.8em; margin-bottom:10px;">AI Agent 聲音克隆 (免費且一鍵)</h3>
+            <ul style="font-size:0.42em; color:#ddd; line-height:2;">
+              <li>🎁 <strong>完全免費</strong>：利用開源模型（如 VoxCPM2），不花一分錢</li>
+              <li>⚡ <strong>一鍵自動安裝</strong>：利用 AI Agent，只需一行指令，自動拉取專案並配置環境</li>
+              <li>🏡 <strong>本地端運行</strong>：所有語音訓練與合成都在本地進行，100% 保障隱私安全</li>
+              <li>🤖 <strong>自然語言操作</strong>：免 GUI，直接以「自然語言指令」命令 Agent 完成克隆</li>
+            </ul>
+          </div>
+        </div>
+        <!-- 比較滑桿的分隔線 -->
+        <div id="viz-divider" style="position:absolute; top:0; left:0; width:3px; height:100%;
+          background:linear-gradient(to bottom, transparent, var(--accent2), transparent);
+          box-shadow: 0 0 12px var(--accent2); pointer-events:none;"></div>
+      </div>
+      <!-- 滑桿輸入器 -->
+      <div style="margin-top:14px; display:flex; align-items:center; justify-content:center; gap:16px;">
+        <span style="font-size:0.4em; color:var(--warn);">傳統付費克隆</span>
+        <input id="viz-slider" type="range" min="0" max="100" value="0" style="width:300px; cursor:pointer;">
+        <span style="font-size:0.4em; color:var(--accent2);">Agent 一鍵克隆</span>
+      </div>
+    </section>
+
+    <!-- 頁 4：核心技術與優勢 [ICON] -> 改為 Lucide 向量圖標 -->
+    <section>
+      <h2>AI 聲音克隆的三大核心亮點</h2>
+      <p style="font-size:0.46em; color:#aaa; margin-top:-0.5em;">透過 Agent 在本地端實現高效、安全的語音合成</p>
+      <div class="adv-grid-3">
+        <div class="adv-card fragment">
+          <div class="adv-icon">
+            <i data-lucide="brain" style="stroke: var(--accent2); filter: drop-shadow(0 0 10px rgba(79,195,247,0.6));"></i>
+          </div>
+          <div class="adv-title">開源 VoxCPM2 模型</div>
+          <div class="adv-desc">支援極少量的語音樣本（甚至幾秒鐘）即可學習音色、音節和說話節奏，具備出色的還原度，免除對雲端 API 的依賴。</div>
+        </div>
+        <div class="adv-card fragment" style="border-top-color: var(--success);">
+          <div class="adv-icon">
+            <i data-lucide="shield-check" style="stroke: var(--success); filter: drop-shadow(0 0 10px rgba(129,199,132,0.6));"></i>
+          </div>
+          <div class="adv-title" style="color: var(--success);">本地運行 隱私安全</div>
+          <div class="adv-desc">語音訓練與文字轉語音（TTS）合成均在本地端運算，生物辨識音訊不外流，保障企業與個人隱私安全。</div>
+        </div>
+        <div class="adv-card fragment" style="border-top-color: var(--accent);">
+          <div class="adv-icon">
+            <i data-lucide="terminal" style="stroke: var(--accent); filter: drop-shadow(0 0 10px rgba(232,100,58,0.6));"></i>
+          </div>
+          <div class="adv-title" style="color: var(--accent);">一行指令 免 GUI</div>
+          <div class="adv-desc">無需開啟網頁手動點擊，AI Agent 可以透過自然語言或是一行 Terminal 指令完成自動化安裝、配置與語音生成。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁 5：多樣化應用場景 [ICON] -> 改為 Lucide 向量圖標 -->
+    <section>
+      <h2>聲音克隆的無限應用場景</h2>
+      <p style="font-size:0.46em; color:#aaa; margin-top:-0.5em;">打破維度！當 AI Agent 擁有你的聲音之後...</p>
+      <div class="adv-grid-4">
+        <div class="adv-card fragment">
+          <div class="adv-icon">
+            <i data-lucide="mic" style="stroke: var(--accent2); filter: drop-shadow(0 0 8px rgba(79,195,247,0.5));"></i>
+          </div>
+          <div class="adv-title">教學影片自動配音</div>
+          <div class="adv-desc">輸入簡報大綱或文章，一鍵生成帶有老師真實音色的教學旁白，免去反覆錄音的疲勞。</div>
+        </div>
+        <div class="adv-card fragment" style="border-top-color: var(--warn);">
+          <div class="adv-icon">
+            <i data-lucide="music" style="stroke: var(--warn); filter: drop-shadow(0 0 8px rgba(255,183,77,0.5));"></i>
+          </div>
+          <div class="adv-title" style="color: var(--warn);">閩南語與唱歌趣味</div>
+          <div class="adv-desc">支援多語言轉換，甚至能克隆你的歌聲或講出流利的閩南語，創造極佳的教學互動樂趣。</div>
+        </div>
+        <div class="adv-card fragment" style="border-top-color: var(--success);">
+          <div class="adv-icon">
+            <i data-lucide="message-square" style="stroke: var(--success); filter: drop-shadow(0 0 8px rgba(129,199,132,0.5));"></i>
+          </div>
+          <div class="adv-title" style="color: var(--success);">多角色雙人對話</div>
+          <div class="adv-desc">在一句對話中自由切換不同音色，實現 AI 主持人與 AI 講者雙人對談的沉浸式教學。</div>
+        </div>
+        <div class="adv-card fragment" style="border-top-color: var(--accent);">
+          <div class="adv-icon">
+            <i data-lucide="cpu" style="stroke: var(--accent); filter: drop-shadow(0 0 8px rgba(232,100,58,0.5));"></i>
+          </div>
+          <div class="adv-title" style="color: var(--accent);">打包成全域 Skill</div>
+          <div class="adv-desc">將聲音克隆打包為 Agent 的全域 Skill，任何專案在呼叫 AI 時，AI 都能直接用你的聲音說話。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁 6：隨堂互動投票 [INTERACT:poll] -->
+    <section id="slide-poll">
+      <h2 style="font-size: 1.15em;">你最想把 AI 聲音克隆技術應用在？</h2>
+      <div id="poll-options" style="display:flex; flex-direction:column; gap:12px; margin-top:0.8em;">
+        <!-- 動態生成 -->
+      </div>
+      <div style="font-size:0.38em; color:#888; text-align:center; margin-top:0.8em;">
+        已投票：<span id="poll-total" style="color:var(--accent2); font-weight:700;">0</span> 人
+      </div>
+    </section>
+
+    <!-- 頁 7：倫理與安全防範 [BG] -> 改為高品質漸層霓虹背景 -->
+    <section data-background-gradient="radial-gradient(circle at center, #2d1313 0%, #0e0505 100%)">
+      <h2>技術背後的安全防線與倫理守則</h2>
+      <p style="font-size:0.46em; color:#aaa; margin-top:-0.5em;">聲音克隆技術強大，必須伴隨對應的素養教育</p>
+      <div class="conclusion-grid">
+        <div class="conclusion-card caution fragment">
+          <div class="cc-title">⚠️ 聲音克隆道德倫理</div>
+          <ul>
+            <li><strong>嚴禁未經同意克隆</strong>：絕對不要私自克隆他人或名人的聲音，這涉及聲紋郵像權與隱私侵權。</li>
+            <li><strong>標示 AI 生成語音</strong>：發布影片時，應明確標示該音訊為 AI 克隆生成，以維護資訊透明度。</li>
+          </ul>
+        </div>
+        <div class="conclusion-card positive fragment">
+          <div class="cc-title">🛡️ 防詐騙與 AI 素養教育</div>
+          <ul>
+            <li><strong>語音防詐騙教材</strong>：利用這項技術作為防詐騙教育教材，讓大眾了解「耳聽不一定為憑」。</li>
+            <li><strong>多管道查證原則</strong>：遇到親友語音求助、借錢，務必透過其他管道（如視訊或約定暗號）進行查證。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁 8：結語與行動 [BG] -> 改為高品質漸層霓虹背景 -->
+    <section data-background-gradient="radial-gradient(circle at center, #1b152d 0%, #080312 100%)">
+      <div class="end-slide">
+        <div class="big" style="margin-bottom: 20px; display: flex; justify-content: center; align-items: center;">
+          <i data-lucide="cpu" style="width: 100px; height: 100px; stroke: var(--accent2); filter: drop-shadow(0 0 24px var(--accent2));"></i>
+        </div>
+        <h1 style="color:var(--accent2); font-size: 1.8em;">現在就讓 AI Agent 複製你的聲音！</h1>
+        <p class="tagline">透過自然語言與本地部署，開啟聲音自動化的全新篇章</p>
+        <p style="font-size: 0.4em; color: #888; margin-top: 2.5em;">三師爸 Sense Bar 教學系列 · Antigravity 實踐指南</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  // 1. 初始化 Reveal.js
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    plugins: []
+  });
+
+  // 初始化 Lucide Icons
+  lucide.createIcons();
+
+  // 2. 比較滑桿控制邏輯
+  const slider = document.getElementById('viz-slider');
+  if (slider) {
+    slider.addEventListener('input', function() {
+      const v = +this.value;
+      const after = document.getElementById('viz-after');
+      const divider = document.getElementById('viz-divider');
+      if (after) after.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+      if (divider) divider.style.left = v + '%';
+    });
+  }
+</script>
+
+<!-- Firebase 互動元件模組 -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+  import {
+    getFirestore, collection, addDoc, onSnapshot,
+    serverTimestamp, query, orderBy, doc, setDoc
+  } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+  // 共用 Firebase 配置
+  const firebaseConfig = {
+    apiKey: "AIzaSyAYQhNavPSce17XtvDC5xnXyl9iUhW9KjA",
+    authDomain: "teacherstudy-109ef.firebaseapp.com",
+    projectId: "teacherstudy-109ef",
+    storageBucket: "teacherstudy-109ef.firebasestorage.app",
+    messagingSenderId: "196599230156",
+    appId: "1:196599230156:web:cfe55d364df3ae1b9d5c69"
+  };
+  const app = initializeApp(firebaseConfig);
+  const fdb = getFirestore(app);
+
+  // slug 設定
+  const SLUG = 'antigravity-voice-cloning';
+
+  /* ==========================================================================
+     互動元件一：文字雲 (WordCloud)
+     ========================================================================== */
+  const wordsRef = collection(fdb, 'ultimate_presentation_wordcloud');
+  const wcCOLORS = ['#4fc3f7','#e8643a','#ffb74d','#81c784','#ce93d8','#80deea','#f48fb1'];
+  let wcData = [];
+  let useMock = false;
+  let mockWords = [];
+
+  // 初始化本地端文字雲數據
+  try {
+    const saved = localStorage.getItem(`${SLUG}_wordcloud_mock`);
+    if (saved) {
+      mockWords = JSON.parse(saved);
+    } else {
+      mockWords = ["聲音克隆", "一鍵安裝", "免費", "安全", "隱私", "VoxCPM2", "三師爸", "驚艷", "防詐騙", "教學配音", "本地運行", "AI Agent"];
+      localStorage.setItem(`${SLUG}_wordcloud_mock`, JSON.stringify(mockWords));
+    }
+  } catch(e) {
+    console.error("無法讀取 localStorage", e);
+  }
+
+  function renderWordCloudData(words) {
+    const counts = {};
+    words.forEach(w => counts[w] = (counts[w] || 0) + 1);
+    wcData = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+    const totalEl = document.getElementById('wc-total');
+    const uniqueEl = document.getElementById('wc-unique');
+    if (totalEl) totalEl.textContent = words.length;
+    if (uniqueEl) uniqueEl.textContent = wcData.length;
+
+    const listEl = document.getElementById('wc-list');
+    if (listEl) {
+      listEl.innerHTML = wcData.slice(0, 12).map(([w, c]) =>
+        `<div style="display:flex;justify-content:space-between;padding:4px 0;
+                     border-bottom:1px solid rgba(255,255,255,0.06);">
+          <span>${w}</span><span style="color:var(--accent);font-weight:700;">${c}</span>
+        </div>`
+      ).join('') || '<div style="color:#555;padding:8px 0;">尚無資料</div>';
+    }
+
+    const empty = document.getElementById('wc-empty');
+    if (empty) empty.style.display = wcData.length > 0 ? 'none' : '';
+    drawWordCloud();
+  }
+
+  window.wcSubmit = async function() {
+    const input = document.getElementById('wc-input');
+    const word = input.value.trim();
+    if (!word) return;
+    const btn = document.getElementById('wc-btn');
+    btn.disabled = true;
+
+    if (useMock) {
+      mockWords.push(word);
+      try {
+        localStorage.setItem(`${SLUG}_wordcloud_mock`, JSON.stringify(mockWords));
+      } catch(e) {}
+      renderWordCloudData(mockWords);
+      input.value = '';
+      btn.disabled = false;
+      return;
+    }
+
+    try {
+      await addDoc(wordsRef, { word, created_at: serverTimestamp() });
+      input.value = '';
+    } catch(e) {
+      console.warn("寫入 Firestore 失敗，無縫切換至 LocalStorage 備援模式！", e);
+      useMock = true;
+      mockWords.push(word);
+      try {
+        localStorage.setItem(`${SLUG}_wordcloud_mock`, JSON.stringify(mockWords));
+      } catch(ex) {}
+      renderWordCloudData(mockWords);
+      input.value = '';
+    } finally {
+      btn.disabled = false;
+    }
+  };
+
+  document.getElementById('wc-input')?.addEventListener('keypress', e => {
+    if (e.key === 'Enter') window.wcSubmit();
+  });
+  document.getElementById('wc-btn')?.addEventListener('click', window.wcSubmit);
+
+  onSnapshot(query(wordsRef, orderBy('created_at', 'asc')), snap => {
+    if (useMock) return;
+    const words = [];
+    snap.forEach(doc => words.push(doc.data().word));
+    if (words.length === 0 && mockWords.length > 0) {
+      renderWordCloudData(mockWords);
+    } else {
+      renderWordCloudData(words);
+    }
+  }, err => {
+    console.warn("Firestore 載入失敗（權限不足），切換至 LocalStorage 備援模式！", err);
+    useMock = true;
+    renderWordCloudData(mockWords);
+  });
+
+  function drawWordCloud() {
+    const canvas = document.getElementById('wc-canvas');
+    if (!canvas || typeof WordCloud === 'undefined') return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 10 || rect.height < 10) return;
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    if (wcData.length === 0) return;
+    const maxCount = wcData[0][1];
+    WordCloud(canvas, {
+      list: wcData.map(([w, c]) => [w, Math.max(16, Math.round((c / maxCount) * 60))]),
+      gridSize: 6,
+      weightFactor: 1,
+      fontFamily: '"Microsoft JhengHei", "Noto Sans TC", sans-serif',
+      color: () => wcCOLORS[Math.floor(Math.random() * wcCOLORS.length)],
+      backgroundColor: 'transparent',
+      rotateRatio: 0.3,
+      shuffle: true,
+    });
+  }
+
+  /* ==========================================================================
+     互動元件二：投票 (Poll)
+     ========================================================================== */
+  const POLL_OPTIONS = [
+    { id: 'a', label: 'A. 教學配音自動化 (省去錄音疲勞)' },
+    { id: 'b', label: 'B. 閩南語/唱歌等娛樂與趣味家庭應用' },
+    { id: 'c', label: 'C. AI 客服雙人對話 (多角色音色切換)' },
+    { id: 'd', label: 'D. 打包為全域 Skill (讓 AI 在任何專案用我的聲音說話)' },
+  ];
+  const pollRef = doc(fdb, 'ultimate_presentation_poll_6', 'results');
+  const userId = 'user_' + Math.random().toString(36).slice(2, 9);
+  let myVote = null;
+  let usePollMock = false;
+  let mockVotes = {};
+
+  // 從 localStorage 初始化投票數據
+  try {
+    myVote = localStorage.getItem(`${SLUG}_my_vote`);
+    const saved = localStorage.getItem(`${SLUG}_poll_mock`);
+    if (saved) {
+      mockVotes = JSON.parse(saved);
+    } else {
+      mockVotes = { 'user1': 'a', 'user2': 'a', 'user3': 'd', 'user4': 'a', 'user5': 'b', 'user6': 'c', 'user7': 'd' };
+      localStorage.setItem(`${SLUG}_poll_mock`, JSON.stringify(mockVotes));
+    }
+  } catch(e) {
+    console.error("無法讀取 localStorage", e);
+  }
+
+  // 渲染投票選項
+  const container = document.getElementById('poll-options');
+  if (container) {
+    POLL_OPTIONS.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.id = `poll-btn-${opt.id}`;
+      btn.innerHTML = `
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="flex:0 0 24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);
+                       display:flex;align-items:center;justify-content:center;font-size:12px;"
+                id="poll-check-${opt.id}"></span>
+          <span style="flex:1;text-align:left;">${opt.label}</span>
+          <span id="poll-bar-wrap-${opt.id}"
+                style="flex:0 0 120px;height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;">
+            <div id="poll-bar-${opt.id}" style="height:100%;width:0;background:var(--accent2);border-radius:4px;transition:width 0.4s;"></div>
+          </span>
+          <span id="poll-pct-${opt.id}" style="flex:0 0 45px;text-align:right;font-size:0.75em;color:#888;">0%</span>
+        </div>
+      `;
+      btn.style.cssText = `width:100%;padding:12px 16px;background:rgba(255,255,255,0.06);
+        border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;
+        font-size:0.48em;cursor:pointer;font-family:inherit;text-align:left;`;
+      btn.onclick = () => vote(opt.id);
+      container.appendChild(btn);
+    });
+  }
+
+  function renderPollData(votes) {
+    const counts = {};
+    POLL_OPTIONS.forEach(o => counts[o.id] = 0);
+    Object.values(votes).forEach(v => { if (counts[v] !== undefined) counts[v]++; });
+    const total = Object.values(counts).reduce((a, b) => a + b, 0);
+
+    const totalEl = document.getElementById('poll-total');
+    if (totalEl) totalEl.textContent = total;
+
+    POLL_OPTIONS.forEach(opt => {
+      const pct = total > 0 ? Math.round((counts[opt.id] / total) * 100) : 0;
+      
+      const bar = document.getElementById(`poll-bar-${opt.id}`);
+      const pctText = document.getElementById(`poll-pct-${opt.id}`);
+      const check = document.getElementById(`poll-check-${opt.id}`);
+      
+      if (bar) bar.style.width = pct + '%';
+      if (pctText) pctText.textContent = pct + '%';
+      if (check) {
+        if (myVote === opt.id) {
+          check.textContent = '✓';
+          check.style.background = 'var(--accent2)';
+          check.style.borderColor = 'var(--accent2)';
+          check.style.color = '#0d1117';
+          check.style.fontWeight = 'bold';
+        } else {
+          check.textContent = '';
+          check.style.background = 'transparent';
+          check.style.borderColor = 'rgba(255,255,255,0.3)';
+        }
+      }
+    });
+  }
+
+  async function vote(optId) {
+    myVote = optId;
+    try {
+      localStorage.setItem(`${SLUG}_my_vote`, optId);
+    } catch(e) {}
+
+    if (usePollMock) {
+      mockVotes[userId] = optId;
+      try {
+        localStorage.setItem(`${SLUG}_poll_mock`, JSON.stringify(mockVotes));
+      } catch(e) {}
+      renderPollData(mockVotes);
+      return;
+    }
+
+    const data = {};
+    data[`votes.${userId}`] = optId;
+    data.updated_at = serverTimestamp();
+
+    try {
+      await setDoc(pollRef, data, { merge: true });
+    } catch(e) {
+      console.warn("寫入 Firestore 投票失敗，切換至 LocalStorage 備援！", e);
+      usePollMock = true;
+      mockVotes[userId] = optId;
+      try {
+        localStorage.setItem(`${SLUG}_poll_mock`, JSON.stringify(mockVotes));
+      } catch(ex) {}
+      renderPollData(mockVotes);
+    }
+  }
+
+  onSnapshot(pollRef, snap => {
+    if (usePollMock) return;
+    const data = snap.data() || {};
+    const votes = data.votes || {};
+    if (Object.keys(votes).length === 0 && Object.keys(mockVotes).length > 0) {
+      renderPollData(mockVotes);
+    } else {
+      renderPollData(votes);
+    }
+  }, err => {
+    console.warn("Firestore 載入投票失敗（權限不足），切換至 LocalStorage 備援！", err);
+    usePollMock = true;
+    renderPollData(mockVotes);
+  });
+
+  // Reveal.js 切換幻燈片時重繪文字雲
+  Reveal.on('slidechanged', e => {
+    if (e.currentSlide?.id === 'slide-wordcloud') {
+      setTimeout(drawWordCloud, 150);
+    }
+  });
+</script>
+
+</body>
+</html>
