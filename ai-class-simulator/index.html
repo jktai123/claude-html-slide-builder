@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 課堂實作與班級互動照片牆</title>
+  <!-- Google Fonts: Noto Sans TC, Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- Background Grid Effect -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <!-- Header Section -->
+  <header>
+    <div class="container header-container">
+      <div class="logo-area">
+        <span class="badge">中華民國AI教育協會</span>
+        <h1>AI 課堂實作模擬器</h1>
+        <p class="subtitle">新一代美圖秀秀 - 不一樣的我 | 講師：黃子恬 Althea 理事長</p>
+      </div>
+      <div class="header-stats">
+        <div class="stat-box">
+          <span class="stat-num" id="class-photo-count">4</span>
+          <span class="stat-label">今日已上傳作品</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Tab Navigation -->
+    <div class="tabs-container">
+      <button class="tab-btn active" data-tab="guide"><i data-lucide="book-open"></i> 學習導覽與公式</button>
+      <button class="tab-btn" data-tab="prompt"><i data-lucide="sparkles"></i> AI 指令填空器</button>
+      <button class="tab-btn" data-tab="camera"><i data-lucide="camera"></i> 風格相機模擬</button>
+      <button class="tab-btn" data-tab="wall"><i data-lucide="image"></i> 班級互動照片牆</button>
+    </div>
+
+    <!-- Tab 1: 學習導覽 -->
+    <section id="tab-guide" class="tab-content active">
+      <div class="card hero-card">
+        <div class="hero-content">
+          <h2>💡 今天你將學會的 AI 技能</h2>
+          <p>透過簡單好上手的 AI 工具，讓我們的舊照片重獲新生，甚至能穿越時空、變換完全不一樣的精彩風格！</p>
+          <div class="skills-grid">
+            <div class="skill-item">
+              <div class="skill-icon"><i data-lucide="pencil-ruler"></i></div>
+              <h3>AI 指令技巧</h3>
+              <p>學習如何下對指令，讓 AI 聽懂你的心聲</p>
+            </div>
+            <div class="skill-item">
+              <div class="skill-icon"><i data-lucide="smile"></i></div>
+              <h3>用 AI 更改形象</h3>
+              <p>讓自己變得更健康、更快樂、更自由</p>
+            </div>
+            <div class="skill-item">
+              <div class="skill-icon"><i data-lucide="history"></i></div>
+              <h3>用 AI 穿越時空</h3>
+              <p>重溫嬰兒時期、工作時期的經典瞬間</p>
+            </div>
+            <div class="skill-item">
+              <div class="skill-icon"><i data-lucide="palette"></i></div>
+              <h3>畫風變換公式</h3>
+              <p>套用波普藝術、新藝術等世界大師風格</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Formula Card -->
+      <div class="grid-2col">
+        <div class="card">
+          <div class="card-header">
+            <i data-lucide="cpu" class="card-icon-main"></i>
+            <h2>AI 變身描述公式</h2>
+          </div>
+          <div class="formula-box">
+            <p class="formula-text">
+              請把這張照片中的人物呈現 <span class="highlight">【轉變目標】</span> 的狀態，放在 <span class="highlight">【場景】</span>，正在做 <span class="highlight">【動作】</span>，整體氛圍是 <span class="highlight">【情緒/氛圍】</span>。畫面要自然、溫馨、有故事感，像真實生活照片。臉要保持原本人物的樣子。
+            </p>
+          </div>
+          <div class="formula-tips">
+            <h4>💡 理事長的溫馨提示：</h4>
+            <ul>
+              <li><strong>轉變目標</strong>：可以填「更健康」、「更快樂」、「更自由」或甚至「大富翁」！</li>
+              <li><strong>臉部特徵</strong>：一定要告訴 AI「臉要保持原本人物的樣子」，照片才會像自己哦！</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <i data-lucide="award" class="card-icon-main"></i>
+            <h2>AI 指令四要素</h2>
+          </div>
+          <div class="elements-list">
+            <div class="element-item">
+              <span class="elem-badge badge-role">角色 Role</span>
+              <p>賦予 AI 身份。例如：「你是台灣第一名的導遊...」</p>
+            </div>
+            <div class="element-item">
+              <span class="elem-badge badge-task">任務 Task</span>
+              <p>明確告知要做什麼。例如：「請推薦適合一日遊的地點...」</p>
+            </div>
+            <div class="element-item">
+              <span class="elem-badge badge-target">目標 Target</span>
+              <p>期望達到的效果。例如：「適合60歲長者、交通方便...」</p>
+            </div>
+            <div class="element-item">
+              <span class="elem-badge badge-constraint">限制 Limit</span>
+              <p>設定邊界。例如：「不需走太多路、列出3個地點...」</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: 指令填空器 -->
+    <section id="tab-prompt" class="tab-content">
+      <div class="grid-2col">
+        <!-- Form 1: AI變身公式 -->
+        <div class="card">
+          <div class="card-header">
+            <i data-lucide="user-cog" class="card-icon"></i>
+            <h2>1. AI 變身描述公式產生器</h2>
+          </div>
+          <div class="form-group">
+            <label for="formula-target">轉變目標：</label>
+            <select id="formula-target" class="form-select">
+              <option value="更健康活力">更健康活力</option>
+              <option value="更快樂無憂">更快樂無憂</option>
+              <option value="更自由自在">更自由自在</option>
+              <option value="含著金湯匙出生的嬰兒時期">含著金湯匙出生的嬰兒時期</option>
+              <option value="環遊世界的百萬富翁">環遊世界的百萬富翁</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="formula-scene">放在什麼【場景】：</label>
+            <input type="text" id="formula-scene" class="form-input" value="翠綠的溪頭森林步道中">
+          </div>
+          <div class="form-group">
+            <label for="formula-action">正在做什麼【動作】：</label>
+            <input type="text" id="formula-action" class="form-input" value="開心地健行，雙手比讚">
+          </div>
+          <div class="form-group">
+            <label for="formula-mood">整體氛圍【情緒/氛圍】：</label>
+            <input type="text" id="formula-mood" class="form-input" value="溫馨、陽光、有故事感">
+          </div>
+          <button class="btn btn-primary btn-block" id="btn-gen-formula">
+            <i data-lucide="refresh-cw"></i> 生成變身指令
+          </button>
+
+          <div class="output-preview-container">
+            <h4>📋 生成的指令文字：</h4>
+            <div class="prompt-preview" id="preview-formula-text">
+              請把這張照片中的人物呈現【更健康活力】的狀態，放在【翠綠的溪頭森林步道中】，正在做【開心地健行，雙手比讚】，整體氛圍是【溫馨、陽光、有故事感】。畫面要自然、溫馨、有故事感，像真實生活照片。臉要保持原本人物的樣子。
+            </div>
+            <button class="btn btn-secondary btn-sm btn-copy" data-target="preview-formula-text">
+              <i data-lucide="copy"></i> 複製指令
+            </button>
+          </div>
+        </div>
+
+        <!-- Form 2: 公版畫風指令 -->
+        <div class="card">
+          <div class="card-header">
+            <i data-lucide="palette" class="card-icon"></i>
+            <h2>2. 藝術公版指令產生器</h2>
+          </div>
+          <div class="form-group">
+            <label for="style-art">選擇【畫風】：</label>
+            <select id="style-art" class="form-select">
+              <option value="波普藝術 (Pop Art)">波普藝術 (Pop Art)</option>
+              <option value="新藝術風格 (Art Nouveau)">新藝術風格 (Art Nouveau)</option>
+              <option value="浮世繪 (Ukiyo-e)">浮世繪 (Ukiyo-e)</option>
+              <option value="後印象派油畫 (Post-Impressionism)">後印象派油畫 (Post-Impressionism)</option>
+              <option value="數位現代插畫 (Digital Illustration)">數位現代插畫 (Digital Illustration)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="style-people">畫面中的【人物】：</label>
+            <input type="text" id="style-people" class="form-input" value="一位戴著墨鏡的開朗長者">
+          </div>
+          <div class="form-group">
+            <label for="style-item">帶著什麼【物品】：</label>
+            <input type="text" id="style-item" class="form-input" value="登山杖與相機">
+          </div>
+          <div class="form-group">
+            <label for="style-location">在什麼【地點】：</label>
+            <input type="text" id="style-location" class="form-input" value="在復古的火車頭前">
+          </div>
+          <button class="btn btn-primary btn-block" id="btn-gen-style">
+            <i data-lucide="refresh-cw"></i> 生成公版指令
+          </button>
+
+          <div class="output-preview-container">
+            <h4>📋 生成的指令文字：</h4>
+            <div class="prompt-preview" id="preview-style-text">
+              請幫我畫一張【波普藝術 (Pop Art)】的圖片，畫面中有一位【一位戴著墨鏡的開朗長者】帶著【登山杖與相機】在【在復古的火車頭前】。
+            </div>
+            <button class="btn btn-secondary btn-sm btn-copy" data-target="preview-style-text">
+              <i data-lucide="copy"></i> 複製指令
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: 風格相機模擬 -->
+    <section id="tab-camera" class="tab-content">
+      <div class="grid-layout-camera">
+        <!-- Control Panel (Left) -->
+        <div class="card camera-controls">
+          <div class="card-header">
+            <i data-lucide="sliders" class="card-icon"></i>
+            <h2>風格控制台</h2>
+          </div>
+
+          <!-- Image Source Selection -->
+          <div class="source-select-area">
+            <h4>1. 選擇或上傳原始照片</h4>
+            <div class="sample-images-grid">
+              <div class="sample-img-card active" data-src="assets/hike_sample.jpg">
+                <img src="assets/hike_sample.jpg" alt="溪頭健行照">
+                <span>溪頭健行照 (推薦)</span>
+              </div>
+              <div class="sample-img-card" data-src="upload">
+                <div class="upload-trigger-inner">
+                  <i data-lucide="upload-cloud"></i>
+                  <span>自行上傳</span>
+                </div>
+                <input type="file" id="camera-upload-input" accept="image/*" style="display: none;">
+              </div>
+            </div>
+          </div>
+
+          <!-- Style Selection -->
+          <div class="style-select-area">
+            <h4>2. 選擇想要模擬的 AI 藝術風格</h4>
+            <div class="style-buttons-grid">
+              <button class="style-select-btn active" data-style="popart">
+                <span class="style-badge style-pop">波普</span>
+                <strong>波普藝術 (四格)</strong>
+              </button>
+              <button class="style-select-btn" data-style="artnouveau">
+                <span class="style-badge style-nouveau">新藝術</span>
+                <strong>新藝術風格 (畫框)</strong>
+              </button>
+              <button class="style-select-btn" data-style="ukiyoe">
+                <span class="style-badge style-uki">浮世繪</span>
+                <strong>日式浮世繪</strong>
+              </button>
+              <button class="style-select-btn" data-style="impressionism">
+                <span class="style-badge style-imp">印象派</span>
+                <strong>印象派油畫</strong>
+              </button>
+              <button class="style-select-btn" data-style="vintage">
+                <span class="style-badge style-vin">復古</span>
+                <strong>懷舊老照片</strong>
+              </button>
+            </div>
+          </div>
+
+          <!-- Process Button -->
+          <button class="btn btn-accent btn-block" id="btn-process-image">
+            <i data-lucide="wand-2"></i> 開始 AI 風格變身！
+          </button>
+        </div>
+
+        <!-- Preview & Output Area (Right) -->
+        <div class="card camera-preview-card">
+          <div class="card-header">
+            <i data-lucide="monitor" class="card-icon"></i>
+            <h2>風格變身預覽</h2>
+          </div>
+          
+          <div class="preview-stage-container">
+            <!-- Canvas Container -->
+            <div class="canvas-wrapper">
+              <canvas id="editor-canvas"></canvas>
+              <!-- Hidden Image for reference -->
+              <img id="ref-image" src="assets/hike_sample.jpg" style="display: none;">
+              
+              <!-- Processing Loader Overlay -->
+              <div class="loader-overlay" id="loader">
+                <div class="spinner"></div>
+                <p>AI 正在算圖中，請稍候...</p>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" id="progress-bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Export Area -->
+          <div class="export-actions">
+            <button class="btn btn-secondary" id="btn-download-img">
+              <i data-lucide="download"></i> 下載此作品
+            </button>
+            <button class="btn btn-accent" id="btn-publish-wall-trigger">
+              <i data-lucide="send"></i> 直接發布至照片牆
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 4: 班級互動照片牆 -->
+    <section id="tab-wall" class="tab-content">
+      
+      <!-- Upload Section -->
+      <div class="card upload-card-section">
+        <div class="card-header">
+          <i data-lucide="upload" class="card-icon"></i>
+          <h2>📤 專屬上傳區：AI 藝術作品</h2>
+        </div>
+        <form id="wall-upload-form" class="upload-form-grid">
+          <div class="form-group">
+            <label for="uploader-name">學員大名：</label>
+            <input type="text" id="uploader-name" class="form-input" placeholder="請輸入名字 (例如：美珠)" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="uploader-prompt">使用的 AI 指令 Prompt：</label>
+            <input type="text" id="uploader-prompt" class="form-input" placeholder="請貼上您複製並修改好的指令" value="請幫我畫一張波普藝術的圖片，畫面中有一位戴著墨鏡的開朗長者...">
+          </div>
+          
+          <div class="form-group file-field-group">
+            <label>選擇要上傳的藝術作品：</label>
+            <div class="custom-file-upload">
+              <label for="wall-file-input" class="file-upload-btn">
+                <i data-lucide="image"></i> 選擇檔案
+              </label>
+              <span id="file-chosen-text">尚未選擇檔案</span>
+              <input type="file" id="wall-file-input" accept="image/*" style="display:none;">
+            </div>
+            <!-- Image preview thumbnail -->
+            <div class="upload-thumbnail-wrapper" id="thumb-wrapper" style="display: none;">
+              <img id="upload-thumbnail" src="" alt="預覽圖">
+            </div>
+          </div>
+          
+          <div class="submit-btn-wrapper">
+            <button type="submit" class="btn btn-primary btn-block" id="btn-submit-work">
+              <i data-lucide="check-circle-2"></i> 確認 上傳藝術作品
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Photos Grid -->
+      <div class="wall-header-section">
+        <div class="wall-title">
+          <i data-lucide="layout-grid"></i>
+          <h2>今日班級照片牆</h2>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="btn-clear-storage">
+          <i data-lucide="trash-2"></i> 重設為預設作品
+        </button>
+      </div>
+      
+      <!-- Masonry Grid -->
+      <div class="photo-wall-grid" id="photo-wall">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-container">
+      <p>&copy; 2026 中華民國AI教育協會. All Rights Reserved. 讓科技溫暖生活，用 AI 創造美好。</p>
+    </div>
+  </footer>
+
+  <!-- Publish Modal -->
+  <div class="modal" id="publish-modal">
+    <div class="modal-content card">
+      <div class="modal-header">
+        <h3>發布作品到照片牆</h3>
+        <button class="modal-close" id="btn-modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-preview-img-container">
+          <img id="modal-preview-img" src="" alt="發布預覽">
+        </div>
+        <div class="form-group">
+          <label for="modal-uploader-name">學員大名：</label>
+          <input type="text" id="modal-uploader-name" class="form-input" placeholder="請輸入您的名字 (例如：阿芬)" required>
+        </div>
+        <div class="form-group">
+          <label for="modal-uploader-prompt">使用的 AI 指令 Prompt：</label>
+          <textarea id="modal-uploader-prompt" class="form-input" rows="3" placeholder="貼上您所使用的 AI 描述句..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-modal-cancel">取消</button>
+        <button class="btn btn-accent" id="btn-modal-confirm">確認上傳</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
