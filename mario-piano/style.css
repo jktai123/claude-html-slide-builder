@@ -1,0 +1,608 @@
+/* 瑪利歐鋼琴極光霓虹樣式 */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap');
+
+:root {
+  --bg-color: #0b0d19;
+  --bg-gradient: linear-gradient(135deg, #090a15 0%, #15192e 100%);
+  --panel-bg: rgba(255, 255, 255, 0.03);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  
+  --neon-blue: #00f0ff;
+  --neon-pink: #ff007f;
+  --neon-gold: #ffd700;
+  --neon-green: #39ff14;
+  
+  --white-key-bg: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%);
+  --white-key-active: linear-gradient(to bottom, #00f0ff 0%, #0080ff 100%);
+  --black-key-bg: linear-gradient(to bottom, #1a1a1a 0%, #050505 100%);
+  --black-key-active: linear-gradient(to bottom, #ff007f 0%, #aa0055 100%);
+
+  --font-modern: 'Outfit', sans-serif;
+  --font-retro: 'Press Start 2P', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  font-family: var(--font-modern);
+  background: var(--bg-color);
+  background-image: var(--bg-gradient);
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 遊戲主容器 */
+.game-container {
+  width: 95vw;
+  max-width: 1000px;
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+  background: rgba(10, 12, 26, 0.6);
+  border-radius: 24px;
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+              0 0 40px rgba(0, 240, 255, 0.05);
+  padding: 20px;
+  position: relative;
+}
+
+/* 頂部裝飾霓虹條 */
+.game-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-pink), transparent);
+  box-shadow: 0 0 15px var(--neon-blue);
+  border-radius: 3px;
+}
+
+/* 標題與頂部面板 */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.title-area {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #00f0ff, #ff007f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mario-badge {
+  font-family: var(--font-retro);
+  font-size: 10px;
+  background: var(--neon-pink);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-shadow: 1px 1px 0px #000;
+  box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+  animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 0, 127, 0.8); }
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #8b9bb4;
+  margin-top: 4px;
+}
+
+/* 控制列與選項 */
+.controls-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.glass-panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 8px 16px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* 狀態面板 (分數/Combo) */
+.status-panel {
+  font-family: var(--font-retro);
+  font-size: 12px;
+  display: flex;
+  gap: 20px;
+}
+
+.status-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.status-label {
+  font-size: 8px;
+  color: #8b9bb4;
+}
+
+.status-val {
+  font-size: 14px;
+  color: var(--neon-gold);
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+.status-val.combo {
+  color: var(--neon-blue);
+  text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+}
+
+/* 主遊戲區域 */
+.game-workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+/* 瀑布流畫布 */
+#piano-roll {
+  width: 100%;
+  flex: 1;
+  display: block;
+  background: linear-gradient(to bottom, #07080f 0%, #0a0b12 100%);
+  border-bottom: 2px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* 判定線指示器 */
+.hit-line-glow {
+  position: absolute;
+  bottom: 200px; /* 琴鍵高度 */
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+  box-shadow: 0 0 10px var(--neon-blue);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* 判定評等顯示 */
+#judgment-display {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  font-family: var(--font-retro);
+  font-size: 24px;
+  font-weight: bold;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 100;
+  transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#judgment-display.perfect {
+  color: var(--neon-gold);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+#judgment-display.good {
+  color: var(--neon-green);
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.8);
+}
+#judgment-display.miss {
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px rgba(255, 0, 127, 0.8);
+}
+
+#judgment-display.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* 鋼琴鍵盤區域 */
+.piano-keyboard {
+  height: 200px;
+  width: 100%;
+  display: flex;
+  position: relative;
+  background: #000;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  overflow: hidden;
+}
+
+/* 白鍵 */
+.white-key {
+  flex: 1;
+  height: 100%;
+  background: var(--white-key-bg);
+  border: 1px solid #111;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 12px;
+  transition: background 0.1s ease, box-shadow 0.1s ease;
+}
+
+.white-key:hover {
+  background: linear-gradient(to bottom, #ffffff 0%, #ebebeb 100%);
+}
+
+.white-key.active {
+  background: var(--white-key-active);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4),
+              0 0 25px var(--neon-blue);
+  border-color: var(--neon-blue);
+}
+
+/* 黑鍵 */
+.black-key {
+  position: absolute;
+  height: 120px;
+  background: var(--black-key-bg);
+  border: 1px solid #000;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 8px;
+  transition: background 0.1s ease, box-shadow 0.1s ease;
+}
+
+.black-key:hover {
+  background: linear-gradient(to bottom, #2d2d2d 0%, #151515 100%);
+}
+
+.black-key.active {
+  background: var(--black-key-active);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5),
+              0 0 20px var(--neon-pink);
+  border-color: var(--neon-pink);
+}
+
+/* 鍵名標籤與按鍵對應 */
+.key-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #555;
+  pointer-events: none;
+}
+
+.white-key.active .key-label {
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.key-bind {
+  font-size: 9px;
+  font-weight: 800;
+  color: #888;
+  margin-top: 3px;
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 4px;
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+.white-key.active .key-bind {
+  color: #fff;
+  background: rgba(255,255,255,0.2);
+}
+
+.black-key .key-label {
+  color: #aaa;
+  font-size: 9px;
+}
+
+.black-key .key-bind {
+  color: #eee;
+  background: rgba(255,255,255,0.1);
+  font-size: 8px;
+}
+
+.black-key.active .key-label,
+.black-key.active .key-bind {
+  color: #fff;
+  background: rgba(255,255,255,0.2);
+}
+
+/* 控制介面與按鈕 */
+select, button {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--panel-border);
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-family: var(--font-modern);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+select {
+  appearance: none;
+  padding-right: 30px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+select option {
+  background: #0f111c;
+  color: #fff;
+}
+
+select:hover, button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(255,255,255,0.05);
+}
+
+button.primary {
+  background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+}
+
+button.primary:hover {
+  background: linear-gradient(90deg, #00d2ff 0%, #0082ff 100%);
+  box-shadow: 0 4px 20px rgba(0, 114, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.mute-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+}
+
+/* 說明抽屜/提示 */
+.legend-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  font-size: 13px;
+  color: #8b9bb4;
+}
+
+.key-shortcuts-hint {
+  display: flex;
+  gap: 12px;
+}
+
+.shortcut-badge {
+  background: rgba(255,255,255,0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--neon-blue);
+  font-weight: bold;
+}
+
+/* 開始覆蓋遮罩 (點擊開始，解鎖 Web Audio) */
+.start-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(9, 10, 21, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  border-radius: 24px;
+  backdrop-filter: blur(15px);
+  transition: opacity 0.5s ease;
+}
+
+.start-card {
+  text-align: center;
+  max-width: 450px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(0, 240, 255, 0.1);
+}
+
+.retro-logo {
+  font-family: var(--font-retro);
+  font-size: 18px;
+  color: var(--neon-gold);
+  line-height: 1.8;
+  margin-bottom: 25px;
+  text-shadow: 3px 3px 0px #c41e3a, -3px -3px 0px #002fbe;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.start-btn {
+  font-family: var(--font-retro);
+  font-size: 12px;
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #e52521 0%, #b31010 100%);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 6px 0px #800a0a, 0 10px 20px rgba(0,0,0,0.4);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.start-btn:hover {
+  transform: translateY(2px);
+  box-shadow: 0 4px 0px #800a0a, 0 6px 15px rgba(0,0,0,0.4);
+}
+
+.start-btn:active {
+  transform: translateY(6px);
+  box-shadow: 0 0px 0px #800a0a, 0 2px 5px rgba(0,0,0,0.4);
+}
+
+/* 遊戲結束或獲勝彈窗 */
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 500;
+  border-radius: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: rgba(20, 24, 46, 0.95);
+  border: 2px solid var(--neon-blue);
+  box-shadow: 0 0 30px var(--neon-blue);
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.modal-title {
+  font-family: var(--font-retro);
+  font-size: 16px;
+  color: var(--neon-gold);
+  margin-bottom: 20px;
+}
+
+.modal-score {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.modal-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 25px;
+  background: rgba(255,255,255,0.03);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.stat-num {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #8b9bb4;
+}
+
+/* 麥克風實體配對按鈕特有樣式與動畫 */
+.mic-btn-style {
+  background: rgba(255, 0, 127, 0.05);
+  border: 1px solid rgba(255, 0, 127, 0.3);
+  color: #ff007f;
+  transition: all 0.3s ease;
+}
+
+.mic-btn-style:hover {
+  background: rgba(255, 0, 127, 0.15) !important;
+  border-color: rgba(255, 0, 127, 0.5) !important;
+  box-shadow: 0 0 12px rgba(255, 0, 127, 0.2);
+}
+
+.mic-btn-style.active {
+  background: #ff007f !important;
+  color: #ffffff !important;
+  border-color: #ff007f !important;
+  box-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
+  animation: mic-pulse 1.5s infinite alternate;
+}
+
+@keyframes mic-pulse {
+  0% {
+    box-shadow: 0 0 8px rgba(255, 0, 127, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 22px rgba(255, 0, 127, 0.9);
+  }
+}

@@ -1,0 +1,84 @@
+﻿Skill名稱,功能分類,路徑,功能描述
+Notion 日記,Notion與工作流整合,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/notion-diary/SKILL.md,自動在 Notion 資料庫建立/更新台北時間當天的日記（格式 mm/dd/yyyy），支持資料追加。
+notion-cli,Notion與工作流整合,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/notion-cli/SKILL.md,調用 Notion CLI 工具 ntn，用以操作 Notion API、部署 Notion Worker 以及上傳檔案。
+notion-knowledge-capture,Notion與工作流整合,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/notion-knowledge-capture/SKILL.md,將對話或討論內容結構化地捕獲，並直接存入 Notion wiki 或資料庫中，防止知識碎片化。
+notion-meeting-intelligence,Notion與工作流整合,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/notion-meeting-intelligence/SKILL.md,收集 Notion 中的會議背景，經由 AI 提煉後，為內部生成 Pre-read，並為外部生成 Agenda 儲存至 Notion。
+notion-research-documentation,Notion與工作流整合,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/notion-research-documentation/SKILL.md,跨 Notion 多個頁面搜尋、綜合分析，最終生成帶有正確引用的綜合研究報告。
+notion-spec-to-implementation,Notion與工作流整合,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/notion-spec-to-implementation/SKILL.md,將 Notion 上的產品或技術規格書拆解成具體的實作任務，以便於 Claude Code 直接執行與進度追蹤。
+baoyu-post-to-wechat,社群媒體與內容發布,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-post-to-wechat/SKILL.md,發布文章至微信公眾號，自動將外鏈轉換為微信友好的底部引用，並支持多圖文發布。
+baoyu-post-to-weibo,社群媒體與內容發布,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-post-to-weibo/SKILL.md,發布常規微博（文字/圖影）或長篇頭條文章至新浪微博。
+baoyu-post-to-x,社群媒體與內容發布,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-post-to-x/SKILL.md,發布推文、推特貼圖，或是長篇 X Articles (Markdown 格式)。
+baoyu-xhs-images,社群媒體與內容發布,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-xhs-images/SKILL.md,將文章內容拆解，並生成 1-10 張適合小紅書/微信圖文的精美資訊圖卡。
+content-creation-publisher,社群媒體與內容發布,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/content-creation-publisher/SKILL.md,整合網頁採集、Markdown 格式化、智能配圖、多平台發布的「全流程一站式解決方案」。
+baoyu-wechat-summary,社群媒體與內容發布,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-wechat-summary/SKILL.md,利用本地 wx-cli 工具，導出微信群聊紀錄並生成結構化的精華摘要，包含普通版與毒舌吐槽版。
+baoyu-image-gen,AI圖像生成與視覺設計,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-image-gen/SKILL.md,"呼叫各類 AI 繪圖 API（GPT Image 2, Google 等）進行單張或批量生圖，支持參考圖和寬高比。"
+cc-draw,AI圖像生成與視覺設計,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/cc-draw/SKILL.md,為 Claude Code 安裝基於 gpt-image-2 的生圖擴充。
+baoyu-cover-image,AI圖像生成與視覺設計,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-cover-image/SKILL.md,自訂生成比例為電影寬螢幕(2.35:1)、寬螢幕(16:9)或正方形(1:1)的高品質文章封面圖。
+baoyu-article-illustrator,AI圖像生成與視覺設計,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-article-illustrator/SKILL.md,分析文章結構，找出最需要視覺輔助的段落，自動為文章生成整套插圖。
+baoyu-comic,AI圖像生成與視覺設計,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-comic/SKILL.md,創作教育型漫畫（類似 Logicomix 風格），自動生成分鏡腳本並批量繪製漫畫格。
+baoyu-diagram,AI圖像生成與視覺設計,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-diagram/SKILL.md,自動繪製並輸出精美的深色主題 SVG 流程圖、架構圖、時序圖或心智圖。
+drawio-skill,AI圖像生成與視覺設計,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/drawio-skill/SKILL.md,生成 .drawio XML 圖表檔，並調用本地 draw.io 桌面 CLI 自動將其導出為 PNG、SVG 或 PDF。
+ai-infographic-master,AI圖像生成與視覺設計,/Users/jktai/.gemini/config/skills/ai-infographic-master/SKILL.md,設計專業、資訊密度高、適合手機閱讀（9:16）的黑板風格或現代風格資訊圖卡。
+chalkboard-infographic,AI圖像生成與視覺設計,/Users/jktai/.gemini/config/skills/chalkboard-infographic/SKILL.md,設計粉筆黑板風格資訊圖卡。
+s-summary-designer,AI圖像生成與視覺設計,/Users/jktai/.gemini/config/skills/s-summary-designer/SKILL.md,將連結進行深度結構化解析，並轉化為高品質手機版資訊圖卡 (9:16)。
+baoyu-infographic,AI圖像生成與視覺設計,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-infographic/SKILL.md,分析文字內容，選擇 21 種版面與 22 種視覺風格之一，生成適合出版的高品質資訊圖表。
+html-slide-builder,互動簡報與PPT生成,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/html-slide-builder/SKILL.md,自動將文字、PDF 或教材轉為 Reveal.js 互動簡報，包含 AI 背景、SVG 圖標、Firebase 互動與 CSS 心智圖。
+ppt-generator,互動簡報與PPT生成,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/ppt-generator/SKILL.md,基於七大角色協同機制，完成主題規劃、模板推薦、內容填充與 AI 配圖，生成標準的 .pptx 簡報。
+nanobanana-ppt-visualizer,互動簡報與PPT生成,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/nanobanana-ppt-visualizer/SKILL.md,PPT 視覺增強工具，提供多風格渲染、網頁播放器生成與 PPT 轉影片合成。
+yt-transcript,影片轉錄與多媒體,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/yt-transcript/SKILL.md,下載並轉錄無字幕的 YouTube 影片為中文逐字稿，自動標記時間戳記與說話者。
+baoyu-youtube-transcript,影片轉錄與多媒體,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-youtube-transcript/SKILL.md,提取 YouTube 影片字幕（支援多語系與翻譯），下載影片封面圖，並將字幕整理成乾淨文本。
+video-transcript-downloader,影片轉錄與多媒體,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/video-transcript-downloader/SKILL.md,基於 yt-dlp 下載任何網站的影片、音訊與字幕，並將其格式化為段落分明的文字檔。
+notebooklm-transcribe,影片轉錄與多媒體,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/notebooklm-transcribe/SKILL.md,將本機音檔上傳至 NotebookLM 轉錄為逐字稿，並自動存入 Obsidian Clipping 筆記中。
+video-creation-suite,影片轉錄與多媒體,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/video-creation-suite/SKILL.md,完整的影片創作與合成套件。整合 Coze API、Edge-TTS 與 Suno API。
+video-recreation,影片轉錄與多媒體,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/video-recreation/SKILL.md,影片二創工具，支援視覺分析、語音合成、背景音樂與視頻合成流程。
+chrome-devtools,Chrome自動化與網頁除錯,/Users/jktai/.gemini/config/plugins/chrome-devtools-plugin/skills/chrome-devtools/SKILL.md,通過 MCP 控制 Chrome 瀏覽器，執行點擊、輸入、截圖、提取 DOM 樹等自動化任務。
+a11y-debugging,Chrome自動化與網頁除錯,/Users/jktai/.gemini/config/plugins/chrome-devtools-plugin/skills/a11y-debugging/SKILL.md,"依據 web.dev 指南審查網頁無障礙設計（Semantic HTML, ARIA 標籤, 色彩對比度等）。"
+debug-optimize-lcp,Chrome自動化與網頁除錯,/Users/jktai/.gemini/config/plugins/chrome-devtools-plugin/skills/debug-optimize-lcp/SKILL.md,檢測與調優網頁 LCP（最大內容繪製時間）指標，優化 Core Web Vitals 載入速度。
+memory-leak-debugging,Chrome自動化與網頁除錯,/Users/jktai/.gemini/config/plugins/chrome-devtools-plugin/skills/memory-leak-debugging/SKILL.md,診斷 JS/Node.js 的記憶體洩漏，分析 Heap Snapshot 效能。
+troubleshooting,Chrome自動化與網頁除錯,/Users/jktai/.gemini/config/plugins/chrome-devtools-plugin/skills/troubleshooting/SKILL.md,用於排除 Chrome CDP 連線異常與 Target 遺失等環境問題。
+firebase-basics,Firebase與行動端開發,/Users/jktai/.gemini/config/plugins/firebase/skills/firebase_basics/SKILL.md,Firebase 環境初始化與 CLI 工具整合設定。
+firebase-firestore,Firebase與行動端開發,/Users/jktai/.gemini/config/plugins/firebase/skills/firebase_firestore/SKILL.md,Firestore 資料庫管理、安全性規則審查與 SDK 程式碼生成。
+firebase-auth-basics,Firebase與行動端開發,/Users/jktai/.gemini/config/plugins/firebase/skills/firebase_auth_basics/SKILL.md,整合 Firebase 會員驗證（Auth）基本設定。
+firebase-hosting-basics,Firebase與行動端開發,/Users/jktai/.gemini/config/plugins/firebase/skills/firebase_hosting_basics/SKILL.md,整合 Firebase 靜態託管（Hosting）與 CLI 部署部署。
+firebase-app-hosting-basics,Firebase與行動端開發,/Users/jktai/.gemini/config/plugins/firebase/skills/firebase_app_hosting_basics/SKILL.md,整合 Firebase App Hosting 全端伺服器託管（例如 Next.js/Angular）。
+firebase-remote-config-basics,Firebase與行動端開發,/Users/jktai/.gemini/config/plugins/firebase/skills/firebase_remote_config_basics/SKILL.md,Firebase Remote Config 範本管理、功能旗標與 client SDK 整合。
+firebase-crashlytics,Firebase與行動端開發,/Users/jktai/.gemini/config/plugins/firebase/skills/firebase_crashlytics/SKILL.md,Firebase Crashlytics 閃退監控配置與 client SDK 串接。
+firebase-data-connect,Firebase與行動端開發,/Users/jktai/.gemini/config/plugins/firebase/skills/firebase_data_connect_basics/SKILL.md,Firebase SQL Connect (PostgreSQL 資料庫) 安全設計與 SDK 生成。
+firebase-security-rules-auditor,Firebase與行動端開發,/Users/jktai/.gemini/config/plugins/firebase/skills/firebase_security_rules_auditor/SKILL.md,評估與審查 Firestore 安全性規則，提供防護建議。
+firebase-ai-logic-basics,Firebase與行動端開發,/Users/jktai/.gemini/config/plugins/firebase/skills/firebase_ai_logic_basics/SKILL.md,整合 Firebase AI Logic（Gemini API）至 Web 應用程式中。
+android-cli,Firebase與行動端開發,/Users/jktai/.gemini/config/plugins/android-cli-plugin/skills/SKILL.md,使用 Android CLI 工具進行專案創建、真機/模擬器部署與環境診斷。
+xcode-project-setup,Firebase與行動端開發,/Users/jktai/.gemini/config/plugins/firebase/skills/xcode_project_setup/SKILL.md,修改 iOS Xcode 專案檔（.pbxproj），自動引入 Swift Packages 並連結檔案。
+antigravity-guide,Antigravity與ClaudeCode設定,/Users/jktai/.gemini/antigravity/builtin/skills/antigravity_guide/SKILL.md,Google Antigravity (AGY) 框架的使用指南，包含 CLI、SDK 與客製化自訂。
+claude-code-lazy-packs,Antigravity與ClaudeCode設定,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/claude-code-lazy-packs/SKILL.md,Claude Code 懶人包全集，快速建置環境、MCP 與輔助技能。
+cc-draw,Antigravity與ClaudeCode設定,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/cc-draw/SKILL.md,Claude Code 安裝 gpt-image-2 本地生圖 skill。
+cc-env-setup,Antigravity與ClaudeCode設定,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/cc-env-setup/SKILL.md,"Claude Code 本地開發環境建置（Node.js, uv）。"
+cc-firebase,Antigravity與ClaudeCode設定,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/cc-firebase/SKILL.md,Claude Code 連接 Firebase MCP 工具環境。
+cc-gemini,Antigravity與ClaudeCode設定,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/cc-gemini/SKILL.md,Claude Code 設定 Gemini 免費 API。
+cc-github,Antigravity與ClaudeCode設定,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/cc-github/SKILL.md,Claude Code 連接 GitHub CLI 工具環境。
+cc-install-all,Antigravity與ClaudeCode設定,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/cc-install-all/SKILL.md,一次安裝所有 Claude Code 懶人包擴充。
+cc-notebooklm,Antigravity與ClaudeCode設定,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/cc-notebooklm/SKILL.md,Claude Code 連接 NotebookLM MCP。
+cc-obsidian,Antigravity與ClaudeCode設定,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/cc-obsidian/SKILL.md,Claude Code 連接 Obsidian MCPVault 筆記本。
+cc-ollama,Antigravity與ClaudeCode設定,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/cc-ollama/SKILL.md,Claude Code 安裝本地 AI Ollama。
+cc-second-brain,Antigravity與ClaudeCode設定,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/cc-second-brain/SKILL.md,Claude Code 第二大腦三層結構設定（Obsidian）。
+cc-supabase,Antigravity與ClaudeCode設定,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/cc-supabase/SKILL.md,Claude Code 連接 Supabase MCP 開發環境。
+cc-workspace,Antigravity與ClaudeCode設定,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/cc-workspace/SKILL.md,Claude Code 老師建專案、初始化班級工具模式。
+baoyu-translate,實用輔助工具,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-translate/SKILL.md,精細翻譯，支援術語庫與在地化修正。
+baoyu-url-to-markdown,實用輔助工具,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-url-to-markdown/SKILL.md,利用 CDP 渲染網頁並轉為 Markdown 儲存。
+baoyu-compress-image,實用輔助工具,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-compress-image/SKILL.md,將指定圖片壓縮並轉換為 WebP 格式。
+baoyu-format-markdown,實用輔助工具,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-format-markdown/SKILL.md,Markdown 格式化、美化排版工具。
+baoyu-electron-extract,實用輔助工具,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/baoyu-electron-extract/SKILL.md,解包 Electron asar 套件，還原混淆過的 JS 原始碼。
+file-organizer,實用輔助工具,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/file-organizer/SKILL.md,基於內容分析自動分類整理與重命名檔案。
+smart-search,實用輔助工具,/Users/jktai/.gemini/config/skills/smart-search/SKILL.md,基於 opencli 的智能搜尋路由器。
+summary-master,實用輔助工具,/Users/jktai/.gemini/config/skills/summary-master/SKILL.md,網頁或 YouTube 影片深度解析與結構化總結工具。
+detail-master,實用輔助工具,/Users/jktai/.gemini/config/skills/detail-master/SKILL.md,徹底分析文章或影片逐字稿，羅列出每一個主題元素。
+tldr-summarizer,實用輔助工具,/Users/jktai/.gemini/config/skills/tldr-summarizer/SKILL.md,懶人包 → PDF / Canva 專用 TL;DR 總結工具。
+bedtime-story,實用輔助工具,/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/.agents/skills/bedtime-story/SKILL.md,為兒童講述溫馨的睡前故事與成語典故。
+daily-devotion,實用輔助工具,/Users/jktai/.gemini/config/skills/daily-devotion/SKILL.md,每日靈修日記與反思寫作輔助。
+japanese-travel-designer,實用輔助工具,/Users/jktai/.gemini/config/skills/japanese-travel-designer/SKILL.md,日本旅遊行程規劃與在地化設計。
+last30days,實用輔助工具,/Users/jktai/.gemini/config/skills/last30days/SKILL.md,研究過去 30 天內各大社群平台對特定主題的真實討論。
+manga-alchemy,實用輔助工具,/Users/jktai/.gemini/config/skills/manga-alchemy/SKILL.md,漫畫煉金術，提供漫畫分鏡與視覺設定引導。
+pd-agenda-schools,實用輔助工具,/Users/jktai/.gemini/config/skills/pd-agenda-schools/SKILL.md,學校專業發展(PD)議程生成與管理。
+prompt-alchemist,實用輔助工具,/Users/jktai/.gemini/config/skills/prompt-alchemist/SKILL.md,指令煉金術，將原始需求轉換為高級 Prompt 指令。
+publish-to-github-io,實用輔助工具,/Users/jktai/.gemini/config/skills/publish-to-github-io/SKILL.md,自動將生成的 HTML 網頁部署至 GitHub Pages Portal 目錄。
+find-skills,實用輔助工具,/Users/jktai/.gemini/config/skills/find-skills/SKILL.md,協助使用者探索並安裝新的代理人技能。
+skill-scanner,實用輔助工具,/Users/jktai/.gemini/config/skills/skill-scanner/SKILL.md,安全審查工具，檢測第三方技能是否包含惡意代碼。

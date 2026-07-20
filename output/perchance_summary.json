@@ -1,0 +1,12 @@
+{
+  "Title": "AI Character Generator - Perchance.org",
+  "日期": "2026-07-17",
+  "URL": "https://perchance.org/ai-character-generator",
+  "摘要": "Perchance AI Character Generator 是一款免費且免註冊的線上 AI 角色與圖像生成工具。它結合了文字與圖像生成插件，讓使用者能透過描述隨機或自訂產生角色的外觀肖像、性格設定及背景描述，無限次免費使用。",
+  "category": "科技",
+  "tags": ["AI生成", "角色設計", "隨機產生器", "圖像生成", "科技"],
+  "importance": "中",
+  "content": "# Perchance AI Character Generator 工具介紹\n\n## 1. 核心特色\n- **免註冊即開即用**：不需要登入或綁定電子信箱，打開網頁即可直接使用。\n- **完全免費無限制**：沒有每日生成次數限制，亦無訂閱或付費牆解鎖功能。\n- **深具客製化潛力**：Perchance 平台支援使用者微調或自己撰寫自訂產生器的代碼。\n\n## 2. 主要功能\n- **隨機角色設定 (Character Generation)**：點擊骰子按鈕可隨機產生各式各樣的角色性格、背景、外貌特徵等描述。\n- **AI 圖像生成 (AI Image Generation)**：內建 Stable Diffusion 圖像生成模組，使用者能設定風格（例如 Painted Anime）、版面形狀（如 Portrait），點擊 `generate` 即可產生角色肖像圖。\n- **無限制角色聊天 (AI Chat)**：除了靜態生成外，Perchance 平台還支援建立自訂 AI 角色並進行沉浸式 roleplay，相較主流平台，其審查機制較為寬鬆自由。\n\n## 3. 適用對象\n- 小說家與編劇：用於尋找寫作靈感，快速產生隨機路人角色或配角背景。\n- 遊戲開發者：為桌遊、RPG 遊戲設計卡牌角色、性格與肖像。\n- AI 藝術愛好者：免安裝任何軟體或調用 API 即可進行快速的文字生成圖片體驗。",
+  "mindmap": "mindmap\n  root((AI 角色產生器))\n    核心特色\n      完全免費無限制\n      免註冊即開即用\n      開源且深具客製性\n    主要功能\n      AI角色聊天 Roleplay\n      AI圖像生成 Text to Image\n      隨機設定產生器\n    技術架構\n      基于 Perchance 框架\n      結合 text_to_image 插件\n      結合 ai_text 插件",
+  "images": ["/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/output/perchance_screenshot.png"]
+}

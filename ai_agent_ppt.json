@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "title": "AI Agent如何改變你的工作流程",
+    "author": "Olivia / 達文西數位科技",
+    "subject": "AI Agent 概念、工具與企業應用指南",
+    "keywords": "AI Agent, MarTech, AI 工具"
+  },
+  "slides": [
+    {
+      "layout": "TitleSlide",
+      "title": "AI Agent 如何改變你的工作流程？",
+      "content": [
+        "最實用的 AI Agent 工具教學、運作模式與企業應用指南",
+        "導讀整理：達文西數位科技"
+      ]
+    },
+    {
+      "layout": "SectionHeader",
+      "title": "一、AI Agent 的定義與核心概念",
+      "content": [
+        "什麼是 AI Agent？與 LLM、Chatbot 有何不同？"
+      ]
+    },
+    {
+      "layout": "ComparisonTable",
+      "title": "Chatbot vs LLM vs AI Agent 比較",
+      "content": [
+        "比較項目 | Chatbot (傳統機器人) | LLM (大語言模型) | AI Agent (智慧代理人)",
+        "核心定位 | 對話介面與簡單資訊查詢 | 知識庫與內容生成大腦 | 具備行動力的數位同僚",
+        "運作機制 | 依據預設規則/關鍵字回覆 | 依據提示詞生成文字/圖像 | 獨立規劃步驟並自動呼叫工具",
+        "主動性 | 被動觸發 | 被動生成 | 主動決策、反思與執行"
+      ]
+    },
+    {
+      "layout": "SectionHeader",
+      "title": "二、AI Agent 的 4 大核心運作模式",
+      "content": [
+        "感知、記憶、規劃與行動：AI Agent 像人一樣思考的關鍵"
+      ]
+    },
+    {
+      "layout": "FlowCards",
+      "title": "AI Agent 的四大運作步驟",
+      "content": [
+        "感知 (Perception): 接收並讀懂文字、聲音、圖像及 API 數據狀態",
+        "記憶 (Memory): 短期與長期記憶儲存，記住上下文並累積過往決策經驗",
+        "規劃 (Planning): 拆解複雜目標為小步驟，並具備自我反思與計畫調整能力",
+        "行動 (Action): 自動執行發信、排會、更新資料庫及呼叫工具等實際操作"
+      ]
+    },
+    {
+      "layout": "SectionHeader",
+      "title": "三、精選 6 款 AI Agent 工具推薦",
+      "content": [
+        "從非技術人員的無程式碼工具，到工程師的開發框架"
+      ]
+    },
+    {
+      "layout": "TwoColumnText",
+      "title": "適合不同角色的 AI Agent 工具",
+      "content": [
+        "【左】 適合初學者與非技術人員",
+        "OpenAI GPTs: 免程式碼，自然語言設定個人助理",
+        "Copilot Studio: 微軟企業級工具，整合 Office 365",
+        "Gumloop: 強大的工作流自動化與數據抓取工具",
+        "【右】 適合開發者與進階使用者",
+        "LangChain: 最主流的 LLM 鏈接與組件框架",
+        "AutoGPT / BabyAGI: 自動規劃任務的自主 Agent 專案",
+        "CrewAI: 易於構建多 Agent 團隊協同合作的框架"
+      ]
+    },
+    {
+      "layout": "SectionHeader",
+      "title": "四、企業如何逐步導入 AI Agent",
+      "content": [
+        "从小範圍測試到全面自動化：循序漸進的導入路徑"
+      ]
+    },
+    {
+      "layout": "FlowCards",
+      "title": "企業導入 AI Agent 四步法",
+      "content": [
+        "Step 1: 挑出重複性高、規則明確且耗時的工作",
+        "Step 2: 整理工作 SOP，明確步驟與例外狀況",
+        "Step 3: 小規模測試，觀察表現並排查 AI 幻覺",
+        "Step 4: 人類把關 (80% AI 執行, 20% 人類確認)"
+      ]
+    },
+    {
+      "layout": "SectionHeader",
+      "title": "五、AI Agent 常見 3 大企業應用領域",
+      "content": [
+        "智能客服 2.0、IT 維運、自動化行銷分析"
+      ]
+    },
+    {
+      "layout": "GeometryGrid",
+      "title": "AI Agent 熱門應用場景",
+      "content": [
+        "智能客服 2.0 :: 從回答問題升級為直接幫客戶操作（如自動處理退貨流程，結合 LINE OA 串接後台）",
+        "軟體開發與 IT 維運 :: 自動編寫代碼、Debug、監控系統警報並分析系統日誌，實現自癒式維運",
+        "自動化行銷分析師 :: 自動抓取 GA4、廣告成效數據，分析表現變化原因，並自動生成完整報告"
+      ]
+    },
+    {
+      "layout": "SectionHeader",
+      "title": "六、如何讓網站被 AI 與 AI Agent 看懂",
+      "content": [
+        "AEO/GEO 時代：把技術真正轉成流量與轉換"
+      ]
+    },
+    {
+      "layout": "GeometryGrid",
+      "title": "4 個關鍵優化方向",
+      "content": [
+        "完善結構化資料 :: 透過 Schema.org / JSON-LD 替網頁寫說明書，方便 AI 抓取與直接理解",
+        "建立權威性 (E-E-A-T) :: 提供專業背景與明確作者介紹，爭取被 Perplexity 等工具引用",
+        "問答式內容結構 :: 將內容整理為問題配答案的 FAQ 形式，便於 AI 和用戶快速定位重點",
+        "SEO 排名仍是關鍵 :: AI 優先索引排名靠前的網站。做好 SEO 基礎是讓 AI 看見你的前提"
+      ]
+    },
+    {
+      "layout": "BlankSlide",
+      "title": "謝謝聆聽",
+      "content": []
+    }
+  ]
+}

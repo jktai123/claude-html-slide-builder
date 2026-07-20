@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>租客生活指南 & 管理規約</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  <style>
+    /* === 全域變數與極致暗色調 === */
+    :root {
+      --accent:  #e8643a;   /* 橘紅 */
+      --accent2: #4fc3f7;   /* 青藍 */
+      --success: #81c784;   /* 嫩綠 */
+      --warn:    #ffb74d;   /* 琥珀 */
+      --danger:  #ff5252;   /* 鮮紅 */
+      --bg-dark: #0d1117;   /* 主背景 */
+    }
+
+    .reveal {
+      font-family: 'Segoe UI', 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-dark);
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Segoe UI', 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-transform: none;
+    }
+    .reveal h1 { font-size: 2em; line-height: 1.2; text-shadow: 0 0 16px rgba(232,100,58,0.3); }
+    .reveal h2 { font-size: 1.4em; color: var(--accent2); margin-bottom: 0.8em; text-shadow: 0 0 10px rgba(79,195,247,0.2); }
+    .reveal .progress { color: var(--accent); }
+    .reveal .controls { color: var(--accent2); }
+
+    /* === 封面 === */
+    .title-slide { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .title-slide .tag {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), #f28b50);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.5em;
+      letter-spacing: 0.1em;
+      margin-bottom: 1em;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(232,100,58,0.4);
+    }
+    .title-slide .subtitle { font-size: 0.7em; color: #ccc; margin-top: 0.6em; font-weight: 300; }
+    .title-slide .author { margin-top: 2.2em; font-size: 0.45em; color: #888; letter-spacing: 0.05em; }
+
+    /* === 3 欄優勢卡（含圖標）=== */
+    .adv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 0.6em; }
+    .adv-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-top: 4px solid var(--accent2);
+      border-radius: 12px;
+      padding: 24px 16px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    .adv-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(79,195,247,0.4);
+    }
+    .adv-card .adv-icon { margin-bottom: 14px; }
+    .adv-card .adv-icon img {
+      width: 64px; height: 64px; object-fit: contain;
+      display: block; margin: 0 auto;
+      filter: drop-shadow(0 0 8px rgba(79,195,247,0.5));
+    }
+    .adv-card .adv-title { font-size: 0.55em; font-weight: 700; color: var(--accent2); margin-bottom: 10px; }
+    .adv-card .adv-desc { font-size: 0.4em; color: #bbb; line-height: 1.6; text-align: left; }
+    .adv-card .adv-desc ul { margin: 0; padding-left: 14px; }
+    .adv-card .adv-desc li { margin-bottom: 4px; }
+
+    /* === VIZ 滑桿對比 === */
+    .viz-container {
+      position: relative;
+      height: 380px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      margin: 10px auto;
+      width: 90%;
+      background: #1e1e24;
+    }
+    .viz-before, .viz-after {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+    .viz-before {
+      background: linear-gradient(135deg, #2d1414, #1a0808);
+      color: #ff8a8a;
+    }
+    .viz-after {
+      background: linear-gradient(135deg, #14281a, #081a0e);
+      color: #a3e2ab;
+      clip-path: inset(0 100% 0 0); /* 初始時遮罩 100% (即隱藏) */
+    }
+    .viz-title {
+      font-size: 0.9em;
+      font-weight: 800;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+    }
+    .viz-content {
+      font-size: 0.55em;
+      line-height: 1.8;
+      text-align: left;
+    }
+    .viz-content ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    .viz-content li {
+      margin-bottom: 10px;
+      padding-left: 24px;
+      position: relative;
+    }
+    .viz-before .viz-content li::before {
+      content: "❌";
+      position: absolute;
+      left: 0;
+    }
+    .viz-after .viz-content li::before {
+      content: "✨";
+      position: absolute;
+      left: 0;
+    }
+    .viz-divider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--accent2), transparent);
+      box-shadow: 0 0 10px var(--accent2);
+      pointer-events: none;
+      z-index: 10;
+    }
+    .viz-slider-control {
+      margin-top: 15px;
+      width: 90%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    .viz-slider-control label {
+      font-size: 0.45em;
+      color: #aaa;
+      font-weight: 500;
+    }
+    .viz-slider-control input[type="range"] {
+      -webkit-appearance: none;
+      width: 60%;
+      height: 6px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 3px;
+      outline: none;
+    }
+    .viz-slider-control input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent2);
+      cursor: pointer;
+      box-shadow: 0 0 8px var(--accent2);
+      transition: background 0.15s;
+    }
+    .viz-slider-control input[type="range"]::-webkit-slider-thumb:hover {
+      background: #80deea;
+    }
+
+    /* === VS 對比雙欄 === */
+    .vs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 0.4em;
+    }
+    .vs-panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: left;
+    }
+    .vs-panel.left-panel { border-left: 4px solid var(--accent2); }
+    .vs-panel.right-panel { border-left: 4px solid var(--accent); }
+    .vs-panel-title { font-size: 0.6em; font-weight: 700; margin-bottom: 12px; letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px; }
+    .vs-panel.left-panel .vs-panel-title { color: var(--accent2); }
+    .vs-panel.right-panel .vs-panel-title { color: var(--accent); }
+    .vs-panel ul { font-size: 0.38em; line-height: 1.7; padding-left: 16px; margin: 0; }
+    .vs-panel li { margin-bottom: 6px; color: #ccc; }
+    .vs-panel strong { color: #fff; }
+    .vs-panel ul ul { font-size: 1.0em !important; }
+
+    /* === 單張卡片樣式 (頁5) === */
+    .card-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+      margin-top: 0.5em;
+    }
+    .main-info-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: left;
+      backdrop-filter: blur(10px);
+    }
+    .side-info-card {
+      background: linear-gradient(135deg, rgba(79,195,247,0.08), rgba(232,100,58,0.08));
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(10px);
+    }
+    .info-title { font-size: 0.55em; font-weight: 700; color: var(--accent2); margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+    .info-body { font-size: 0.42em; line-height: 1.8; color: #ddd; }
+    .info-body ul { padding-left: 18px; margin: 0; }
+    .info-body li { margin-bottom: 8px; }
+    .wifi-icon { font-size: 2em; color: var(--accent2); margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(79,195,247,0.4)); }
+    .wifi-ssid { font-size: 0.5em; color: #fff; font-weight: 700; margin-bottom: 4px; }
+    .wifi-pwd { font-size: 0.6em; color: var(--warn); font-weight: 800; letter-spacing: 0.05em; background: rgba(0,0,0,0.3); padding: 4px 12px; border-radius: 6px; border: 1px dashed rgba(255,255,255,0.15); display: inline-block; margin-top: 4px; }
+
+    /* === 封底 === */
+    .end-slide { text-align: center; }
+    .end-slide .warn-box {
+      background: rgba(255, 82, 82, 0.08);
+      border: 1px solid rgba(255, 82, 82, 0.25);
+      border-radius: 10px;
+      padding: 16px 24px;
+      display: inline-block;
+      margin-top: 1.5em;
+      font-size: 0.45em;
+      color: #ff8a8a;
+      max-width: 600px;
+    }
+    .end-slide .warn-box strong { color: var(--danger); }
+
+    /* === 垃圾分類專屬列表 === */
+    .danger-tip-text { font-size: 0.42em; color: var(--danger); margin-bottom: 20px; font-weight: 700; }
+    .danger-list { font-size: 0.5em; line-height: 1.8; color: #ff8a8a; list-style-type: none; padding: 0; }
+    .success-tip-text { font-size: 0.42em; color: var(--success); margin-bottom: 20px; font-weight: 700; }
+
+    /* === 列印優化 === */
+    @media print {
+      @page {
+        size: landscape;
+        margin: 0;
+      }
+    }
+
+    /* === 響應式與行動裝置優化 (手機 & iPad) === */
+    @media (max-width: 768px) {
+      .reveal .slides {
+        font-size: 1.4em; /* 再次調大基礎字體 */
+      }
+      .reveal h1 { font-size: 1.8em !important; }
+      .reveal h2 { font-size: 1.3em !important; }
+      
+      /* 將所有並列網格與卡片排版強制改為直向單欄排列，避免內容擠壓 */
+      .stat-row { flex-direction: column; gap: 10px; }
+      .adv-grid { grid-template-columns: 1fr !important; gap: 12px; }
+      .vs-grid { grid-template-columns: 1fr !important; gap: 12px; }
+      .vs-center { display: none; }
+      .conclusion-grid { grid-template-columns: 1fr !important; gap: 12px; }
+      .card-layout { grid-template-columns: 1fr !important; gap: 12px; }
+      
+      /* 強制放大行動裝置下的卡片與列表字體 */
+      .stat-card .num { font-size: 2.2em !important; }
+      .stat-card .label { font-size: 0.75em !important; }
+      
+      .adv-card .adv-title { font-size: 0.85em !important; }
+      .adv-card .adv-desc { font-size: 0.7em !important; }
+      .adv-card .adv-desc ul { padding-left: 20px !important; }
+      
+      .vs-panel .vs-panel-title { font-size: 0.85em !important; }
+      .vs-panel ul { font-size: 0.7em !important; padding-left: 20px !important; }
+      .vs-panel ul li { margin-bottom: 8px !important; }
+      .vs-panel ul ul { font-size: 1.0em !important; }
+      
+      .main-info-card .info-title { font-size: 0.85em !important; }
+      .main-info-card .info-body { font-size: 0.7em !important; }
+      .main-info-card .info-body ul { padding-left: 20px !important; }
+      .main-info-card .info-body li { margin-bottom: 10px !important; }
+      
+      .side-info-card .wifi-ssid { font-size: 0.75em !important; }
+      .side-info-card .wifi-pwd { font-size: 0.85em !important; }
+      
+      .end-slide .warn-box { font-size: 0.75em !important; max-width: 100% !important; line-height: 1.7 !important; }
+      .end-slide .tagline { font-size: 0.8em !important; }
+      
+      /* 垃圾分類 Before/After 字體放大 */
+      .danger-tip-text { font-size: 0.75em !important; }
+      .danger-list { font-size: 0.7em !important; }
+      .success-tip-text { font-size: 0.75em !important; }
+      
+      .timeline-item { font-size: 0.75em !important; }
+      .quote-box { font-size: 0.8em !important; }
+      
+      /* 縮小卡片內邊距以釋放手機螢幕空間 */
+      .stat-card { padding: 12px 16px; }
+      .adv-card { padding: 12px; }
+      .vs-col { padding: 12px; }
+      .conclusion-card { padding: 12px; }
+      .main-info-card { padding: 16px; }
+      .side-info-card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 頁 1：封面 -->
+    <section data-background-image="images/cover_bg.png"
+             data-background-opacity="0.3"
+             data-background-size="cover">
+      <div class="title-slide">
+        <div class="tag">租屋管理 · 溫馨指南</div>
+        <h1>租客注意規約</h1>
+        <h2 style="color: var(--accent); margin-top: 0.2em; font-size: 1.1em;">優質居住品質，我們攜手共同維護</h2>
+        <p class="subtitle">請細閱並配合大樓及房源管理規範</p>
+        <p class="author">發佈日期：2026 年 6 月</p>
+      </div>
+    </section>
+
+    <!-- 頁 2：三大生活核心守則 -->
+    <section>
+      <h2>三大生活核心守則</h2>
+      <div class="adv-grid">
+        <!-- 垃圾分類 -->
+        <div class="adv-card fragment" data-fragment-index="1">
+          <div class="adv-icon">
+            <img src="images/icon_recycle.png" alt="垃圾分類" onerror="this.src='https://img.icons8.com/neon/96/garbage-sorting.png'">
+          </div>
+          <div class="adv-title">確實垃圾分類</div>
+          <div class="adv-desc">
+            <ul>
+              <li><strong>乾淨回收：</strong>容器沖洗擦拭後再回收，勿沾染髒污。</li>
+              <li><strong>分類置放：</strong>嚴格區分藍桶、大紅桶、小紅桶。</li>
+              <li><strong>配合時間：</strong>遵守時間與少量原則。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 水電與消耗品 -->
+        <div class="adv-card fragment" data-fragment-index="2">
+          <div class="adv-icon">
+            <img src="images/icon_utility.png" alt="水電與消耗品" onerror="this.src='https://img.icons8.com/neon/96/electricity.png'">
+          </div>
+          <div class="adv-title">水電與自備更換</div>
+          <div class="adv-desc">
+            <ul>
+              <li><strong>拍照計費：</strong>每月自行拍照電表回報計算度數。</li>
+              <li><strong>合併匯款：</strong>電費加上租金，一同匯入帳戶。</li>
+              <li><strong>消耗品自理：</strong>燈泡壞掉等耗材由租客自行更換。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 網路連線 -->
+        <div class="adv-card fragment" data-fragment-index="3">
+          <div class="adv-icon">
+            <img src="images/icon_wifi.png" alt="網路連線" onerror="this.src='https://img.icons8.com/neon/96/wi-fi-connected.png'">
+          </div>
+          <div class="adv-title">高速無線網路</div>
+          <div class="adv-desc">
+            <ul>
+              <li><strong>專屬頻寬：</strong>房源內提供獨立 WiFi，極速穩定.</li>
+              <li><strong>連線資訊：</strong>投影片後續有詳細帳密資料可連線。</li>
+              <li><strong>合規使用：</strong>請勿用於非法下載 or 侵害版權。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁 3：垃圾分類 - ❌ 錯誤處理方式 -->
+    <section>
+      <h2>❌ 錯誤的處理方式</h2>
+      <p class="danger-tip-text">以下為常見的錯誤示範，請務必避免：</p>
+      <div class="main-info-card" style="background: linear-gradient(135deg, #2d1414, #1a0808); border-color: rgba(255, 82, 82, 0.3); padding: 30px; max-width: 800px; margin: 0 auto;">
+        <ul class="danger-list">
+          <li style="margin-bottom: 12px; padding-left: 28px; position: relative;">
+            <span style="position: absolute; left: 0;">❌</span>
+            外帶吃完的便當盒或飲料杯，<strong>直接裝在塑膠袋內</strong>就丟進回收箱。
+          </li>
+          <li style="margin-bottom: 12px; padding-left: 28px; position: relative;">
+            <span style="position: absolute; left: 0;">❌</span>
+            可回收的餐盒、飲料瓶等，<strong>未經沖洗直接當一般垃圾</strong>丟棄。
+          </li>
+          <li style="margin-bottom: 12px; padding-left: 28px; position: relative;">
+            <span style="position: absolute; left: 0;">❌</span>
+            吃不完的<strong>廚餘連同便當盒餐盒混在一起</strong>，未經分類即亂丟。
+          </li>
+          <li style="margin-bottom: 12px; padding-left: 28px; position: relative;">
+            <span style="position: absolute; left: 0;">❌</span>
+            回收箱堆積油污與異味，嚴重影響公共環境衛生與大樓清潔人員。
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 頁 4：垃圾分類 - ✨ 正確生活指引 -->
+    <section>
+      <h2>✨ 正確的生活指引</h2>
+      <p class="success-tip-text">請依照以下垃圾桶區分確實分類：</p>
+      
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; max-width: 900px; margin: 0 auto; text-align: left;">
+        <div class="vs-panel left-panel" style="border-left-color: var(--accent2); background: rgba(79,195,247,0.05); padding: 20px;">
+          <div class="vs-panel-title" style="color: var(--accent2); font-size:0.55em; margin-bottom: 10px;">🔵 大藍色桶 (可回收)</div>
+          <ul style="line-height: 1.7; color: #ccc;">
+            <li><strong>食品容器：</strong>餐盒、飲料瓶、紙盒、飲料杯。</li>
+            <li><strong>紙張紙類：</strong>紙張也是可回收物品。</li>
+            <li><strong>💡 重點：</strong>食用完畢請將容器<strong>沖洗、擦拭乾淨</strong>再置放。</li>
+          </ul>
+        </div>
+        
+        <div class="vs-panel right-panel" style="border-left-color: var(--danger); background: rgba(255,82,82,0.05); padding: 20px;">
+          <div class="vs-panel-title" style="color: var(--danger); font-size:0.55em; margin-bottom: 10px;">🔴 紅色桶 (一般/廚餘)</div>
+          <ul style="line-height: 1.7; color: #ccc;">
+            <li>🔴 <strong>大紅色桶：</strong>放置<strong>一般垃圾、廁浴衛生類</strong>。切勿放可回收餐盒與飲料瓶！</li>
+            <li style="margin-top:8px;">🔴 <strong>小紅色桶：</strong>廚房<strong>葉菜類及蔬菓</strong>。吃不完的食物請用袋子包好放置（切勿裝在餐盒內放置）。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁 4：台北市資源回收指引 -->
+    <section>
+      <h2 style="margin-bottom: 0.3em;">台北市資源回收指引</h2>
+      <p style="font-size:0.38em; color:#aaa; margin-bottom:10px;">依據環保局標準，確實做好以下四大類分類</p>
+      <div class="vs-grid">
+        <!-- 立體類 & 平面類 -->
+        <div class="vs-panel left-panel">
+          <div class="vs-panel-title">
+            <span style="background:var(--accent2); width:12px; height:12px; border-radius:50%; display:inline-block;"></span>
+            可回收類別 (立體 / 平面)
+          </div>
+          <ul>
+            <li><strong>立體類 (二、四、六回收)：</strong>
+              <ul>
+                <li>一般資源物：瓶罐、紙容器(紙餐盒、紙杯、牛奶盒)、乾淨保麗龍。</li>
+                <li><em>*請注意：紙容器必須沖洗擦拭乾淨！</em></li>
+              </ul>
+            </li>
+            <li style="margin-top:8px;"><strong>平面類 (一、五回收)：</strong>
+              <ul>
+                <li>乾淨舊衣、廢紙類(箱、盒、紙袋)、舊書、乾淨塑膠袋(無油污湯汁)。</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- 其他類 & 不可回收 -->
+        <div class="vs-panel right-panel">
+          <div class="vs-panel-title">
+            <span style="background:var(--accent); width:12px; height:12px; border-radius:50%; display:inline-block;"></span>
+            其他與不可回收類別
+          </div>
+          <ul>
+            <li><strong>其他類 (一、二、四、五、六回收)：</strong>
+              <ul>
+                <li>照明燈管(須包裝)、乾電池、行動電源、環境衛生用藥容器。</li>
+                <li><strong>廚餘類：</strong>堆肥廚餘(果皮茶渣)與養豬廚餘(肉類剩食)。</li>
+              </ul>
+            </li>
+            <li style="margin-top:8px;"><strong>⚠️ 絕對不可回收 (當一般垃圾)：</strong>
+              <ul>
+                <li>沾有油漬血水之塑膠袋/零食袋、木片餐盒、布偶、腳踏墊。</li>
+                <li>衛生紙、尿布、複寫紙、貼紙底紙等。</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁 5：水電計費、耗材與網路連線 -->
+    <section data-background-image="images/utility_bg.png"
+             data-background-opacity="0.15"
+             data-background-size="cover">
+      <h2>水電公約與網路連線</h2>
+      <div class="card-layout">
+        <!-- 水電與耗材說明 -->
+        <div class="main-info-card">
+          <div class="info-title">🔌 自主回報與維護須知</div>
+          <div class="info-body">
+            <ul>
+              <li><strong>電費結算：</strong>每個月請自行拍照記錄房間專屬電表，計算實際用電度數。</li>
+              <li><strong>合併匯款：</strong>請依算出的電費金額，連同當月租金一同匯入台灣銀行帳戶。</li>
+              <li><strong>消耗品處理：</strong>租屋處的「電燈泡」等消耗品若壞掉，屬於租客自行負擔項目，請自行購買同規格燈泡進行更換。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- WiFi 連線 -->
+        <div class="side-info-card">
+          <div class="wifi-icon">📶</div>
+          <div class="wifi-ssid">WiFi 名稱 (SSID)</div>
+          <div style="font-size:0.65em; font-weight:700; color:var(--accent2); margin-bottom:12px;">TAI</div>
+          <div class="wifi-ssid">密碼 (Password)</div>
+          <div class="wifi-pwd">19FA553FC3</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁 6：封底 -->
+    <section data-background-image="images/end_bg.png"
+             data-background-opacity="0.3"
+             data-background-size="cover">
+      <div class="end-slide">
+        <h1 style="color: var(--accent2); font-size: 2.2em;">攜手共創美好環境</h1>
+        <p class="tagline" style="margin-top: 1em; font-size: 0.65em; color: #ddd; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+          優質的居住環境需要大家一同維持，謝謝您的理解與配合。做好分類、愛惜公物，讓您的租屋生活更加溫馨舒適！
+        </p>
+        
+        <div class="warn-box">
+          ⚠️ <strong>管委會溫馨提示：</strong><br>
+          垃圾回收區已設有監視器。<strong>違反垃圾分類規定者，管委會將依大樓自治條例進行罰款。</strong><br>
+          請大家務必做好「時間」、「分類」與「少量」三大原則，避免受罰！
+        </div>
+        
+        <p style="margin-top: 2.5em; font-size: 0.45em; color: #666;">如有任何緊急設備問題，請隨時聯絡管理員</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    width: 1050,
+    height: 700,
+    margin: 0.05,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: []
+  });
+
+
+</script>
+</body>
+</html>

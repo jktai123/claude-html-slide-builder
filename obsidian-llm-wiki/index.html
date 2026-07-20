@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LLM Wiki x Obsidian 實戰指南</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+  <style>
+    /* === 全域變數與主題調色盤 (Midnight Executive 升級版) === */
+    :root {
+      --bg-dark: #070913;
+      --bg-light: #f3f6fa;
+      --text-dark: #ffffff;
+      --text-light: #1e2761;
+      --accent: #1e2761;
+      --accent2: #80deea;
+      --accent-alt: #4fc3f7;
+      --success: #81c784;
+      --warn:    #ffb74d;
+      --card-bg-light: #ffffff;
+      --card-border-light: rgba(30, 39, 97, 0.08);
+      --card-bg-dark: rgba(255, 255, 255, 0.06);
+      --card-border-dark: rgba(255, 255, 255, 0.12);
+    }
+
+    /* === Reveal.js 複寫 === */
+    .reveal {
+      font-family: 'Segoe UI', 'Noto Sans TC', system-ui, sans-serif;
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-transform: none;
+    }
+    .reveal h1 { font-size: 2.2em; text-shadow: 0 0 20px rgba(79, 195, 247, 0.3); }
+    .reveal h2 { font-size: 1.45em; margin-bottom: 0.6em; }
+    .reveal h3 { font-size: 1.1em; }
+    .reveal p, .reveal li { font-size: 0.55em; line-height: 1.7; }
+    .reveal .progress { color: var(--accent-alt); }
+    .reveal .controls { color: var(--accent-alt); }
+
+    /* === 亮暗投影片樣式 === */
+    .reveal section.dark-slide {
+      --bg-card: var(--card-bg-dark);
+      --border-card: var(--card-border-dark);
+      --text-primary: var(--text-dark);
+      --text-muted: rgba(255, 255, 255, 0.7);
+      color: var(--text-primary);
+      background: radial-gradient(circle at 80% 20%, #1e2761 0%, #070913 100%) !important;
+    }
+    .reveal section.dark-slide h1,
+    .reveal section.dark-slide h2,
+    .reveal section.dark-slide h3,
+    .reveal section.dark-slide p,
+    .reveal section.dark-slide li {
+      color: var(--text-primary);
+    }
+    .reveal section.dark-slide h2 {
+      color: var(--accent-alt);
+    }
+
+    .reveal section.light-slide {
+      --bg-card: var(--card-bg-light);
+      --border-card: var(--card-border-light);
+      --text-primary: var(--text-light);
+      --text-muted: rgba(30, 39, 97, 0.65);
+      color: var(--text-primary);
+      background: radial-gradient(circle at 20% 80%, #ffffff 0%, #eef3f9 100%) !important;
+    }
+    .reveal section.light-slide h1,
+    .reveal section.light-slide h2,
+    .reveal section.light-slide h3,
+    .reveal section.light-slide p,
+    .reveal section.light-slide li {
+      color: var(--text-primary);
+    }
+    .reveal section.light-slide h2 {
+      color: var(--accent);
+    }
+
+    /* === 視覺 Motif === */
+    .motif-border-left {
+      border-left: 6px solid var(--accent);
+      padding-left: 18px;
+      text-align: left;
+    }
+    .reveal section.dark-slide .motif-border-left {
+      border-left-color: var(--accent-alt);
+    }
+
+    .motif-flat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+    .reveal section.light-slide .motif-flat-card {
+      box-shadow: 0 10px 30px rgba(30, 39, 97, 0.04);
+    }
+    .motif-flat-card:hover {
+      transform: translateY(-2px);
+    }
+    .reveal section.dark-slide .motif-flat-card:hover {
+      border-color: var(--accent-alt);
+      box-shadow: 0 0 20px rgba(79, 195, 247, 0.15);
+    }
+    .reveal section.light-slide .motif-flat-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 10px 30px rgba(30, 39, 97, 0.08);
+    }
+
+    /* === 封面樣式 === */
+    .title-slide {
+      text-align: center;
+      padding: 20px;
+    }
+    .title-slide .tag {
+      display: inline-block;
+      background: var(--accent-alt);
+      color: #070913;
+      padding: 4px 16px;
+      border-radius: 20px;
+      font-size: 0.45em;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.2em;
+      font-weight: 700;
+    }
+    .title-slide .subtitle {
+      font-size: 0.7em;
+      color: var(--text-muted);
+      margin-top: 0.6em;
+    }
+    .title-slide .author {
+      margin-top: 2.2em;
+      font-size: 0.45em;
+      color: var(--text-muted);
+    }
+
+    /* === 雙欄網格 === */
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: center;
+      text-align: left;
+    }
+    .two-col-grid .col-text {
+      font-size: 0.85em;
+    }
+    .two-col-grid .col-visual {
+      text-align: center;
+    }
+
+    /* === 4欄優勢卡 (帶向量圖標) === */
+    .adv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 0.5em;
+    }
+    .adv-card {
+      background: var(--bg-card);
+      border-top: 4px solid var(--accent);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: left;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+    .reveal section.dark-slide .adv-card {
+      border-top-color: var(--accent-alt);
+    }
+    .adv-card .adv-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .adv-card .adv-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .adv-card .adv-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+    }
+    .reveal section.dark-slide .adv-card .adv-icon svg {
+      stroke: var(--accent-alt);
+    }
+    .adv-card .adv-title {
+      font-size: 0.55em;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .adv-card .adv-desc {
+      font-size: 0.42em;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* === 比較表 === */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.44em;
+      margin-top: 0.8em;
+    }
+    .compare-table th, .compare-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-card);
+      text-align: left;
+    }
+    .compare-table th {
+      background: rgba(30, 39, 97, 0.05);
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .reveal section.dark-slide .compare-table th {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--accent-alt);
+    }
+    .compare-table tr:hover {
+      background: rgba(30, 39, 97, 0.02);
+    }
+
+    /* === VIZ 滑桿對比 === */
+    .viz-container {
+      position: relative;
+      height: 380px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-top: 0.6em;
+    }
+    .viz-slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+      background-position: center;
+    }
+    .viz-slide-label {
+      position: absolute;
+      top: 15px;
+      background: rgba(7, 9, 19, 0.8);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.45em;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      pointer-events: none;
+    }
+    #viz-before {
+      background: #14172a;
+      color: #a0aec0;
+    }
+    #viz-after {
+      background: radial-gradient(circle at center, #0f1123 0%, #04050d 100%);
+      color: #fff;
+    }
+    .viz-slider-input {
+      position: absolute;
+      bottom: 20px;
+      left: 10%;
+      width: 80%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      outline: none;
+      -webkit-appearance: none;
+      z-index: 10;
+    }
+    .viz-slider-input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent-alt);
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(79, 195, 247, 0.8);
+    }
+
+    /* === 科技感心智圖 === */
+    .mindmap-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 0.5em;
+      position: relative;
+    }
+    .mindmap-row {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr 1fr;
+      align-items: center;
+      gap: 20px;
+    }
+    .mindmap-node {
+      background: var(--bg-card);
+      border: 2px solid var(--border-card);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.45em;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .mindmap-node.core {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 0 15px rgba(30, 39, 97, 0.3);
+      font-size: 0.55em;
+    }
+    .reveal section.dark-slide .mindmap-node.core {
+      background: var(--accent-alt);
+      color: #070913;
+      border-color: var(--accent-alt);
+      box-shadow: 0 0 15px rgba(79, 195, 247, 0.4);
+    }
+    .mindmap-node:hover {
+      transform: scale(1.05);
+      border-color: var(--accent-alt);
+    }
+    .mindmap-link-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* === 項目流程卡 === */
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 0.8em;
+    }
+    .flow-step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      align-items: center;
+      gap: 15px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      padding: 12px 18px;
+      text-align: left;
+      font-size: 0.48em;
+    }
+    .flow-step .step-idx {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    .reveal section.dark-slide .flow-step .step-idx {
+      background: var(--accent-alt);
+      color: #070913;
+    }
+
+    /* === 手機版響應式 RWD 補寫 === */
+    @media (max-width: 560px), (max-device-width: 560px) and (orientation: portrait) {
+      .reveal { font-size: 1.65em !important; }
+      .reveal h1 { font-size: 1.7em !important; line-height: 1.25 !important; }
+      .reveal h2 { font-size: 1.35em !important; }
+      .reveal p, .reveal li { font-size: 0.85em !important; }
+      .adv-grid, .two-col-grid, .compare-table, .mindmap-row {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .compare-table {
+        display: block;
+        overflow-x: auto;
+      }
+      .stat-row {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .viz-container {
+        height: 280px !important;
+      }
+      .mindmap-node {
+        font-size: 0.8em !important;
+        padding: 8px 10px !important;
+      }
+    }
+  </style>
+</head>
+<body class="theme-midnight">
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1. 封面 -->
+    <section class="dark-slide">
+      <div class="title-slide">
+        <div class="tag">AI 時代的第二大腦</div>
+        <h1>Obsidian x LLM Wiki</h1>
+        <h2 style="color:var(--accent-alt); margin-top:0.2em;">從零打造 AI 協同的個人知識網絡</h2>
+        <p class="subtitle">將零散的筆記，交付給 AI 代理人自動關聯與維護</p>
+        <p class="author">導讀整理：Antigravity AI 助理</p>
+      </div>
+    </section>
+
+    <!-- 2. 破冰提問 -->
+    <section id="slide-wordcloud" class="light-slide">
+      <h2 style="font-size:1.15em; margin-bottom:0.4em;">你最常使用的筆記軟體或 AI 整理工具有哪些？</h2>
+      <div style="display:grid; grid-template-columns:250px 1fr; gap:14px; height:460px;">
+        <!-- 左欄：輸入 + 排行 -->
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="background:rgba(30, 39, 97, 0.04); border:1px solid rgba(30, 39, 97, 0.08); border-radius:10px; padding:14px;">
+            <div style="font-size:0.38em; color:var(--accent); font-weight:700; margin-bottom:8px;">輸入你的答案</div>
+            <input id="wc-input" type="text" placeholder="輸入關鍵詞…" maxlength="20"
+              style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid rgba(30, 39, 97, 0.2);
+                     background:#fff; color:#1e2761; font-size:13px;
+                     box-sizing:border-box; font-family:inherit; outline:none;" />
+            <button id="wc-btn"
+              style="width:100%; margin-top:8px; padding:9px; background:var(--accent); color:#fff;
+                     border:none; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer;">
+              送出 ↵
+            </button>
+          </div>
+          <div style="background:rgba(30, 39, 97, 0.04); border:1px solid rgba(30, 39, 97, 0.08); border-radius:10px; padding:14px; flex:1; overflow:hidden; display:flex; flex-direction:column;">
+            <div style="font-size:0.38em; color:var(--accent); font-weight:700; margin-bottom:8px;">
+              熱門答案
+              <span style="display:inline-block; background:#ff4757; color:#fff; padding:2px 7px;
+                           border-radius:10px; font-size:0.85em; animation:pulseGlow 1.5s infinite;">LIVE</span>
+            </div>
+            <div id="wc-list" style="font-size:0.34em; overflow-y:auto; flex:1; color:#555;"></div>
+            <div style="margin-top:8px; font-size:0.32em; color:#888; border-top:1px solid rgba(30, 39, 97, 0.08); padding-top:6px;">
+              總提交：<span id="wc-total" style="color:var(--accent); font-weight:700;">0</span>　
+              不同答案：<span id="wc-unique" style="color:var(--accent); font-weight:700;">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右欄：文字雲 -->
+        <div style="background:#fff; border-radius:12px; overflow:hidden;
+                    position:relative; border:1px solid rgba(30, 39, 97, 0.08);">
+          <canvas id="wc-canvas" style="width:100%; height:100%; display:block;"></canvas>
+          <div id="wc-empty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                                     color:#999; font-size:0.42em; text-align:center;
+                                     pointer-events:none; line-height:2;">
+            輸入第一個答案<br>文字雲就會出現 ✨
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Markdown 核心語法 -->
+    <section class="light-slide">
+      <h2>Obsidian 常用 Markdown 語法</h2>
+      <p style="text-align:left; margin-bottom:0.4em; color:var(--text-muted);">極簡純文字排版，讓筆記永久通用、不被特定平台綁架</p>
+      <div class="adv-grid">
+        <div class="adv-card fragment">
+          <div class="adv-header">
+            <div class="adv-icon">
+              <!-- Inline SVG Document Icon -->
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div class="adv-title">標題與層級</div>
+          </div>
+          <div class="adv-desc">文字前加上 # 字號。一個為大標題，兩個為中標題，三個為小標題，階層清晰。</div>
+        </div>
+
+        <div class="adv-card fragment">
+          <div class="adv-header">
+            <div class="adv-icon">
+              <!-- Inline SVG Edit Icon -->
+              <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"/></svg>
+            </div>
+            <div class="adv-title">字體樣式</div>
+          </div>
+          <div class="adv-desc">文字左右加上星號，單星號 `*文字*` 會套用 *斜體*，雙星號 `**文字**` 則會套用 **粗體**。</div>
+        </div>
+
+        <div class="adv-card fragment">
+          <div class="adv-header">
+            <div class="adv-icon">
+              <!-- Inline SVG Quote Icon -->
+              <svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-3-2H3c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h3c0 2.5-1.75 5-5 5v1zm14 0c3 0 7-1 7-8V5c0-1.25-.75-2-3-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h3c0 2.5-1.75 5-5 5v1z"/></svg>
+            </div>
+            <div class="adv-title">區塊引言</div>
+          </div>
+          <div class="adv-desc">在句子開頭加上大於符號 `>`，左側即會顯示一條精緻的標注線，適合引用文獻。</div>
+        </div>
+
+        <div class="adv-card fragment">
+          <div class="adv-header">
+            <div class="adv-icon">
+              <!-- Inline SVG List Icon -->
+              <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            </div>
+            <div class="adv-title">清單與分隔線</div>
+          </div>
+          <div class="adv-desc">開頭輸入減號 `-` 建立項目清單；連續輸入三個減號 `---` 即可產生一條水平分隔線。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Frontmatter -->
+    <section class="light-slide">
+      <h2>筆記屬性面板 (Frontmatter)</h2>
+      <div class="two-col-grid">
+        <div class="col-text">
+          <p>屬性面板是用來記錄筆記元數據 (Metadata) 的核心區塊：</p>
+          <ul>
+            <li class="fragment" style="margin-bottom:8px;">在筆記最上方連續輸入三條橫線 `---` 即可啟動。</li>
+            <li class="fragment" style="margin-bottom:8px;">可用於記錄人物基本屬性（如字、生卒年、歷史地位）。</li>
+            <li class="fragment" style="margin-bottom:8px;">或是記錄事件元數據（如發生日期、地點、影響級別）。</li>
+            <li class="fragment" style="margin-bottom:8px;">Obsidian 提供精美的可視化屬性表格，不編輯時可摺疊。</li>
+          </ul>
+        </div>
+        <div class="col-visual">
+          <div class="motif-flat-card" style="text-align:left; font-family:monospace; font-size:0.42em; background:#1e2761; color:#fff; border:none; box-shadow:0 10px 25px rgba(30,39,97,0.25);">
+            <span style="color:#80deea;">---</span><br>
+            <span style="color:#ffb74d;">字</span>: 玄德<br>
+            <span style="color:#ffb74d;">出生</span>: 161年<br>
+            <span style="color:#ffb74d;">逝世</span>: 223年<br>
+            <span style="color:#ffb74d;">地位</span>: 蜀漢開國皇帝<br>
+            <span style="color:#ffb74d;">tags</span>:<br>
+            &nbsp;&nbsp;- 三國人物<br>
+            &nbsp;&nbsp;- 君主<br>
+            <span style="color:#80deea;">---</span><br><br>
+            <span style="color:#81c784;"># 簡介</span><br>
+            劉備，字玄德，三國時期蜀漢...
+          </div>
+          <div style="font-size:0.38em; color:var(--text-muted); margin-top:8px;">▲ 屬性面板在 Markdown 中的程式碼結構</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 雙向連結的奧秘 -->
+    <section class="light-slide">
+      <h2>雙向連結：串起零散筆記的橋樑</h2>
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px; margin-top:0.8em;">
+        <div class="motif-flat-card fragment">
+          <div style="font-size:2.8em; line-height:1; margin-bottom:12px;">✍️</div>
+          <div style="font-size:0.55em; font-weight:700; color:var(--accent); margin-bottom:8px;">1. 手動括號插入</div>
+          <div style="font-size:0.42em; color:var(--text-muted); line-height:1.6;">
+            在撰寫內文時，連續輸入兩個左方括號 `[[`，畫面會立即跳出清單，點選即可連結已有筆記。
+          </div>
+        </div>
+        <div class="motif-flat-card fragment">
+          <div style="font-size:2.8em; line-height:1; margin-bottom:12px;">✨</div>
+          <div style="font-size:0.55em; font-weight:700; color:var(--accent); margin-bottom:8px;">2. 反白文字升級</div>
+          <div style="font-size:0.42em; color:var(--text-muted); line-height:1.6;">
+            將內文中已經打好的詞彙反白，並輸入兩個左括號 `[[`，該段文字便會自動包裝升級為關聯連結。
+          </div>
+        </div>
+        <div class="motif-flat-card fragment">
+          <div style="font-size:2.8em; line-height:1; margin-bottom:12px;">🚀</div>
+          <div style="font-size:0.55em; font-weight:700; color:var(--accent); margin-bottom:8px;">3. 預先連結未來</div>
+          <div style="font-size:0.42em; color:var(--text-muted); line-height:1.6;">
+            即使該主題尚未建立，依然可以先拉出連結（呈淡色）。之後點擊該連結，系統便會自動幫你創立新筆記。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 章節過渡 -->
+    <section class="dark-slide">
+      <div class="title-slide">
+        <div class="tag">自動化維護升級</div>
+        <h1 style="color:var(--accent-alt);">第二部分：引進 LLM Wiki 新思維</h1>
+        <p class="subtitle">讓人類專注提供原始史料，讓 AI 來閱讀、寫入與拉出雙向關聯</p>
+      </div>
+    </section>
+
+    <!-- 7. 視覺化滑桿對比 -->
+    <section class="light-slide">
+      <h2>手動建庫 vs. AI 協同維護</h2>
+      <p style="text-align:left; font-size:0.5em; color:var(--text-muted); margin-bottom:10px;">
+        拖動下方滑桿對比：手動維護的雜亂孤島，以及導入 LLM Wiki 後由 AI 建立的精緻網絡。
+      </p>
+      <div class="viz-container">
+        <!-- Before -->
+        <div id="viz-before" class="viz-slide">
+          <div style="padding:40px; text-align:center;">
+            <div style="font-size:3em; margin-bottom:10px;">📉</div>
+            <h3>手動建立：資訊孤島與巨大維護成本</h3>
+            <p style="max-width:600px; margin:10px auto; font-size:0.7em;">
+              每當新增一篇文獻，都必須手動閱讀、找出關鍵人名或事件，並在 Obsidian 中人工拉線連結。隨時間推移，維護知識庫成為繁重的苦工。
+            </p>
+          </div>
+          <div class="viz-slide-label" style="left:20px;">手動維護 (BEFORE)</div>
+        </div>
+
+        <!-- After -->
+        <div id="viz-after" class="viz-slide">
+          <div style="padding:40px; text-align:center;">
+            <div style="font-size:3em; margin-bottom:10px; text-shadow:0 0 15px var(--accent-alt);">🚀</div>
+            <h3 style="color:var(--accent-alt);">AI 協同：自動化的 LLM Wiki 知識網</h3>
+            <p style="max-width:600px; margin:10px auto; font-size:0.7em; color:#fff;">
+              Andrej Karpathy 提出的概念：人類僅需將原始史料放入，AI 助理 (如 Claude Code) 自動閱讀內容，套用範本格式寫入筆記，並自動更新目錄、日誌及建立所有雙向連結！
+            </p>
+          </div>
+          <div class="viz-slide-label" style="right:20px;">AI 協同 (AFTER)</div>
+        </div>
+
+        <div id="viz-divider" style="position:absolute; top:0; left:50%; width:4px; height:100%; background:var(--accent-alt); box-shadow:0 0 10px var(--accent-alt); z-index:5; pointer-events:none;"></div>
+        <input id="viz-slider" type="range" class="viz-slider-input" min="0" max="100" value="50">
+      </div>
+    </section>
+
+    <!-- 8. LLM Wiki 四大資料結構 -->
+    <section class="light-slide">
+      <h2>LLM Wiki 的四大核心架構</h2>
+      <p style="text-align:left; color:var(--text-muted); margin-bottom:0.4em;">透過明確的目錄劃分，讓 AI 助理清楚知道它在知識庫中的權責與邊界</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:0.4em;">
+        <div class="motif-flat-card" style="text-align:left;">
+          <h3 style="margin-bottom:6px; color:var(--accent);">📁 1. 原始史料 (Sources)</h3>
+          <p style="font-size:0.85em; margin:0; color:var(--text-muted);">
+            存放大腦的原始輸入，包括 PDF 書籍、網頁擷取文章或剪報。AI 對此資料夾只有「唯讀」權限，保證史料不被污染。
+          </p>
+        </div>
+        <div class="motif-flat-card" style="text-align:left;">
+          <h3 style="margin-bottom:6px; color:var(--accent);">📂 2. 自動知識庫 (Vault)</h3>
+          <p style="font-size:0.85em; margin:0; color:var(--text-muted);">
+            完全交由 AI 助理寫入與管理的資料夾。包含按分類存放的「人物」與「事件」等結構化 Markdown 筆記。
+          </p>
+        </div>
+        <div class="motif-flat-card" style="text-align:left;">
+          <h3 style="margin-bottom:6px; color:var(--accent);">📄 3. 目錄與日誌 (Index & Log)</h3>
+          <p style="font-size:0.85em; margin:0; color:var(--text-muted);">
+            AI 寫入知識庫後，會自動更新「目錄」提供導覽，並在「日誌」留下歷史更新紀錄，防止重複匯入與衝突。
+          </p>
+        </div>
+        <div class="motif-flat-card" style="text-align:left;">
+          <h3 style="margin-bottom:6px; color:var(--accent);">⚙️ 4. 指導手冊 (CLAUDE / AGENTS)</h3>
+          <p style="font-size:0.85em; margin:0; color:var(--text-muted);">
+            放在儲存庫根目錄的提示詞說明書。指示 AI 應該如何讀取史料、套用範本格式、並執行自動雙向連結。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. AI 助理自動工作流 -->
+    <section class="light-slide">
+      <h2>AI 助理自動化維護工作流</h2>
+      <div class="flow-steps">
+        <div class="flow-step fragment">
+          <div class="step-idx">1</div>
+          <div>
+            <strong>自動監測與讀取</strong> —— 定期排程掃描「原始史料 (Sources)」資料夾，發現未處理的文獻便自動載入。
+          </div>
+        </div>
+        <div class="flow-step fragment">
+          <div class="step-idx">2</div>
+          <div>
+            <strong>套用範本與結構化</strong> —— 提取文章人物與事件，套用 Obsidian 範本，填入 Frontmatter 元數據屬性並寫入知識庫。
+          </div>
+        </div>
+        <div class="flow-step fragment">
+          <div class="step-idx">3</div>
+          <div>
+            <strong>智能雙向連結</strong> —— 偵測知識庫內提及的實體名稱，一鍵自動建立相互連結，拓展雙向關係網絡。
+          </div>
+        </div>
+        <div class="flow-step fragment">
+          <div class="step-idx">4</div>
+          <div>
+            <strong>更新目錄與日誌</strong> —— 每完成一輪寫入，即自動在「目錄」補上摘要簡介，並在「日誌」留下紀錄便於回溯。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. 心智圖頁面 -->
+    <section class="light-slide" id="slide-mindmap">
+      <h2>Obsidian x LLM Wiki 整合心智圖</h2>
+      <p style="text-align:left; font-size:0.5em; color:var(--text-muted); margin-bottom:15px;">點擊或滑鼠移入任何分支節點，即可查看其在第二大腦網絡中的關聯角色。</p>
+      
+      <div class="mindmap-container" style="max-width: 800px; margin: 0 auto; z-index: 5;">
+        <svg class="mindmap-link-svg" id="mm-svg"></svg>
+        
+        <div class="mindmap-row">
+          <!-- Left branch -->
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div class="mindmap-node" id="node-md" onclick="showNodeDetail('Markdown 語法：#標題、**粗體**、引言，全文字通用排版')">Obsidian 語法</div>
+            <div class="mindmap-node" id="node-fm" onclick="showNodeDetail('Frontmatter 面板：使用 --- 在頂部建立 YAML 屬性元數據')">Frontmatter 屬性</div>
+            <div class="mindmap-node" id="node-att" onclick="showNodeDetail('附件管理：圖片與圖表專用資料夾，保持根目錄清爽')">附件與資源</div>
+          </div>
+          
+          <!-- Core -->
+          <div style="display:flex; justify-content:center;">
+            <div class="mindmap-node core" id="node-core" onclick="showNodeDetail('雙向連結第二大腦：LLM Wiki + Obsidian 的核心神經網路')">
+              雙向連結<br>第二大腦
+            </div>
+          </div>
+          
+          <!-- Right branch -->
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div class="mindmap-node" id="node-src" onclick="showNodeDetail('史料庫 (Sources)：用戶只需用 Web Clipper 抓取原始文章放入')">史料輸入端</div>
+            <div class="mindmap-node" id="node-ai" onclick="showNodeDetail('AI 自動鏈接：自動套用模板、建立頁面、串聯反向連結')">AI 關聯處理</div>
+            <div class="mindmap-node" id="node-log" onclick="showNodeDetail('日誌與目錄：AI 自動記錄異動、生成文獻摘要導覽')">日誌與目錄</div>
+          </div>
+        </div>
+
+        <div id="mm-detail" class="motif-flat-card" style="margin-top:20px; font-size:0.46em; text-align:center; padding:12px 20px; border-color:var(--accent); min-height:48px; display:flex; align-items:center; justify-content:center;">
+          點擊上方任何節點，解鎖第二大腦架構細節 💡
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. 結語 -->
+    <section class="dark-slide">
+      <div class="end-slide">
+        <div class="big">
+          <!-- Custom SVG Brain Icon in gold -->
+          <svg viewBox="0 0 24 24" style="width:120px; height:120px; stroke:var(--accent-alt); stroke-width:1.5; fill:none; filter:drop-shadow(0 0 20px rgba(79,195,247,0.6));">
+            <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-4.12 2.5 2.5 0 0 1 0-4.12A2.5 2.5 0 0 1 9.5 2z"/>
+            <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-4.12 2.5 2.5 0 0 0 0-4.12A2.5 2.5 0 0 0 14.5 2z"/>
+          </svg>
+        </div>
+        <h1 style="color:var(--accent-alt);">開創你的個人 LLM Wiki</h1>
+        <p class="tagline">讓人類提供素材，AI 連結知識：大腦只用來思考與決策，而非記憶</p>
+        <p style="font-size:0.5em; color:var(--text-muted); margin-top:20px;">課程簡報結束 · 謝謝聆聽</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  // 偵測是否為手機，動態適配手機版面
+  const isMobile = window.innerHeight > window.innerWidth || window.innerWidth < 600;
+  Reveal.initialize({
+    width: isMobile ? 450 : 960,
+    height: isMobile ? 800 : 700,
+    margin: isMobile ? 0.05 : 0.1,
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    touch: true,
+    plugins: []
+  });
+
+  // VIZ 滑桿處理邏輯
+  const slider = document.getElementById('viz-slider');
+  if (slider) {
+    slider.addEventListener('input', function() {
+      const val = +this.value;
+      const after = document.getElementById('viz-after');
+      const divider = document.getElementById('viz-divider');
+      if (after) after.style.clipPath = `inset(0 ${100 - val}% 0 0)`;
+      if (divider) divider.style.left = val + '%';
+    });
+  }
+
+  // 心智圖互動與 SVG 連線處理
+  window.showNodeDetail = function(text) {
+    const el = document.getElementById('mm-detail');
+    if (el) {
+      el.innerHTML = text;
+      el.style.borderColor = 'var(--accent-alt)';
+    }
+  };
+
+  function drawMindmapLinks() {
+    const svg = document.getElementById('mm-svg');
+    if (!svg) return;
+    svg.innerHTML = '';
+    
+    const core = document.getElementById('node-core');
+    const nodes = ['node-md', 'node-fm', 'node-att', 'node-src', 'node-ai', 'node-log'];
+    
+    if (!core) return;
+    const coreRect = core.getBoundingClientRect();
+    const containerRect = svg.parentNode.getBoundingClientRect();
+    
+    // Core center coords relative to container
+    const cx = coreRect.left - containerRect.left + coreRect.width / 2;
+    const cy = coreRect.top - containerRect.top + coreRect.height / 2;
+    
+    nodes.forEach(id => {
+      const node = document.getElementById(id);
+      if (!node) return;
+      const rect = node.getBoundingClientRect();
+      
+      const nx = rect.left - containerRect.left + (id.startsWith('node-s') || id.startsWith('node-a') || id.startsWith('node-l') ? 0 : rect.width);
+      const ny = rect.top - containerRect.top + rect.height / 2;
+      
+      // Draw bezier curves
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const controlX1 = cx + (nx - cx) / 2;
+      const controlY1 = cy;
+      const controlX2 = cx + (nx - cx) / 2;
+      const controlY2 = ny;
+      
+      path.setAttribute('d', `M ${cx} ${cy} C ${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${nx} ${ny}`);
+      path.setAttribute('stroke', isMobile ? 'rgba(79, 195, 247, 0.2)' : 'rgba(79, 195, 247, 0.4)');
+      path.setAttribute('stroke-width', '2.5');
+      path.setAttribute('fill', 'none');
+      svg.appendChild(path);
+    });
+  }
+
+  Reveal.on('slidechanged', e => {
+    if (e.currentSlide?.id === 'slide-mindmap') {
+      setTimeout(drawMindmapLinks, 150);
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (Reveal.getCurrentSlide()?.id === 'slide-mindmap') {
+      drawMindmapLinks();
+    }
+  });
+</script>
+
+<!-- Firebase Realtime 文字雲功能 -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+  import {
+    getFirestore, collection, addDoc, onSnapshot,
+    serverTimestamp, query, orderBy
+  } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAYQhNavPSce17XtvDC5xnXyl9iUhW9KjA",
+    authDomain: "teacherstudy-109ef.firebaseapp.com",
+    projectId: "teacherstudy-109ef",
+    storageBucket: "teacherstudy-109ef.firebasestorage.app",
+    messagingSenderId: "196599230156",
+    appId: "1:196599230156:web:cfe55d364df3ae1b9d5c69"
+  };
+  const app = initializeApp(firebaseConfig);
+  const fdb = getFirestore(app);
+  const wordsRef = collection(fdb, 'obsidian_llm_wiki_wordcloud');
+
+  const COLORS = ['#1e2761','#4fc3f7','#80deea','#81c784','#ffb74d','#f48fb1','#ce93d8'];
+  let wcData = [];
+
+  window.wcSubmit = async function() {
+    const input = document.getElementById('wc-input');
+    const word = input.value.trim();
+    if (!word) return;
+    const btn = document.getElementById('wc-btn');
+    btn.disabled = true;
+    try {
+      await addDoc(wordsRef, { word, created_at: serverTimestamp() });
+      input.value = '';
+    } catch(e) { console.error(e); }
+    finally { btn.disabled = false; }
+  };
+
+  document.getElementById('wc-input')?.addEventListener('keypress', e => {
+    if (e.key === 'Enter') window.wcSubmit();
+  });
+  document.getElementById('wc-btn')?.addEventListener('click', window.wcSubmit);
+
+  onSnapshot(query(wordsRef, orderBy('created_at', 'asc')), snap => {
+    const words = [];
+    snap.forEach(doc => {
+      const data = doc.data();
+      if (data && data.word) words.push(data.word);
+    });
+    const counts = {};
+    words.forEach(w => counts[w] = (counts[w] || 0) + 1);
+    wcData = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+    document.getElementById('wc-total').textContent = words.length;
+    document.getElementById('wc-unique').textContent = wcData.length;
+
+    const listEl = document.getElementById('wc-list');
+    listEl.innerHTML = wcData.slice(0, 10).map(([w, c]) =>
+      `<div style="display:flex;justify-content:space-between;padding:4px 0;
+                   border-bottom:1px solid rgba(30,39,97,0.06);">
+        <span>${w}</span><span style="color:var(--accent);font-weight:700;">${c}</span>
+      </div>`
+    ).join('') || '<div style="color:#999;padding:8px 0;">尚無資料</div>';
+
+    const empty = document.getElementById('wc-empty');
+    if (empty) empty.style.display = wcData.length > 0 ? 'none' : '';
+    drawWordCloud();
+  });
+
+  function drawWordCloud() {
+    const canvas = document.getElementById('wc-canvas');
+    if (!canvas || typeof WordCloud === 'undefined') return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 10 || rect.height < 10) return;
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    if (wcData.length === 0) return;
+    const maxCount = wcData[0][1];
+    
+    // Scale weight factor based on container height
+    WordCloud(canvas, {
+      list: wcData.map(([w, c]) => [w, Math.max(12, Math.round((c / maxCount) * 48))]),
+      gridSize: isMobile ? 4 : 8,
+      weightFactor: 1,
+      fontFamily: '"Segoe UI", "Microsoft JhengHei", "Noto Sans TC", sans-serif',
+      color: () => COLORS[Math.floor(Math.random() * COLORS.length)],
+      backgroundColor: 'transparent',
+      rotateRatio: 0.25,
+      shuffle: true,
+    });
+  }
+
+  Reveal.on('slidechanged', e => {
+    if (e.currentSlide?.id === 'slide-wordcloud') setTimeout(drawWordCloud, 150);
+  });
+</script>
+
+</body>
+</html>

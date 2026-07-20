@@ -1,0 +1,12 @@
+{
+  "Title": "DIGEN AI - 多模型整合 / 照片動態與虛擬主播影片產生器",
+  "日期": "2026-07-17",
+  "URL": "https://digen.ai/en/explore",
+  "摘要": "DIGEN AI 是一款功能先進 of AI 影片生成平台。支援照片動態化 (RealMotion)、動作轉移 (Act-Motion) 與高精度對口型 (Lip-Sync) 技術，並整合了 Sora 2、Veo 3.1 和 Runway 等多種頂尖 AI 模型，提供全自動的影音生成體驗。",
+  "category": "科技",
+  "tags": ["DIGEN", "AI影片", "虛擬主播", "動作轉移", "科技"],
+  "importance": "高",
+  "content": "# DIGEN AI - AI 影片生成平台介紹\n\n## 1. 什麼是 DIGEN AI？\n- **定位**：這是一款旨在簡化專業影片製作流程的瀏覽器與行動端 AI 影音平台。使用者只需輸入文字、上傳圖片或提供參考動作影片，即可由 AI 自動搞定腳本、配音、人物動態、口型同步及字幕，極大降低了影片剪輯的門檻。\n\n## 2. 核心技術特色\n- **RealMotion 圖片動態化**：上傳單張靜態照片（可以是真實人物、寵物或插畫角色），AI 便能使其產生流暢、自然的動態眼神與面部表情。\n- **動作轉移 (Act-Motion Transfer)**：支持「動作重定位」。你可以上傳一段示範動作（如跳舞、跑步或翻滾）以及一張人物照片，AI 會讓照片中的人物完美模仿該影片中的動作，同時維持臉部特徵與身形的一致性。\n- **高精度對口型 (Lip-Syncing)**：配備強大的音訊至影片對齊功能，不論是上傳配音檔、TTS 生成的語音還是歌曲，AI 虛擬角色的嘴型都能完美且自然地跟音軌同步。\n- **多模型大聚合 (Multi-Model Integration)**：為了提供更多元且高品質的影音風格，DIGEN 直接整合了多款業界最頂尖的 AI 模型，如 **Sora 2、Veo 3.1、Runway 及 Flux 2**，讓創作者能自由選擇底層引擎。\n- **Smart Edit 智慧編輯器**：內建 text-to-image 4K 生成器，並提供類似 Magic Brush 的工具，使用者可以直接塗抹畫面來替換背景、更換風格，或添加與移除畫面中的元素。\n- **全自動影音生產線**：自動優化文案、合成擬真配音、自動配上背景音樂並生成字幕，達到「一鍵出片」的效果。",
+  "mindmap": "mindmap\n  root((DIGEN AI))\n    核心技術\n      RealMotion 圖片動態化\n      Act-Motion 動作轉移\n      Lip-Sync 擬真口型\n    模型整合\n      Sora 2\n      Veo 3.1\n      Runway\n      Flux 2\n    編輯與工具\n      4K文生圖\n      Smart Edit 智慧塗抹\n      自動配音字幕\n    應用場景\n      社群短影音\n      行銷與教學\n      無門檻電影創作",
+  "images": ["/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/output/digen_screenshot.png"]
+}

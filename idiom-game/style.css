@@ -1,0 +1,674 @@
+/* 全域樣式設定 */
+:root {
+  --color-bg: #f7f9fc;
+  --color-forest: #e8f5e9;
+  --color-green: #4caf50;
+  --color-green-light: #e8f5e9;
+  --color-orange: #ff9800;
+  --color-orange-light: #fff3e0;
+  --color-blue: #03a9f4;
+  --color-blue-light: #e1f5fe;
+  --color-yellow: #ffeb3b;
+  --color-yellow-light: #fffde7;
+  --color-pink: #e91e63;
+  --color-pink-light: #fce4ec;
+  
+  --font-primary: 'Fredoka', 'Noto Sans TC', sans-serif;
+  
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 12px 40px rgba(0, 0, 0, 0.08);
+  --shadow-pop: 0 16px 40px rgba(0, 0, 0, 0.15);
+  
+  --border-radius-sm: 12px;
+  --border-radius-md: 24px;
+  --border-radius-lg: 32px;
+  --border-radius-pill: 50px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-primary);
+  background: radial-gradient(circle at 50% 50%, #ffffff 0%, #e0f2f1 100%);
+  color: #2c3e50;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* 遊戲容器限制 */
+#game-container {
+  width: 100%;
+  max-width: 480px;
+  height: 100vh;
+  max-height: 850px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  border: 4px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-medium);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 螢幕切換控制 */
+.screen {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  padding: 24px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.screen.active {
+  display: flex;
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ========================================== */
+/* 1. 首頁 (Start Screen) */
+/* ========================================== */
+#start-screen {
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+}
+
+.forest-bg-decor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(rgba(76, 175, 80, 0.08) 2px, transparent 0);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.logo-container {
+  z-index: 1;
+}
+
+.game-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+  text-shadow: 0 4px 0px rgba(255, 255, 255, 1), 0 8px 15px rgba(0,0,0,0.1);
+  letter-spacing: 2px;
+}
+
+.title-word {
+  display: inline-block;
+  transform: rotate(-3deg);
+  transition: transform 0.3s ease;
+}
+
+.title-word:nth-child(even) {
+  transform: rotate(4deg) translateY(4px);
+}
+
+.title-word:hover {
+  transform: scale(1.2) rotate(0deg);
+}
+
+/* 成語繽紛色彩 */
+.color-green { color: #2e7d32; }
+.color-orange { color: #f57c00; }
+.color-blue { color: #0288d1; }
+.color-yellow { color: #fbc02d; }
+.color-pink { color: #c2185b; }
+.color-green2 { color: #689f38; }
+
+.subtitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #4b6584;
+}
+
+.mascot-container {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: white;
+  border: 8px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--shadow-medium);
+  overflow: hidden;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.start-mascot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: floatMascot 4s ease-in-out infinite;
+}
+
+@keyframes floatMascot {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(3deg); }
+}
+
+/* 按鈕樣式 */
+.btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.btn-primary {
+  padding: 16px 48px;
+  font-size: 1.5rem;
+  border-radius: var(--border-radius-pill);
+  background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+  color: white;
+  box-shadow: 0 8px 0px #b23c17, 0 12px 20px rgba(0,0,0,0.15);
+  z-index: 1;
+}
+
+.btn-primary:active {
+  transform: translateY(4px);
+  box-shadow: 0 4px 0px #b23c17, 0 6px 10px rgba(0,0,0,0.15);
+}
+
+.btn-secondary {
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  border-radius: var(--border-radius-pill);
+  background: #f1f2f6;
+  color: #57606f;
+  box-shadow: 0 4px 0px #ced6e0;
+}
+
+.btn-secondary:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0px #ced6e0;
+}
+
+.pulse {
+  animation: pulseBtn 2s infinite;
+}
+
+@keyframes pulseBtn {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* ========================================== */
+/* 2. 遊戲主畫面 (Play Screen) */
+/* ========================================== */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  z-index: 2;
+}
+
+.btn-icon {
+  background: white;
+  border: 2px solid #e1f5fe;
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: var(--border-radius-pill);
+  color: #0288d1;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-icon:active {
+  transform: scale(0.95);
+}
+
+.level-indicator {
+  font-size: 1.2rem;
+  font-weight: 800;
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 6px 16px;
+  border-radius: var(--border-radius-pill);
+}
+
+.stars-container {
+  display: flex;
+  align-items: center;
+  background: #fffde7;
+  color: #fbc02d;
+  font-weight: 900;
+  font-size: 1.2rem;
+  padding: 6px 16px;
+  border-radius: var(--border-radius-pill);
+  border: 2px solid #fff9c4;
+}
+
+.star-icon {
+  margin-right: 4px;
+  animation: spinStar 3s linear infinite;
+}
+
+@keyframes spinStar {
+  0%, 10% { transform: rotate(0); }
+  30%, 100% { transform: rotate(360deg); }
+}
+
+.game-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 成語插圖卡片 */
+.illustration-card {
+  width: 100%;
+  aspect-ratio: 1/1;
+  max-height: 280px;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-medium);
+  border: 6px solid white;
+  background: white;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.illustration-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 答案空格區 */
+.answer-slots {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.slot {
+  width: 65px;
+  height: 80px;
+  border: 3px dashed #b2bec3;
+  border-radius: var(--border-radius-sm);
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.slot.filled {
+  border-style: solid;
+  border-color: #74b9ff;
+  background: white;
+  box-shadow: var(--shadow-soft);
+}
+
+/* 備選字卡池 */
+.letter-pool {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* 字卡 (備選字與填入字) */
+.char-card {
+  height: 80px;
+  background: white;
+  border-radius: var(--border-radius-sm);
+  box-shadow: 0 6px 0px #dfe6e9, var(--shadow-soft);
+  border: 2px solid #dfe6e9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s ease, opacity 0.2s ease;
+  position: relative;
+}
+
+.char-card:hover {
+  transform: translateY(-2px);
+}
+
+.char-card:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0px #dfe6e9;
+}
+
+.char-card.used {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.char-card.in-slot {
+  width: 100%;
+  height: 100%;
+  border: none;
+  box-shadow: none;
+}
+
+/* 國字注音結構 */
+.bpmf {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 2px;
+}
+
+.char {
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: #2c3e50;
+  line-height: 1;
+}
+
+/* 不同種類字卡的配色背景 */
+.char-card:nth-child(4n+1) { background: #e8f5e9; border-color: #c8e6c9; box-shadow: 0 6px 0px #a5d6a7, var(--shadow-soft); }
+.char-card:nth-child(4n+2) { background: #fff3e0; border-color: #ffe0b2; box-shadow: 0 6px 0px #ffcc80, var(--shadow-soft); }
+.char-card:nth-child(4n+3) { background: #e1f5fe; border-color: #b3e5fc; box-shadow: 0 6px 0px #81d4fa, var(--shadow-soft); }
+.char-card:nth-child(4n+4) { background: #fce4ec; border-color: #f8bbd0; box-shadow: 0 6px 0px #f48fb1, var(--shadow-soft); }
+
+.char-card:nth-child(4n+1):active { box-shadow: 0 2px 0px #a5d6a7; }
+.char-card:nth-child(4n+2):active { box-shadow: 0 2px 0px #ffcc80; }
+.char-card:nth-child(4n+3):active { box-shadow: 0 2px 0px #81d4fa; }
+.char-card:nth-child(4n+4):active { box-shadow: 0 2px 0px #f48fb1; }
+
+/* 錯誤抖動動畫 */
+.shake {
+  animation: shakeAnim 0.5s ease-in-out;
+}
+
+@keyframes shakeAnim {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px) rotate(-3deg); }
+  40%, 80% { transform: translateX(8px) rotate(3deg); }
+}
+
+.game-footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* ========================================== */
+/* 3. 答對彈窗 (Success Modal) */
+/* ========================================== */
+.modal {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(44, 62, 80, 0.4);
+  backdrop-filter: blur(6px);
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  width: 100%;
+  border-radius: var(--border-radius-lg);
+  padding: 30px 24px;
+  box-shadow: var(--shadow-pop);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bounce-in {
+  animation: bounceInAnim 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes bounceInAnim {
+  from { opacity: 0; transform: scale(0.7) translateY(40px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.success-header {
+  margin-bottom: 20px;
+}
+
+.success-badge {
+  font-size: 1.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #4caf50 0%, #81c784 100%);
+  color: white;
+  padding: 8px 24px;
+  border-radius: var(--border-radius-pill);
+  box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+}
+
+/* 成語在大視窗中的展示 */
+.idiom-display {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.display-char-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 85px;
+  background: #f9f9f9;
+  border-radius: var(--border-radius-sm);
+  border: 3px solid #e0e0e0;
+}
+
+.display-char-box:nth-child(1) { background: #e8f5e9; border-color: #a5d6a7; }
+.display-char-box:nth-child(2) { background: #fff3e0; border-color: #ffcc80; }
+.display-char-box:nth-child(3) { background: #e1f5fe; border-color: #81d4fa; }
+.display-char-box:nth-child(4) { background: #fce4ec; border-color: #f48fb1; }
+
+.display-bpmf {
+  font-size: 0.9rem;
+  color: #555;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.display-char {
+  font-size: 2.3rem;
+  font-weight: 900;
+  color: #2c3e50;
+}
+
+/* 詳情說明 */
+.idiom-details {
+  width: 100%;
+  text-align: left;
+  background: #f8f9fa;
+  border-radius: var(--border-radius-md);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.detail-section {
+  margin-bottom: 16px;
+}
+
+.detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.detail-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #2c3e50;
+  margin-bottom: 6px;
+}
+
+.detail-text {
+  font-size: 1.05rem;
+  color: #4b6584;
+  line-height: 1.6;
+  font-weight: bold;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.modal-actions .btn {
+  flex: 1;
+}
+
+.btn-audio {
+  padding: 12px;
+  font-size: 1.2rem;
+  border-radius: var(--border-radius-pill);
+  background: #00bcd4;
+  color: white;
+  box-shadow: 0 4px 0px #0097a7;
+}
+
+.btn-audio:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0px #0097a7;
+}
+
+/* ========================================== */
+/* 4. 結算畫面 (End Screen) */
+/* ========================================== */
+#end-screen {
+  background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.zoom-in {
+  animation: zoomInAnim 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes zoomInAnim {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.badge-container {
+  margin-bottom: 30px;
+}
+
+.badge-ring {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: white;
+  border: 10px dashed #ff9800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  box-shadow: var(--shadow-medium);
+  animation: rotateRing 15s linear infinite;
+}
+
+@keyframes rotateRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.badge-emoji {
+  font-size: 4.5rem;
+  animation: bounceEmoji 2s ease-in-out infinite;
+}
+
+@keyframes bounceEmoji {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-10px) scale(1.1); }
+}
+
+.end-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #ff5722;
+  margin-bottom: 8px;
+}
+
+.end-subtitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #5d4037;
+  margin-bottom: 24px;
+}
+
+.end-stats {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.final-stars {
+  letter-spacing: 4px;
+  display: inline-block;
+  animation: starPulse 1.5s infinite;
+}
+
+@keyframes starPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Confetti Canvas */
+#confetti-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 99;
+}

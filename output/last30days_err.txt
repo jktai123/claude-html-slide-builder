@@ -1,0 +1,137 @@
+[safari] Permission denied reading Cookies.binarycookies. Enable Full Disk Access for Terminal in System Settings > Privacy & Security > Full Disk Access.
+[safari] Permission denied reading Cookies.binarycookies. Enable Full Disk Access for Terminal in System Settings > Privacy & Security > Full Disk Access.
+[safari] Permission denied reading Cookies.binarycookies. Enable Full Disk Access for Terminal in System Settings > Privacy & Security > Full Disk Access.
+[safari] Permission denied reading Cookies.binarycookies. Enable Full Disk Access for Terminal in System Settings > Privacy & Security > Full Disk Access.
+/last30days · researching: Google Antigravity
+⏳ [95mProcessing[0m Organizing findings...
+[Planner] Plan: intent=product, freshness=strict_recent, cluster_mode=story, subqueries=3, source=external
+[Planner]   sq1 label=primary search="google antigravity" sources=[reddit,youtube,hackernews,polymarket,github,grounding,jobs]
+[Planner]   sq2 label=development search="google antigravity sdk cli agy agent" sources=[reddit,youtube,hackernews,polymarket,github,grounding,jobs]
+[Planner]   sq3 label=comparison search="google antigravity cursor claude code" sources=[reddit,youtube,hackernews,polymarket,github,grounding,jobs]
+[GitHub] Person-mode search for @google-antigravity (since 2026-06-09)
+[GitHub] Found 0 total PRs, 0 merged
+[GitHub] No PRs found, falling back to keyword search
+[YouTube] Searching YouTube for 'google antigravity' (since 2026-06-09, count=8)
+[HN] Searching for 'google antigravity' (raw: 'google antigravity', since 2026-06-09, count=30)
+[PM] Searching for 'google antigravity' with queries: ['google antigravity', 'google', 'antigravity'] (pages=3)
+[YouTube] Searching YouTube for 'google antigravity' (since 2026-06-09, count=8)
+[HN] Searching for 'google antigravity sdk cli agy agent' (raw: 'google antigravity sdk cli agy agent', since 2026-06-09, count=30)
+[PM] Searching for 'google antigravity sdk cli agy agent' with queries: ['google antigravity sdk cli agy agent', 'google', 'antigravity', 'sdk', 'agy'] (pages=3)
+[HN] Search failed: HTTP 400: Bad Request
+[YouTube] Searching YouTube for 'google antigravity' (since 2026-06-09, count=8)
+[HN] Searching for 'google antigravity cursor claude code' (raw: 'google antigravity cursor claude code', since 2026-06-09, count=30)
+[PM] Searching for 'google antigravity cursor claude code' with queries: ['google antigravity cursor claude code', 'google', 'antigravity', 'cursor', 'claude'] (pages=3)
+[HN] Search failed: HTTP 400: Bad Request
+[RedditPublic] 403 forbidden: https://www.reddit.com/search.json?q=Google+Antigravity&sort=relevance&t=month&limit=25&raw_json=1
+[GitHub] Searching for 'google antigravity' (raw: 'google antigravity', since 2026-06-09, count=30)
+[HN] Search failed: HTTP 400: Bad Request
+[GitHub] Searching for 'google antigravity sdk cli agy agent' (raw: 'google antigravity sdk cli agy agent', since 2026-06-09, count=30)
+[GitHub] Searching for 'google antigravity cursor claude code' (raw: 'google antigravity cursor claude code', since 2026-06-09, count=30)
+[GitHub] Found 30 issues/PRs
+[GitHub] Enriching top 5 items with comments
+[GitHub] Found 30 issues/PRs
+[GitHub] Enriching top 5 items with comments
+[GitHub] Found 30 issues/PRs
+[GitHub] Enriching top 5 items with comments
+[PM] Search failed for 'google' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google antigravity' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google antigravity' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'antigravity' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google antigravity' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google antigravity sdk cli agy agent' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google antigravity sdk cli agy agent' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'antigravity' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google antigravity cursor claude code' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google antigravity cursor claude code' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'antigravity' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google antigravity cursor claude code' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'antigravity' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google antigravity sdk cli agy agent' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'antigravity' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'antigravity' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'antigravity' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'cursor' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'cursor' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'sdk' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'antigravity' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Found 0 unique events across 3 queries
+[PM] Search failed for 'sdk' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'agy' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'agy' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'cursor' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'claude' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'claude' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'claude' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'sdk' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'agy' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Found 0 unique events across 5 queries
+[PM] Search failed for 'antigravity' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Found 0 unique events across 5 queries
+[RedditPublic] 429 rate limited, retry 1/3 after 0.0s
+[RedditPublic] 403 forbidden: https://www.reddit.com/search.json?q=Google+Antigravity&sort=relevance&t=month&limit=25&raw_json=1
+[RedditPublic] 429 rate limited, retry 1/3 after 0.0s
+[RedditPublic] 403 forbidden: https://www.reddit.com/search.json?q=Google+Antigravity&sort=relevance&t=month&limit=25&raw_json=1
+[RedditKeyless] Tier 1 (RSS) 0 posts; listing discovery 259; 259 scored cards
+[RedditKeyless] Relevance floor dropped 207 off-topic posts
+[YouTube] Found 8 videos (1 within date range, keeping all)
+[YouTube] Searching YouTube for 'google antigravity review reaction breakdown' (since 2026-06-09, count=8)
+[RedditKeyless] Tier 1 (RSS) 0 posts; listing discovery 258; 258 scored cards
+[RedditKeyless] Relevance floor dropped 206 off-topic posts
+[YouTube] Found 8 videos (1 within date range, keeping all)
+[YouTube] Searching YouTube for 'google antigravity review reaction breakdown' (since 2026-06-09, count=8)
+[YouTube] Found 8 videos (1 within date range, keeping all)
+[YouTube] Searching YouTube for 'google antigravity review reaction breakdown' (since 2026-06-09, count=8)
+[RedditKeyless] Tier 1 (RSS) 0 posts; listing discovery 258; 258 scored cards
+[RedditKeyless] Relevance floor dropped 206 off-topic posts
+[YouTube] Found 8 videos (0 within date range, keeping all)
+[YouTube] Fetching transcripts for up to 6 videos (target: 2): ['nTOVIGsqCuY', 'SVCBA-pBgt0', 'QZCYFJTv8jI', '6C0FjHoN3qE', '2SFbqQvsFGc', 'mbxq88TOxp4']
+[YouTube] Fetching transcripts for 6 videos
+[YouTube] Found 8 videos (0 within date range, keeping all)
+[YouTube] Fetching transcripts for up to 6 videos (target: 2): ['nTOVIGsqCuY', 'SVCBA-pBgt0', 'QZCYFJTv8jI', '6C0FjHoN3qE', '2SFbqQvsFGc', 'mbxq88TOxp4']
+[YouTube] Fetching transcripts for 6 videos
+[YouTube] Found 8 videos (0 within date range, keeping all)
+[YouTube] Fetching transcripts for up to 6 videos (target: 2): ['nTOVIGsqCuY', 'SVCBA-pBgt0', 'QZCYFJTv8jI', '6C0FjHoN3qE', '2SFbqQvsFGc', 'mbxq88TOxp4']
+[YouTube] Fetching transcripts for 6 videos
+[YouTube] yt-dlp transcript timed out after 30s for 6C0FjHoN3qE (attempt 1/3)
+[YouTube] yt-dlp transcript timed out after 30s for 6C0FjHoN3qE (attempt 1/3)
+[YouTube] yt-dlp transcript timed out after 30s for 6C0FjHoN3qE (attempt 1/3)
+[YouTube] Got transcripts for 6/6 videos (0 failed)
+[YouTube] Got transcripts for 6/6 videos (0 failed)
+[YouTube] Got transcripts for 6/6 videos (0 failed)
+[HN] Searching for 'google antigravity' (raw: 'google antigravity', since 2026-06-09, count=30)
+[PM] Searching for 'google antigravity' with queries: ['google antigravity', 'google', 'antigravity'] (pages=3)
+[HN] Search failed: HTTP 400: Bad Request
+[PM] Search failed for 'google antigravity' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'antigravity' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google antigravity' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'antigravity' page 1: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'google antigravity' page 2: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Search failed for 'antigravity' page 3: URL Error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1010)
+[PM] Found 0 unique events across 3 queries
+[YouTube] Backfilling transcripts for 1 finalized videos (target: 2)
+[YouTube] Fetching transcripts for 1 videos
+[YouTube] Got transcripts for 1/1 videos (0 failed)
+[GitHub] Star enrichment: fetching 10 repos
+[GitHub] Star enrichment: annotated 8 candidates
+✓ Research complete (270.3s) - Reddit: 16 threads, YouTube: 1 video, HN: 0 stories, Polymarket: 0 markets, Web: 0 results, Github: 36 results, Jobs: 0 results
+
+💡 Unlock X: log into x.com in your browser, then re-run. Firefox works on all platforms. Safari works on macOS (detected automatically). Chrome, Brave, Edge, Arc, Vivaldi, Opera, or Chromium on macOS require FROM_BROWSER=auto in .env (Keychain dialog). On Windows only Firefox is supported. Or add AUTH_TOKEN/CT0 or XAI_API_KEY.
+
+Research quality: 4/5 core sources.
+Missing: X/Twitter.
+
+Free fixes:
+  - X/Twitter: real-time posts with likes and reposts - the fastest signal for breaking topics. Three options: log into x.com in your browser and re-run (cookies detected automatically), or add XAI_API_KEY to your .env (get key at api.x.ai), or add XQUIK_API_KEY to your .env (get key at xquik.com).
+
+Bonus: TikTok and Instagram are available with a free ScrapeCreators key at scrapecreators.com (no affiliation).

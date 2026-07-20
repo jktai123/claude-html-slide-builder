@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>書擋的 45 種創意用法｜極簡生活・一物多用・零成本收納</title>
+  <meta name="description" content="書擋除了擋書還能做什麼？45 種極簡收納妙用，廚房、牆面、桌面、床邊全搞定，零成本改造你的空間。" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+
+  <style>
+    /* === 全域變數 === */
+    :root {
+      --accent:  #e8643a;
+      --accent2: #4fc3f7;
+      --success: #81c784;
+      --warn:    #ffb74d;
+    }
+
+    .reveal {
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .reveal h1 { font-size: 2.2em; }
+    .reveal h2 { font-size: 1.5em; color: var(--accent2); }
+    .reveal .progress { color: var(--accent); }
+    .reveal .fragment { opacity: 0.2; }
+    .reveal .fragment.visible { opacity: 1; }
+
+    /* === 封面 === */
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.55em;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8em;
+      font-weight: 600;
+    }
+    .title-slide .subtitle { font-size: 0.75em; color: #aaa; margin-top: 0.5em; }
+    .title-slide .author   { margin-top: 2em; font-size: 0.5em; color: #888; }
+
+    /* === 統計數字卡 === */
+    .stat-row { display: flex; gap: 20px; justify-content: center; margin-top: 1em; }
+    .stat-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 20px 26px;
+      text-align: center;
+      flex: 1;
+    }
+    .stat-card .num   { font-size: 1.8em; font-weight: 800; color: var(--accent); line-height: 1; }
+    .stat-card .label { font-size: 0.42em; color: #ccc; margin-top: 6px; }
+
+    /* === 優勢卡（並列特點）=== */
+    .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 0.6em; }
+    .adv-grid-5 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 12px; margin-top: 0.6em; }
+    .adv-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-top: 0.6em; }
+    .adv-card {
+      background: rgba(255,255,255,0.05);
+      border-top: 4px solid var(--accent2);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+    .adv-card .adv-icon { margin-bottom: 8px; font-size: 2em; }
+    .adv-card .adv-icon img {
+      width: 56px; height: 56px; object-fit: contain;
+      display: block; margin: 0 auto;
+      filter: drop-shadow(0 0 10px rgba(79,195,247,0.6));
+    }
+    .adv-card .adv-title { font-size: 0.5em; font-weight: 700; color: var(--accent2); margin-bottom: 6px; }
+    .adv-card .adv-desc  { font-size: 0.38em; color: #bbb; line-height: 1.6; }
+
+    /* === 技巧卡 3 欄 === */
+    .trick-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 0.6em; }
+    .trick-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 14px;
+      border-left: 3px solid var(--accent);
+    }
+    .trick-card .tc-num { font-size: 0.38em; color: var(--accent); font-weight: 800; margin-bottom: 4px; }
+    .trick-card .tc-title { font-size: 0.45em; font-weight: 700; color: #eee; margin-bottom: 4px; }
+    .trick-card .tc-desc { font-size: 0.36em; color: #999; line-height: 1.5; }
+
+    /* === 引用 === */
+    .quote-box {
+      background: rgba(255,255,255,0.05);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 0.8em 0;
+      font-size: 0.55em;
+      color: #ddd;
+      font-style: italic;
+      line-height: 1.7;
+    }
+    .quote-author { font-size: 0.4em; color: #888; text-align: right; margin-top: 8px; font-style: normal; }
+
+    /* === 結論卡 === */
+    .conclusion-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 0.8em; }
+    .conclusion-card { border-radius: 10px; padding: 18px; font-size: 0.44em; }
+    .conclusion-card.positive {
+      background: rgba(79,195,247,0.12);
+      border: 1px solid rgba(79,195,247,0.35);
+    }
+    .conclusion-card.caution {
+      background: rgba(255,183,77,0.1);
+      border: 1px solid rgba(255,183,77,0.3);
+    }
+    .conclusion-card.accent {
+      background: rgba(232,100,58,0.12);
+      border: 1px solid rgba(232,100,58,0.35);
+    }
+    .conclusion-card .cc-title { font-size: 1.3em; font-weight: 700; margin-bottom: 8px; }
+    .conclusion-card.positive .cc-title { color: var(--accent2); }
+    .conclusion-card.caution  .cc-title { color: var(--warn); }
+    .conclusion-card.accent   .cc-title { color: var(--accent); }
+    .conclusion-card ul { list-style: none; padding: 0; margin: 0; color: #ccc; line-height: 1.8; }
+    .conclusion-card ul li::before { content: "→ "; opacity: 0.6; }
+
+    /* === 封底 === */
+    .end-slide { text-align: center; }
+    .end-slide .big { font-size: 3.5em; margin-bottom: 0.2em; }
+    .end-slide .tagline { font-size: 0.65em; color: #aaa; }
+
+    /* === VIZ 滑桿 === */
+    #viz-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 80%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.15);
+      outline: none;
+      margin: 12px auto 0;
+      display: block;
+    }
+    #viz-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--accent2);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--accent2);
+    }
+    .viz-label {
+      font-size: 0.38em;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      position: absolute;
+      top: 8px;
+      transition: opacity 0.3s;
+    }
+    .viz-label.left  { left: 12px;  background: rgba(79,195,247,0.25); color: var(--accent2); }
+    .viz-label.right { right: 12px; background: rgba(255,183,77,0.25); color: var(--warn); }
+
+    /* === LIVE 動畫 === */
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+    /* === 場域分類 row === */
+    .zone-row { display: flex; gap: 10px; margin-top: 0.5em; flex-wrap: wrap; justify-content: center; }
+    .zone-badge {
+      background: rgba(79,195,247,0.12);
+      border: 1px solid rgba(79,195,247,0.3);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 0.38em;
+      color: var(--accent2);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ① 封面 [BG] -->
+    <section data-background-image="images/cover.png"
+             data-background-opacity="0.35"
+             data-background-size="cover">
+      <div class="title-slide">
+        <div class="tag">極簡生活 · 一物多用 · 零成本收納</div>
+        <h1>書擋的<span style="color:var(--accent);">45</span>種<br>創意用法</h1>
+        <h2 style="color:var(--accent); margin-top:0.2em;">Big Makeovers for Tiny Everyday Items</h2>
+        <p class="subtitle">廚房 · 牆面 · 書桌 · 展示 · 床邊 — 全場域改造指南</p>
+        <p class="author">by Minimalist Paik &nbsp;|&nbsp; 2026</p>
+      </div>
+    </section>
+
+    <!-- ② 文字雲：你怎麼用書擋？[INTERACT:wordcloud] -->
+    <section id="slide-wordcloud">
+      <h2 style="font-size:1.1em; margin-bottom:0.4em;">你平常怎麼用書擋？🤔</h2>
+      <p style="font-size:0.42em; color:#888; margin-bottom:0.6em;">分享你的用法，看看大家的答案</p>
+      <div style="display:grid; grid-template-columns:250px 1fr; gap:14px; height:440px;">
+
+        <!-- 左欄：輸入 + 排行 -->
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px;">
+            <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px;">輸入你的答案</div>
+            <input id="wc-input" type="text" placeholder="例：擋書、裝飾…" maxlength="20"
+              style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid rgba(79,195,247,0.3);
+                     background:rgba(255,255,255,0.08); color:#fff; font-size:13px;
+                     box-sizing:border-box; font-family:inherit; outline:none;" />
+            <button id="wc-btn"
+              style="width:100%; margin-top:8px; padding:9px; background:var(--accent2); color:#0d1117;
+                     border:none; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer;">
+              送出 ↵
+            </button>
+          </div>
+          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px; flex:1; overflow:hidden; display:flex; flex-direction:column;">
+            <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px;">
+              熱門答案
+              <span style="display:inline-block; background:#ff4757; color:#fff; padding:2px 7px;
+                           border-radius:10px; font-size:0.85em; animation:pulse 1.5s infinite;">LIVE</span>
+            </div>
+            <div id="wc-list" style="font-size:0.34em; overflow-y:auto; flex:1; color:#ccc;"></div>
+            <div style="margin-top:8px; font-size:0.32em; color:#666; border-top:1px solid rgba(255,255,255,0.08); padding-top:6px;">
+              總提交：<span id="wc-total" style="color:var(--accent); font-weight:700;">0</span>　
+              不同答案：<span id="wc-unique" style="color:var(--accent2); font-weight:700;">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右欄：文字雲 -->
+        <div style="background:rgba(255,255,255,0.04); border-radius:12px; overflow:hidden;
+                    position:relative; border:1px solid rgba(255,255,255,0.07);">
+          <canvas id="wc-canvas" style="width:100%; height:100%; display:block;"></canvas>
+          <div id="wc-empty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                                     color:#444; font-size:0.42em; text-align:center;
+                                     pointer-events:none; line-height:2;">
+            輸入第一個答案<br>文字雲就會出現 ✨
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ③ 五大應用場域 [ICON] -->
+    <section>
+      <h2>五大應用場域</h2>
+      <p style="font-size:0.42em; color:#888; margin-bottom:0.3em;">一個書擋，改造全場域</p>
+      <div class="adv-grid-5">
+        <div class="adv-card fragment">
+          <div class="adv-icon">
+            <img src="images/icon_kitchen.png" alt="廚房" onerror="this.style.fontSize='2em';this.outerHTML='<span style=&quot;font-size:2em;&quot;>🍳</span>'">
+          </div>
+          <div class="adv-title">廚房收納</div>
+          <div class="adv-desc">冰箱門・上下櫃<br>保鮮盒・飲料架</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon">
+            <img src="images/icon_wall.png" alt="牆面" onerror="this.style.fontSize='2em';this.outerHTML='<span style=&quot;font-size:2em;&quot;>🧱</span>'">
+          </div>
+          <div class="adv-title">牆面 & 懸掛</div>
+          <div class="adv-desc">毛巾架・掛桿<br>擱架・補縫隙</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon">
+            <img src="images/icon_desk.png" alt="書桌" onerror="this.style.fontSize='2em';this.outerHTML='<span style=&quot;font-size:2em;&quot;>🖊️</span>'">
+          </div>
+          <div class="adv-title">桌面 & 文具</div>
+          <div class="adv-desc">文具架・DIY 桌曆<br>梳妝台・化妝品</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon">
+            <img src="images/icon_display.png" alt="展示" onerror="this.style.fontSize='2em';this.outerHTML='<span style=&quot;font-size:2em;&quot;>🏆</span>'">
+          </div>
+          <div class="adv-title">展示 & DIY</div>
+          <div class="adv-desc">模型・玩具展架<br>DIY 置物架</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon">
+            <img src="images/icon_bed.png" alt="床邊" onerror="this.style.fontSize='2em';this.outerHTML='<span style=&quot;font-size:2em;&quot;>🛏️</span>'">
+          </div>
+          <div class="adv-title">床邊 & 沙發</div>
+          <div class="adv-desc">床邊置物架<br>沙發杯架・扶手架</div>
+        </div>
+      </div>
+      <div class="zone-row fragment" style="margin-top:1em;">
+        <span class="zone-badge">45 種創意用法</span>
+        <span class="zone-badge">零成本</span>
+        <span class="zone-badge">不用買新收納盒</span>
+      </div>
+    </section>
+
+    <!-- ④ 廚房收納術 [BG] -->
+    <section data-background-image="images/kitchen.png"
+             data-background-opacity="0.18"
+             data-background-size="cover">
+      <h2>廚房收納術</h2>
+      <p style="font-size:0.4em; color:#aaa; margin-bottom:0.5em;">7 招徹底改造廚房空間</p>
+      <div class="trick-grid">
+        <div class="trick-card fragment">
+          <div class="tc-num">招 1–2</div>
+          <div class="tc-title">🧊 冰箱門收納</div>
+          <div class="tc-desc">書擋橫置固定瓶罐，上下兩層都能用，不再翻倒</div>
+        </div>
+        <div class="trick-card fragment">
+          <div class="tc-num">招 3</div>
+          <div class="tc-title">🥤 罐裝飲料架</div>
+          <div class="tc-desc">L 型書擋當分隔，飲料整齊站立，一目了然</div>
+        </div>
+        <div class="trick-card fragment">
+          <div class="tc-num">招 4</div>
+          <div class="tc-title">🥡 袋裝食材整理</div>
+          <div class="tc-desc">醬料袋、零食袋站立存放，再也不壓垮</div>
+        </div>
+        <div class="trick-card fragment">
+          <div class="tc-num">招 5</div>
+          <div class="tc-title">📦 保鮮盒收納</div>
+          <div class="tc-desc">書擋當隔板，蓋子直立分類，拿取超快速</div>
+        </div>
+        <div class="trick-card fragment">
+          <div class="tc-num">招 6–7</div>
+          <div class="tc-title">🗄️ 上下櫃妙用</div>
+          <div class="tc-desc">上櫃多層分隔 × 4，下櫃深處收納，空間倍增</div>
+        </div>
+        <div class="trick-card fragment" style="border-left-color: var(--accent2);">
+          <div class="tc-num" style="color:var(--accent2);">💡 Tip</div>
+          <div class="tc-title">不鏽鋼書擋最耐用</div>
+          <div class="tc-desc">廚房環境潮溼，選防鏽材質，用水沖洗即可清潔</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑤ 牆面 & 懸掛收納 -->
+    <section>
+      <h2>牆面 & 懸掛收納</h2>
+      <p style="font-size:0.4em; color:#aaa; margin-bottom:0.5em;">讓垂直空間發揮最大效益</p>
+      <div class="trick-grid">
+        <div class="trick-card fragment">
+          <div class="tc-num">招 1</div>
+          <div class="tc-title">🪣 毛巾架</div>
+          <div class="tc-desc">書擋倒置固定在牆面，掛毛巾穩固不滑落</div>
+        </div>
+        <div class="trick-card fragment">
+          <div class="tc-num">招 2</div>
+          <div class="tc-title">🪝 掛衣桿</div>
+          <div class="tc-desc">兩個書擋夾住橫桿，秒變小衣架，衣帽間必備</div>
+        </div>
+        <div class="trick-card fragment">
+          <div class="tc-num">招 3</div>
+          <div class="tc-title">🪞 牆面擱架</div>
+          <div class="tc-desc">書擋橫向固定為托架，放小植物或裝飾品超穩</div>
+        </div>
+        <div class="trick-card fragment">
+          <div class="tc-num">招 4</div>
+          <div class="tc-title">📚 書櫃懸掛</div>
+          <div class="tc-desc">掛在書櫃側面或格內，多一層收納空間</div>
+        </div>
+        <div class="trick-card fragment">
+          <div class="tc-num">招 5</div>
+          <div class="tc-title">🔧 補牆縫</div>
+          <div class="tc-desc">書桌靠牆縫隙塞書擋，東西不掉落，順便收納</div>
+        </div>
+        <div class="trick-card fragment" style="border-left-color: var(--success);">
+          <div class="tc-num" style="color:var(--success);">✅ 重點</div>
+          <div class="tc-title">無痕膠帶加持</div>
+          <div class="tc-desc">牆面掛載搭配 3M 無痕貼，零破壞零風險，租屋族友善</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑥ 桌面 & 文具整理 [ICON] -->
+    <section>
+      <h2>桌面 & 文具整理</h2>
+      <p style="font-size:0.4em; color:#aaa; margin-bottom:0.4em;">梳妝台 · 書桌 · 文具 · DIY 桌曆</p>
+      <div class="adv-grid-4">
+        <div class="adv-card fragment">
+          <div class="adv-icon">
+            <img src="images/icon_stationery.png" alt="文具" onerror="this.style.fontSize='2em';this.outerHTML='<span style=&quot;font-size:2em;&quot;>✏️</span>'">
+          </div>
+          <div class="adv-title">文具架 × 2 款</div>
+          <div class="adv-desc">書擋夾住隔板直立收筆<br>或 L 型當筆筒底座</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon">
+            <img src="images/icon_calendar.png" alt="桌曆" onerror="this.style.fontSize='2em';this.outerHTML='<span style=&quot;font-size:2em;&quot;>📅</span>'">
+          </div>
+          <div class="adv-title">DIY 桌曆</div>
+          <div class="adv-desc">書擋夾住月曆頁面<br>站立桌上，質感翻倍</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon">
+            <img src="images/icon_vanity.png" alt="梳妝台" onerror="this.style.fontSize='2em';this.outerHTML='<span style=&quot;font-size:2em;&quot;>💄</span>'">
+          </div>
+          <div class="adv-title">梳妝台整理</div>
+          <div class="adv-desc">分區放保養品・飾品<br>讓梳妝台不再雜亂</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon">
+            <img src="images/icon_makeup.png" alt="化妝品架" onerror="this.style.fontSize='2em';this.outerHTML='<span style=&quot;font-size:2em;&quot;>🧴</span>'">
+          </div>
+          <div class="adv-title">化妝品收納架</div>
+          <div class="adv-desc">多層書擋疊高當架<br>小瓶罐直立一覽無遺</div>
+        </div>
+      </div>
+      <div class="quote-box fragment" style="margin-top:0.8em;">
+        書擋不只是「擋書」的工具——它是你書桌上最被低估的生產力神器。
+        <div class="quote-author">— Minimalist Paik</div>
+      </div>
+    </section>
+
+    <!-- ⑦ 前後對比 [VIZ] -->
+    <section>
+      <h2>有書擋 vs 沒書擋</h2>
+      <p style="font-size:0.38em; color:#888; margin-bottom:0.6em;">← 拖曳滑桿，感受改造的差距</p>
+
+      <div style="position:relative; height:370px; border-radius:12px; overflow:hidden; margin:0 auto; max-width:860px;">
+        <!-- Before -->
+        <div id="viz-before" style="position:absolute;inset:0;
+          background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+          display:flex; align-items:center; justify-content:center; flex-direction:column; gap:14px; padding:20px;">
+          <div style="font-size:0.7em; font-weight:700; color:var(--accent); margin-bottom:4px;">❌ 改造前</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%;">
+            <div style="background:rgba(255,100,58,0.12); border-radius:8px; padding:14px; font-size:0.38em; color:#ccc;">
+              <div style="font-weight:700; color:var(--accent); margin-bottom:6px;">廚房</div>
+              瓶罐躺倒、東西散落<br>翻找一遍才找到醬油
+            </div>
+            <div style="background:rgba(255,100,58,0.12); border-radius:8px; padding:14px; font-size:0.38em; color:#ccc;">
+              <div style="font-weight:700; color:var(--accent); margin-bottom:6px;">書桌</div>
+              文具四散、桌面雜亂<br>找東西要翻半天
+            </div>
+            <div style="background:rgba(255,100,58,0.12); border-radius:8px; padding:14px; font-size:0.38em; color:#ccc;">
+              <div style="font-weight:700; color:var(--accent); margin-bottom:6px;">牆面空間</div>
+              垂直空間完全浪費<br>物品堆在地面
+            </div>
+            <div style="background:rgba(255,100,58,0.12); border-radius:8px; padding:14px; font-size:0.38em; color:#ccc;">
+              <div style="font-weight:700; color:var(--accent); margin-bottom:6px;">預算</div>
+              花錢買收納盒<br>買了還嫌不夠
+            </div>
+          </div>
+        </div>
+
+        <!-- After -->
+        <div id="viz-after" style="position:absolute;inset:0;clip-path:inset(0 100% 0 0);
+          background: linear-gradient(135deg, #0d1117 0%, #0a1628 100%);
+          display:flex; align-items:center; justify-content:center; flex-direction:column; gap:14px; padding:20px;">
+          <div style="font-size:0.7em; font-weight:700; color:var(--success); margin-bottom:4px;">✅ 書擋改造後</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%;">
+            <div style="background:rgba(129,199,132,0.12); border-radius:8px; padding:14px; font-size:0.38em; color:#ccc;">
+              <div style="font-weight:700; color:var(--success); margin-bottom:6px;">廚房</div>
+              瓶罐站立整齊<br>拿取一秒到位
+            </div>
+            <div style="background:rgba(129,199,132,0.12); border-radius:8px; padding:14px; font-size:0.38em; color:#ccc;">
+              <div style="font-weight:700; color:var(--success); margin-bottom:6px;">書桌</div>
+              文具分區直立<br>桌面清爽有質感
+            </div>
+            <div style="background:rgba(129,199,132,0.12); border-radius:8px; padding:14px; font-size:0.38em; color:#ccc;">
+              <div style="font-weight:700; color:var(--success); margin-bottom:6px;">牆面空間</div>
+              垂直空間全活化<br>地面一片清爽
+            </div>
+            <div style="background:rgba(129,199,132,0.12); border-radius:8px; padding:14px; font-size:0.38em; color:#ccc;">
+              <div style="font-weight:700; color:var(--success); margin-bottom:6px;">預算</div>
+              完全免費<br>書擋就是收納盒
+            </div>
+          </div>
+        </div>
+
+        <!-- 分隔線 -->
+        <div id="viz-divider" style="position:absolute;top:0;left:0;width:3px;height:100%;
+          background:linear-gradient(to bottom,transparent,#4fc3f7,transparent);
+          box-shadow:0 0 12px #4fc3f7;pointer-events:none;"></div>
+
+        <!-- 標籤 -->
+        <div class="viz-label left" id="viz-label-left">改造前</div>
+        <div class="viz-label right" id="viz-label-right">改造後</div>
+      </div>
+
+      <input id="viz-slider" type="range" min="0" max="100" value="0">
+      <p style="font-size:0.35em; color:#555; text-align:center; margin-top:6px;">拖曳滑桿查看差異</p>
+
+      <script>
+        document.getElementById('viz-slider').addEventListener('input', function() {
+          const v = +this.value;
+          document.getElementById('viz-after').style.clipPath = `inset(0 ${100-v}% 0 0)`;
+          document.getElementById('viz-divider').style.left = v + '%';
+          const lLabel = document.getElementById('viz-label-left');
+          const rLabel = document.getElementById('viz-label-right');
+          lLabel.style.opacity = v > 80 ? (1 - (v - 80) / 20) : 1;
+          rLabel.style.opacity = v < 20 ? v / 20 : 1;
+        });
+      </script>
+    </section>
+
+    <!-- ⑧ 展示 & DIY 創意 -->
+    <section>
+      <h2>展示 & DIY 創意</h2>
+      <p style="font-size:0.4em; color:#aaa; margin-bottom:0.5em;">玩具・模型・自製置物架</p>
+      <div class="adv-grid">
+        <div class="adv-card fragment">
+          <div class="adv-icon" style="font-size:2.2em;">🏆</div>
+          <div class="adv-title">模型 & 玩具展示架</div>
+          <div class="adv-desc">書擋背板直立當展示架背景<br>讓收藏品更有儀式感<br>玩具分格展示，找東西一秒到</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon" style="font-size:2.2em;">🗄️</div>
+          <div class="adv-title">書櫃置物隔層</div>
+          <div class="adv-desc">L 型書擋橫置當隔板<br>書櫃空間變雙層<br>小物一格格分類清楚</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon" style="font-size:2.2em;">🔨</div>
+          <div class="adv-title">DIY 牆面置物架 × 3</div>
+          <div class="adv-desc">書擋當托架固定在牆<br>放相框、小盆栽、雜物<br>三種尺寸都能用</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon" style="font-size:2.2em;">👟</div>
+          <div class="adv-title">鞋櫃隔層 & 籃子分隔</div>
+          <div class="adv-desc">鞋櫃多加一層放高跟鞋<br>收納籃內分區<br>雜物不再混亂一堆</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑨ 床邊 & 沙發收納 -->
+    <section>
+      <h2>床邊 & 沙發收納</h2>
+      <p style="font-size:0.4em; color:#aaa; margin-bottom:0.5em;">讓睡前時光更舒適</p>
+      <div class="trick-grid">
+        <div class="trick-card fragment">
+          <div class="tc-num">招 1</div>
+          <div class="tc-title">🛏️ 床邊收納</div>
+          <div class="tc-desc">書擋固定在床板側面，放手機、充電線、眼鏡，伸手就到</div>
+        </div>
+        <div class="trick-card fragment">
+          <div class="tc-num">招 2</div>
+          <div class="tc-title">📱 DIY 床邊置物架</div>
+          <div class="tc-desc">兩個書擋加橫板，打造專屬小夜架，放書 + 飲料全搞定</div>
+        </div>
+        <div class="trick-card fragment">
+          <div class="tc-num">招 3</div>
+          <div class="tc-title">☕ 沙發簡易杯架</div>
+          <div class="tc-desc">書擋夾在沙發縫，飲料不再放地板，告別灑水危機</div>
+        </div>
+        <div class="trick-card fragment">
+          <div class="tc-num">招 4</div>
+          <div class="tc-title">🛋️ 沙發扶手置物架</div>
+          <div class="tc-desc">固定在扶手上，遙控器、零食、手機一個都不少</div>
+        </div>
+        <div class="trick-card fragment">
+          <div class="tc-num">招 5</div>
+          <div class="tc-title">🗑️ 簡易垃圾桶</div>
+          <div class="tc-desc">書擋圍出框架，塑膠袋一套，床邊垃圾桶完成！</div>
+        </div>
+        <div class="trick-card fragment" style="border-left-color: var(--accent2);">
+          <div class="tc-num" style="color:var(--accent2);">💡 Tip</div>
+          <div class="tc-title">防滑貼不可少</div>
+          <div class="tc-desc">沙發布料易滑，書擋底部貼防滑墊，固定超牢靠</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑩ 投票 [INTERACT:poll] -->
+    <section id="slide-poll">
+      <h2 style="font-size:1.1em;">你最想在哪個場域試試？</h2>
+      <p style="font-size:0.4em; color:#888; margin-bottom:0.5em;">選一個你最想立刻改造的空間！</p>
+      <div id="poll-options" style="display:flex; flex-direction:column; gap:12px; margin-top:0.6em;"></div>
+      <div style="font-size:0.38em; color:#666; text-align:center; margin-top:0.8em;">
+        已投票：<span id="poll-total" style="color:var(--accent); font-weight:700;">0</span> 人
+      </div>
+    </section>
+
+    <!-- ⑪ 極簡核心心法 [BG] -->
+    <section data-background-image="images/mindset.png"
+             data-background-opacity="0.20"
+             data-background-size="cover">
+      <h2>極簡核心心法</h2>
+      <div class="conclusion-grid" style="margin-top:0.6em;">
+          <div class="conclusion-card positive fragment">
+          <div class="cc-title">♻️ 一物多用</div>
+          <ul>
+            <li>每件物品都有第二個用途</li>
+            <li>思考「還能怎麼用」</li>
+            <li>打破固有使用框架</li>
+          </ul>
+        </div>
+        <div class="conclusion-card accent fragment">
+          <div class="cc-title">💸 零成本</div>
+          <ul>
+            <li>不買新的收納盒</li>
+            <li>家裡已有的就是資源</li>
+            <li>省錢又環保</li>
+          </ul>
+        </div>
+        <div class="conclusion-card caution fragment">
+          <div class="cc-title">✨ 極簡思維</div>
+          <ul>
+            <li>少買東西，善用現有</li>
+            <li>空間整潔 = 心情清爽</li>
+            <li>從一個小物開始改造</li>
+          </ul>
+        </div>
+      </div>
+      <div class="quote-box fragment" style="margin-top:0.8em; font-size:0.5em;">
+        「不是空間不夠，是沒有找到正確的用法。」
+        <div class="quote-author">— Minimalist Paik</div>
+      </div>
+    </section>
+
+    <!-- ⑫ 封底 [BG] -->
+    <section data-background-image="images/ending.png"
+             data-background-opacity="0.40"
+             data-background-size="cover">
+      <div class="end-slide">
+        <div class="big">📚</div>
+        <h1 style="color:var(--accent2);">現在，去找你的書擋！</h1>
+        <p class="tagline">45 種用法 · 零成本 · 從今天開始改造你的空間</p>
+        <div class="stat-row fragment" style="margin-top:1.5em;">
+          <div class="stat-card">
+            <div class="num">45</div>
+            <div class="label">種創意用法</div>
+          </div>
+          <div class="stat-card">
+            <div class="num">5</div>
+            <div class="label">大應用場域</div>
+          </div>
+          <div class="stat-card">
+            <div class="num">$0</div>
+            <div class="label">額外花費</div>
+          </div>
+        </div>
+        <p style="font-size:0.42em; color:#666; margin-top:1.5em;">
+          by Minimalist Paik &nbsp;|&nbsp;
+          <a href="https://youtu.be/D6lCQ11Sq-U" style="color:var(--accent2);" target="_blank">原影片連結</a>
+        </p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    plugins: []
+  });
+</script>
+
+<!-- Firebase 文字雲 -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+  import {
+    getFirestore, collection, addDoc, onSnapshot,
+    serverTimestamp, query, orderBy
+  } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAYQhNavPSce17XtvDC5xnXyl9iUhW9KjA",
+    authDomain: "teacherstudy-109ef.firebaseapp.com",
+    projectId: "teacherstudy-109ef",
+    storageBucket: "teacherstudy-109ef.firebasestorage.app",
+    messagingSenderId: "196599230156",
+    appId: "1:196599230156:web:cfe55d364df3ae1b9d5c69"
+  };
+  const app = initializeApp(firebaseConfig);
+  const fdb = getFirestore(app);
+  const wordsRef = collection(fdb, 'ultimate_presentation_wordcloud');
+
+  const COLORS = ['#4fc3f7','#e8643a','#ffb74d','#81c784','#ce93d8','#80deea','#f48fb1'];
+  let wcData = [];
+  let useMock = false;
+  let mockWords = [];
+
+  // 初始化本地端數據
+  try {
+    const saved = localStorage.getItem('bookend_hacks_wordcloud_mock');
+    if (saved) {
+      mockWords = JSON.parse(saved);
+    } else {
+      mockWords = ["擋書", "冰箱收納", "極簡", "零成本", "上下櫃", "文具架", "DIY置物架", "毛巾架", "掛衣桿", "鞋櫃隔層", "沙發杯架", "床邊架"];
+      localStorage.setItem('bookend_hacks_wordcloud_mock', JSON.stringify(mockWords));
+    }
+  } catch(e) {
+    console.error("無法讀取 localStorage", e);
+  }
+
+  function renderWordCloudData(words) {
+    const counts = {};
+    words.forEach(w => counts[w] = (counts[w] || 0) + 1);
+    wcData = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+    document.getElementById('wc-total').textContent = words.length;
+    document.getElementById('wc-unique').textContent = wcData.length;
+
+    const listEl = document.getElementById('wc-list');
+    listEl.innerHTML = wcData.slice(0, 12).map(([w, c]) =>
+      `<div style="display:flex;justify-content:space-between;padding:4px 0;
+                   border-bottom:1px solid rgba(255,255,255,0.06);">
+        <span>${w}</span><span style="color:var(--accent);font-weight:700;">${c}</span>
+      </div>`
+    ).join('') || '<div style="color:#555;padding:8px 0;">尚無資料</div>';
+
+    const empty = document.getElementById('wc-empty');
+    if (empty) empty.style.display = wcData.length > 0 ? 'none' : '';
+    drawWordCloud();
+  }
+
+  window.wcSubmit = async function() {
+    const input = document.getElementById('wc-input');
+    const word = input.value.trim();
+    if (!word) return;
+    const btn = document.getElementById('wc-btn');
+    btn.disabled = true;
+
+    if (useMock) {
+      mockWords.push(word);
+      try {
+        localStorage.setItem('bookend_hacks_wordcloud_mock', JSON.stringify(mockWords));
+      } catch(e) {}
+      renderWordCloudData(mockWords);
+      input.value = '';
+      btn.disabled = false;
+      return;
+    }
+
+    try {
+      await addDoc(wordsRef, { word, created_at: serverTimestamp() });
+      input.value = '';
+    } catch(e) {
+      console.warn("寫入 Firestore 失敗，無縫切換至 LocalStorage 模式！", e);
+      useMock = true;
+      mockWords.push(word);
+      try {
+        localStorage.setItem('bookend_hacks_wordcloud_mock', JSON.stringify(mockWords));
+      } catch(ex) {}
+      renderWordCloudData(mockWords);
+      input.value = '';
+    } finally {
+      btn.disabled = false;
+    }
+  };
+
+  document.getElementById('wc-input')?.addEventListener('keypress', e => {
+    if (e.key === 'Enter') window.wcSubmit();
+  });
+  document.getElementById('wc-btn')?.addEventListener('click', window.wcSubmit);
+
+  onSnapshot(query(wordsRef, orderBy('created_at', 'asc')), snap => {
+    if (useMock) return;
+    const words = [];
+    snap.forEach(doc => words.push(doc.data().word));
+    if (words.length === 0 && mockWords.length > 0) {
+      renderWordCloudData(mockWords);
+    } else {
+      renderWordCloudData(words);
+    }
+  }, err => {
+    console.warn("Firestore 載入文字雲失敗（權限不足），切換至 LocalStorage 備援！", err);
+    useMock = true;
+    renderWordCloudData(mockWords);
+  });
+
+  function drawWordCloud() {
+    const canvas = document.getElementById('wc-canvas');
+    if (!canvas || typeof WordCloud === 'undefined') return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 10 || rect.height < 10) return;
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    if (wcData.length === 0) return;
+    const maxCount = wcData[0][1];
+    WordCloud(canvas, {
+      list: wcData.map(([w, c]) => [w, Math.max(18, Math.round((c / maxCount) * 76))]),
+      gridSize: 6,
+      weightFactor: 1,
+      fontFamily: '"Microsoft JhengHei", "Noto Sans TC", sans-serif',
+      color: () => COLORS[Math.floor(Math.random() * COLORS.length)],
+      backgroundColor: 'transparent',
+      rotateRatio: 0.3,
+      shuffle: true,
+    });
+  }
+
+  Reveal.on('slidechanged', e => {
+    if (e.currentSlide?.id === 'slide-wordcloud') setTimeout(drawWordCloud, 150);
+  });
+</script>
+
+<!-- Firebase 投票 -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+  import {
+    getFirestore, doc, setDoc, onSnapshot, serverTimestamp
+  } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAYQhNavPSce17XtvDC5xnXyl9iUhW9KjA",
+    authDomain: "teacherstudy-109ef.firebaseapp.com",
+    projectId: "teacherstudy-109ef",
+    storageBucket: "teacherstudy-109ef.firebasestorage.app",
+    messagingSenderId: "196599230156",
+    appId: "1:196599230156:web:cfe55d364df3ae1b9d5c69"
+  };
+  const app2 = initializeApp(firebaseConfig, 'poll-app');
+  const fdb2 = getFirestore(app2);
+
+  const OPTIONS = [
+    { id: 'kitchen', label: '🍳 廚房收納（冰箱、保鮮盒、碗碟）' },
+    { id: 'wall',    label: '🧱 牆面 & 懸掛（毛巾架、掛桿、擱架）' },
+    { id: 'desk',    label: '🖊️ 桌面 & 文具（文具架、桌曆、梳妝台）' },
+    { id: 'display', label: '🏆 展示 & DIY（模型架、鞋櫃、自製架）' },
+    { id: 'bed',     label: '🛋️ 床邊 & 沙發（床邊架、杯架）' },
+  ];
+  const pollRef = doc(fdb2, 'ultimate_presentation_poll_8', 'results');
+  const userId = 'user_' + Math.random().toString(36).slice(2, 9);
+  let myVote = null;
+  let usePollMock = false;
+  let mockVotes = {};
+
+  // 從 localStorage 初始化投票數據
+  try {
+    myVote = localStorage.getItem('bookend_hacks_my_vote');
+    const saved = localStorage.getItem('bookend_hacks_poll_mock');
+    if (saved) {
+      mockVotes = JSON.parse(saved);
+    } else {
+      mockVotes = { 'user1': 'kitchen', 'user2': 'desk', 'user3': 'kitchen', 'user4': 'wall', 'user5': 'display', 'user6': 'kitchen', 'user7': 'bed' };
+      localStorage.setItem('bookend_hacks_poll_mock', JSON.stringify(mockVotes));
+    }
+  } catch(e) {
+    console.error("無法讀取 localStorage", e);
+  }
+
+  const container = document.getElementById('poll-options');
+  OPTIONS.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.id = `poll-btn-${opt.id}`;
+    btn.innerHTML = `
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="flex:0 0 24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);
+                     display:flex;align-items:center;justify-content:center;font-size:12px;"
+              id="poll-check-${opt.id}"></span>
+        <span style="flex:1;text-align:left;">${opt.label}</span>
+        <span id="poll-bar-wrap-${opt.id}"
+              style="flex:0 0 140px;height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;">
+          <div id="poll-bar-${opt.id}" style="height:100%;width:0;background:var(--accent2);border-radius:4px;transition:width 0.4s;"></div>
+        </span>
+        <span id="poll-pct-${opt.id}" style="flex:0 0 36px;text-align:right;font-size:0.75em;color:#888;">0%</span>
+      </div>
+    `;
+    btn.style.cssText = `width:100%;padding:12px 16px;background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;
+      font-size:0.45em;cursor:pointer;font-family:inherit;text-align:left;outline:none;`;
+    btn.onclick = () => vote(opt.id);
+    container.appendChild(btn);
+  });
+
+  function renderPollData(votes) {
+    const counts = {};
+    OPTIONS.forEach(o => counts[o.id] = 0);
+    Object.values(votes).forEach(v => { if (counts[v] !== undefined) counts[v]++; });
+    const total = Object.values(counts).reduce((a, b) => a + b, 0);
+
+    document.getElementById('poll-total').textContent = total;
+    OPTIONS.forEach(opt => {
+      const pct = total > 0 ? Math.round((counts[opt.id] / total) * 100) : 0;
+      document.getElementById(`poll-bar-${opt.id}`).style.width = pct + '%';
+      document.getElementById(`poll-pct-${opt.id}`).textContent = pct + '%';
+      
+      const check = document.getElementById(`poll-check-${opt.id}`);
+      if (myVote === opt.id) {
+        check.textContent = '✓';
+        check.style.background = 'var(--accent2)';
+        check.style.borderColor = 'var(--accent2)';
+        check.style.color = '#0d1117';
+        check.style.fontWeight = 'bold';
+      } else {
+        check.textContent = '';
+        check.style.background = 'transparent';
+        check.style.borderColor = 'rgba(255,255,255,0.3)';
+      }
+    });
+  }
+
+  async function vote(optId) {
+    myVote = optId;
+    try {
+      localStorage.setItem('bookend_hacks_my_vote', optId);
+    } catch(e) {}
+
+    if (usePollMock) {
+      mockVotes[userId] = optId;
+      try {
+        localStorage.setItem('bookend_hacks_poll_mock', JSON.stringify(mockVotes));
+      } catch(e) {}
+      renderPollData(mockVotes);
+      return;
+    }
+
+    const data = {};
+    data[`votes.${userId}`] = optId;
+    data.updated_at = serverTimestamp();
+
+    try {
+      await setDoc(pollRef, data, { merge: true });
+    } catch(e) {
+      console.warn("寫入 Firestore 投票失敗，切換至 LocalStorage 備援！", e);
+      usePollMock = true;
+      mockVotes[userId] = optId;
+      try {
+        localStorage.setItem('bookend_hacks_poll_mock', JSON.stringify(mockVotes));
+      } catch(ex) {}
+      renderPollData(mockVotes);
+    }
+  }
+
+  onSnapshot(pollRef, snap => {
+    if (usePollMock) return;
+    const data = snap.data() || {};
+    const votes = data.votes || {};
+    if (Object.keys(votes).length === 0 && Object.keys(mockVotes).length > 0) {
+      renderPollData(mockVotes);
+    } else {
+      renderPollData(votes);
+    }
+  }, err => {
+    console.warn("Firestore 載入投票失敗（權限不足），切換至 LocalStorage 備援！", err);
+    usePollMock = true;
+    renderPollData(mockVotes);
+  });
+</script>
+
+</body>
+</html>

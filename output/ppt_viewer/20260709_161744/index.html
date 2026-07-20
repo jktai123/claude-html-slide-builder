@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT 簡報教學：Images 2.0 視覺化簡報</title>
+    <!-- 引入高質感字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', -apple-system, sans-serif;
+            background: #08090d;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #f3f4f6;
+        }
+
+        /* 背景流光特效 */
+        .bg-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
+            top: -200px;
+            left: -200px;
+            filter: blur(80px);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .bg-glow-right {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.15) 0%, transparent 70%);
+            bottom: -100px;
+            right: -100px;
+            filter: blur(80px);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1440px;
+            height: 85vh;
+            background: rgba(13, 17, 23, 0.7);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(20px);
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            transition: all 0.5s ease;
+        }
+
+        /* 磨砂玻璃遮罩 */
+        .slide-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(8, 9, 13, 0.9) 35%, rgba(8, 9, 13, 0.4) 100%);
+            z-index: 1;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .slide-content {
+            position: relative;
+            max-width: 1100px;
+            width: 100%;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        /* 簡報大標題 */
+        h2 {
+            font-size: 52px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 35px;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            background: linear-gradient(135deg, #ffffff 60%, #a2b6ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 段落內容卡片化 (Bento) */
+        ul {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        li {
+            font-size: 24px;
+            color: #d1d5db;
+            line-height: 1.6;
+            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        li:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.1);
+        }
+
+        /* 項目強調標籤 */
+        .highlight-tag {
+            color: #4f46e5;
+            background: rgba(79, 70, 229, 0.15);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 18px;
+            margin-right: 10px;
+            border: 1px solid rgba(79, 70, 229, 0.2);
+            display: inline-block;
+        }
+
+        /* 雙欄排版 */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .col-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .col-card h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #818cf8;
+            border-left: 4px solid #4f46e5;
+            padding-left: 12px;
+        }
+
+        .col-card p {
+            font-size: 20px;
+            color: #9ca3af;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* 頁碼指示器 */
+        .slide-number {
+            position: absolute;
+            bottom: 40px;
+            right: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 2px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 10;
+        }
+
+        /* 底部控制鈕 */
+        .controls {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 10;
+            background: rgba(8, 9, 13, 0.5);
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+        }
+
+        .control-btn {
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            color: #d1d5db;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .control-btn:hover {
+            background: #4f46e5;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .play-indicator {
+            font-size: 14px;
+            font-weight: 600;
+            color: #9ca3af;
+            padding: 0 10px;
+        }
+
+        /* 進度條 */
+        .progress-bar-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.02);
+            z-index: 10;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4f46e5, #818cf8);
+            box-shadow: 0 0 10px #818cf8;
+            transition: width 0.3s ease;
+        }
+
+        /* 投影片特定背景與排版 */
+        /* Slide 1-6 使用生成圖作為背景 */
+        #slide-1 { background-image: url('images/slide_01.jpg'); }
+        #slide-2 { background-image: url('images/slide_02.jpg'); }
+        #slide-3 { background-image: url('images/slide_03.jpg'); }
+        #slide-4 { background-image: url('images/slide_04.jpg'); }
+        #slide-5 { background-image: url('images/slide_05.jpg'); }
+        #slide-6 { background-image: url('images/slide_06.jpg'); }
+
+        /* Slide 7-11 使用 CSS 炫光漸層作為背景 */
+        .fallback-gradient {
+            background: radial-gradient(circle at 80% 20%, rgba(79, 70, 229, 0.12) 0%, transparent 60%),
+                        radial-gradient(circle at 20% 80%, rgba(129, 140, 248, 0.12) 0%, transparent 60%),
+                        #0b0e14;
+        }
+
+        /* 微小動畫 */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.02); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.9; }
+        }
+
+        .pulsing-box {
+            animation: pulse 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <div class="bg-glow-right"></div>
+
+    <div class="container">
+        <div id="slides-container" style="width: 100%; height: 100%;">
+            
+            <!-- Slide 1 (封面) -->
+            <div class="slide" id="slide-1" data-index="1">
+                <div class="slide-overlay"></div>
+                <div class="slide-content pulsing-box">
+                    <h2>ChatGPT 簡報製作教學</h2>
+                    <ul>
+                        <li style="font-size: 30px; border-left: 6px solid #4f46e5; background: rgba(79, 70, 229, 0.05);">
+                            使用 Images 2.0 從視覺規範到一鍵打包 PPTX
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-number">1 / 11</div>
+            </div>
+
+            <!-- Slide 2 (章節 1) -->
+            <div class="slide" id="slide-2" data-index="2">
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <span class="highlight-tag" style="margin-bottom: 20px; font-size: 20px;">PART 01</span>
+                    <h2>第一部分：Images 2.0 的三大突破</h2>
+                    <ul>
+                        <li>解決傳統 AI 生圖痛點，帶來全新簡報視覺體驗</li>
+                    </ul>
+                </div>
+                <div class="slide-number">2 / 11</div>
+            </div>
+
+            <!-- Slide 3 (突破介紹) -->
+            <div class="slide" id="slide-3" data-index="3">
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <h2>Images 2.0 的有感提升</h2>
+                    <ul>
+                        <li><span class="highlight-tag">突破 1</span> <strong>中文字幕幾乎無錯字</strong>：以往筆劃崩壞、亂碼問題降至極低</li>
+                        <li><span class="highlight-tag">突破 2</span> <strong>構圖設計感大幅提升</strong>：版面多樣且精緻，超越傳統生圖工具</li>
+                        <li><span class="highlight-tag">突破 3</span> <strong>跨批次風格高度一致</strong>：精準記憶上下文的視覺設計規範</li>
+                    </ul>
+                </div>
+                <div class="slide-number">3 / 11</div>
+            </div>
+
+            <!-- Slide 4 (章節 2) -->
+            <div class="slide" id="slide-4" data-index="4">
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <span class="highlight-tag" style="margin-bottom: 20px; font-size: 20px;">PART 02</span>
+                    <h2>第二部分：六步驟極速簡報工作流</h2>
+                    <ul>
+                        <li>從定義任務到一鍵打包下載的實戰指南</li>
+                    </ul>
+                </div>
+                <div class="slide-number">4 / 11</div>
+            </div>
+
+            <!-- Slide 5 (步驟 1-2) -->
+            <div class="slide" id="slide-5" data-index="5">
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <h2>步驟 1-2：定義任務與對焦骨架</h2>
+                    <ul>
+                        <li>
+                            <span class="highlight-tag">第一步</span> <strong>定義任務</strong>：
+                            上傳企劃書檔案，並明確界定五要素：主題、對象、目的、頁數、風格。
+                        </li>
+                        <li>
+                            <span class="highlight-tag">第二步</span> <strong>對焦骨架</strong>：
+                            請 GPT 以表格產出大綱，包含頁碼、標題、核心訊息與建議畫面類型。
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-number">5 / 11</div>
+            </div>
+
+            <!-- Slide 6 (步驟 3-4) -->
+            <div class="slide" id="slide-6" data-index="6">
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <h2>步驟 3-4：設定風格與分批生圖</h2>
+                    <ul>
+                        <li>
+                            <span class="highlight-tag">第三步</span> <strong>建立風格規範</strong>：
+                            在生圖前，先要求 GPT 定義色彩（色碼）、字體調性及封面設計方向。
+                        </li>
+                        <li>
+                            <span class="highlight-tag">第四步</span> <strong>分批生圖</strong>：
+                            按視覺規範分批生成 16:9 的投影片圖片（因為單次生圖上限為 10 張）。
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-number">6 / 11</div>
+            </div>
+
+            <!-- Slide 7 (步驟 5-6) -->
+            <div class="slide fallback-gradient" id="slide-7" data-index="7">
+                <div class="slide-content">
+                    <h2>步驟 5-6：生成講稿與打包下載</h2>
+                    <ul>
+                        <li>
+                            <span class="highlight-tag">第五步</span> <strong>逐頁講稿撰寫</strong>：
+                            利用 GPT 根據圖片內容及原本的文件，為你撰寫具備說服力的逐頁講稿要點。
+                        </li>
+                        <li>
+                            <span class="highlight-tag">第六步</span> <strong>一鍵打包 PPTX</strong>：
+                            最後下指令請 GPT 將生成的所有圖片統整，一鍵打包成 PPTX 檔下載。
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-number">7 / 11</div>
+            </div>
+
+            <!-- Slide 8 (問題對比) -->
+            <div class="slide fallback-gradient" id="slide-8" data-index="8">
+                <div class="slide-content">
+                    <h2>常見問題與高效解法</h2>
+                    <div class="two-column">
+                        <div class="col-card">
+                            <h3>出現錯字或局部不滿意？</h3>
+                            <p><strong>塗改壓字</strong>：直接在修圖軟體中塗掉錯字並壓上新字，速度最快也最省時。</p>
+                            <p><strong>局部重繪</strong>：使用 GPT 圈選功能並下 Prompt 重新生成特定區域。</p>
+                        </div>
+                        <div class="col-card">
+                            <h3>排版風格突然變了？</h3>
+                            <p><strong>降級 Fallback</strong>：多人使用時，系統可能偷降級為舊模型運算。</p>
+                            <p><strong>重開對話</strong>：新開對話，並在指令中強制加上「use the latest image model」。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-number">8 / 11</div>
+            </div>
+
+            <!-- Slide 9 (章節 3) -->
+            <div class="slide fallback-gradient" id="slide-9" data-index="9">
+                <div class="slide-content">
+                    <span class="highlight-tag" style="margin-bottom: 20px; font-size: 20px;">PART 03</span>
+                    <h2>第三部分：AI 簡報核心心法</h2>
+                    <ul>
+                        <li>決定簡報好壞與說服力的，依然是人類的大腦</li>
+                    </ul>
+                </div>
+                <div class="slide-number">9 / 11</div>
+            </div>
+
+            <!-- Slide 10 (心法) -->
+            <div class="slide fallback-gradient" id="slide-10" data-index="10">
+                <div class="slide-content">
+                    <h2>兩大不可忽視的 AI 簡報心法</h2>
+                    <ul>
+                        <li>
+                            <span class="highlight-tag">心法一</span> <strong>先想清楚，再讓 AI 放大觀點</strong><br>
+                            AI 是放大器，不是判斷力的替代品；你必須自己先理清邏輯大綱。
+                        </li>
+                        <li>
+                            <span class="highlight-tag">心法二</span> <strong>敘事邏輯與視覺邏輯分開處理</strong><br>
+                            輸入端注重「敘事說服力」，確保邏輯嚴密；輸出端再用 AI 進行「視覺化」呈現。
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-number">10 / 11</div>
+            </div>
+
+            <!-- Slide 11 (封底) -->
+            <div class="slide fallback-gradient" id="slide-11" data-index="11">
+                <div class="slide-content" style="text-align: center; align-items: center;">
+                    <h2 style="font-size: 64px; margin-bottom: 20px;">謝謝聆聽</h2>
+                    <p style="font-size: 24px; color: #9ca3af; margin-bottom: 30px;">Q&A / 問與答時間</p>
+                    <div style="background: rgba(255,255,255,0.03); padding: 15px 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); font-size: 16px; color: rgba(255,255,255,0.5);">
+                        本文授權轉載自 經理人月刊
+                    </div>
+                </div>
+                <div class="slide-number">11 / 11</div>
+            </div>
+
+        </div>
+
+        <!-- 播放控制台 -->
+        <div class="controls">
+            <button class="control-btn" id="prev-btn" title="上一頁">◀</button>
+            <div class="play-indicator" id="play-status">PAGE 1</div>
+            <button class="control-btn" id="play-btn" title="播放/暫停">▶</button>
+            <button class="control-btn" id="next-btn" title="下一頁">▶</button>
+        </div>
+
+        <!-- 進度條 -->
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        const totalSlides = 11;
+        let currentSlide = 1;
+        let isPlaying = false;
+        let playInterval = null;
+
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const playBtn = document.getElementById('play-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const playStatus = document.getElementById('play-status');
+
+        function showSlide(index) {
+            if (index < 1) index = 1;
+            if (index > totalSlides) index = totalSlides;
+
+            currentSlide = index;
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i + 1 === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+
+            playStatus.textContent = `PAGE ${currentSlide}`;
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const progress = (currentSlide / totalSlides) * 100;
+            progressBar.style.width = progress + '%';
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1);
+            } else if (isPlaying) {
+                togglePlay(); // 播完自動停止
+            }
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                playBtn.innerHTML = '⏸';
+                playInterval = setInterval(() => {
+                    nextSlide();
+                }, 4000); // 4秒自動翻頁
+            } else {
+                playBtn.innerHTML = '▶';
+                if (playInterval) {
+                    clearInterval(playInterval);
+                    playInterval = null;
+                }
+            }
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+        playBtn.addEventListener('click', togglePlay);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'p' || e.key === 'P') {
+                togglePlay();
+            }
+        });
+
+        // 初始化
+        showSlide(1);
+    </script>
+</body>
+</html>

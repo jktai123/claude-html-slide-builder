@@ -1,0 +1,69 @@
+{
+  "videoId": "ZC8AI_jFWnU",
+  "title": "國外瘋傳的 AI 筆記工作流！LLM Wiki 讓你的 Obsidian 筆記升級成能自我進化的第二大腦！",
+  "channel": "PAPAYA 電腦教室",
+  "channelId": "UCdEpz2A4DzV__4C1x2quKLw",
+  "description": "🔹 內容綱要\n00:00 Obsidian 安裝與基本操作\n03:31 建立 Obsidian 範本\n04:36 建立頁面連結\n08:22 管理反向連結\n10:13 顯示關聯圖\n11:02 LLM Wiki 基本觀念和架構設定\n13:08 將 Codex 連結到 Obsidian\n14:23 安裝 Obsidian Web Clipper\n15:58 設定 LLM 排程\n17:16 建立 HTML 資訊圖表\n\n🔹 網站連結\nObsidian 官網 https://obsidian.md/\nCodex 下載 https://openai.com/zh-Hant/codex/\nObsidian Web Clipper https://bit.ly/4vaDp5y\nLLM Wiki 提示詞 https://bit.ly/4xZUNMH\n\n🔹 請 Papaya 喝咖啡 ☕️\nhttps://buymeacoffee.com/papayaclass\n\n🔹 頻道會員影片目錄\nhttps://bit.ly/3PaC4Jj\n\n#教學 #Obsidian #筆記 #LLM #Wiki #AI #第二大腦",
+  "duration": 1085,
+  "publishDate": "2026-07-08",
+  "url": "https://www.youtube.com/watch?v=ZC8AI_jFWnU",
+  "coverImage": "imgs/cover.jpg",
+  "thumbnailUrl": "https://i.ytimg.com/vi/ZC8AI_jFWnU/maxresdefault.jpg",
+  "language": {
+    "code": "zh-TW",
+    "name": "Chinese (Taiwan)",
+    "isGenerated": false
+  },
+  "chapters": [
+    {
+      "title": "Obsidian 安裝與基本操作",
+      "start": 0,
+      "end": 211
+    },
+    {
+      "title": "建立 Obsidian 範本",
+      "start": 211,
+      "end": 276
+    },
+    {
+      "title": "建立頁面連結",
+      "start": 276,
+      "end": 502
+    },
+    {
+      "title": "管理反向連結",
+      "start": 502,
+      "end": 613
+    },
+    {
+      "title": "顯示關聯圖",
+      "start": 613,
+      "end": 662
+    },
+    {
+      "title": "LLM Wiki 基本觀念和架構設定",
+      "start": 662,
+      "end": 788
+    },
+    {
+      "title": "將 Codex 連結到 Obsidian",
+      "start": 788,
+      "end": 863
+    },
+    {
+      "title": "安裝 Obsidian Web Clipper",
+      "start": 863,
+      "end": 958
+    },
+    {
+      "title": "設定 LLM 排程",
+      "start": 958,
+      "end": 1036
+    },
+    {
+      "title": "建立 HTML 資訊圖表",
+      "start": 1036,
+      "end": 1085
+    }
+  ]
+}

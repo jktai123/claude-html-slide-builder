@@ -1,0 +1,412 @@
+/* 核心變數 */
+:root {
+    --bg-dark: #070913;
+    --card-bg: rgba(17, 22, 44, 0.65);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --primary-grad: linear-gradient(135deg, #00f0ff 0%, #7000ff 100%);
+    --secondary-grad: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    --accent-grad: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+    --glow-cyan: rgba(0, 240, 255, 0.35);
+    --glow-purple: rgba(112, 0, 255, 0.3);
+}
+
+/* 全域樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* 霓虹發光背景 */
+.glass-bg {
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    width: 60%;
+    height: 70%;
+    background: radial-gradient(circle, var(--glow-cyan) 0%, transparent 60%);
+    z-index: -1;
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+body::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    right: -10%;
+    width: 50%;
+    height: 60%;
+    background: radial-gradient(circle, var(--glow-purple) 0%, transparent 65%);
+    z-index: -1;
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+/* 容器排版 */
+.container {
+    width: 100%;
+    max-width: 960px;
+    padding: 2.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    z-index: 1;
+}
+
+header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+}
+
+.logo-icon {
+    font-size: 2.5rem;
+    animation: rotate 12s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+header h1 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    letter-spacing: -0.05em;
+    background: linear-gradient(to right, #00f0ff, #ff007f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+header h1 span {
+    font-weight: 300;
+    color: var(--text-primary);
+    -webkit-text-fill-color: var(--text-primary);
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+/* 網頁主面板 */
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 玻璃擬態卡片 */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.card:hover {
+    border-color: rgba(0, 240, 255, 0.25);
+    box-shadow: 0 10px 40px 0 rgba(0, 240, 255, 0.08);
+}
+
+.card h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+/* 按鈕樣式 */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.btn {
+    width: 100%;
+    padding: 1.1rem;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transition: 0.6s;
+}
+
+.btn:hover::after {
+    left: 100%;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background: var(--primary-grad);
+    box-shadow: 0 4px 20px rgba(0, 240, 255, 0.25);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 6px 25px rgba(0, 240, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: var(--secondary-grad);
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
+}
+
+.btn-secondary:hover {
+    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-accent {
+    background: var(--accent-grad);
+    box-shadow: 0 4px 20px rgba(236, 72, 153, 0.2);
+}
+
+.btn-accent:hover {
+    box-shadow: 0 6px 25px rgba(236, 72, 153, 0.35);
+    transform: translateY(-2px);
+}
+
+/* 輸入框 */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+textarea {
+    width: 100%;
+    height: 160px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem;
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    resize: none;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+textarea:focus {
+    border-color: #ec4899;
+    box-shadow: 0 0 12px rgba(236, 72, 153, 0.2);
+}
+
+/* 輸出面板 */
+.output-panel {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+    .output-panel {
+        grid-column: auto;
+    }
+}
+
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.btn-text:hover {
+    color: #ff007f;
+}
+
+.console-box {
+    background: rgba(5, 7, 18, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.5rem;
+    min-height: 250px;
+    max-height: 500px;
+    overflow-y: auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #a9b1d6;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.placeholder-text {
+    color: #565f89;
+    text-align: center;
+    margin-top: 5rem;
+    font-style: italic;
+}
+
+.error-box {
+    color: #f7768e;
+    border-left: 3px solid #f7768e;
+    padding-left: 1rem;
+    margin: 1rem 0;
+}
+
+.notion-link {
+    color: #7aa2f7;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dashed #7aa2f7;
+}
+
+.notion-link:hover {
+    color: #89ddff;
+    border-bottom-style: solid;
+}
+
+/* Loading 效果 */
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 4rem;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(0, 240, 255, 0.1);
+    border-radius: 50%;
+    border-top-color: #00f0ff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* 頁尾 */
+footer {
+    text-align: center;
+    color: #565f89;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+    font-weight: 300;
+}
+
+/* 媒體上傳區域樣式 */
+.file-upload-wrapper {
+    width: 100%;
+}
+
+.file-upload-box {
+    border: 2px dashed rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 2.2rem 1rem;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.file-upload-box:hover {
+    border-color: #00f0ff;
+    background: rgba(0, 240, 255, 0.03);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.05);
+}
+
+.upload-icon {
+    font-size: 2.2rem;
+    filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.3));
+}
+
+.file-upload-box p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 300;
+}
+
+.console-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text-primary);
+}
+

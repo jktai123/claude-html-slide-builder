@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google Antigravity 30天社群監測與技術爭議報告</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+  <style>
+    /* === 全域變數與主題調色盤 (Midnight Executive 科技版) === */
+    :root {
+      --bg-dark: #070913;
+      --bg-light: #f4f7fc;
+      --text-dark: #ffffff;
+      --text-primary: #1e2761;
+      --text-muted-dark: rgba(255, 255, 255, 0.7);
+      --text-muted-light: rgba(30, 39, 97, 0.7);
+      --accent: #1e2761;
+      --accent2: #80deea;
+      --accent-alt: #4fc3f7;
+      --success: #81c784;
+      --warn:    #ffb74d;
+      --card-bg-light: #ffffff;
+      --card-border-light: rgba(30, 39, 97, 0.08);
+      --card-bg-dark: rgba(255, 255, 255, 0.06);
+      --card-border-dark: rgba(255, 255, 255, 0.12);
+    }
+
+    /* === Reveal.js 基礎複寫 === */
+    .reveal {
+      font-family: 'Segoe UI', 'Noto Sans TC', system-ui, sans-serif;
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-transform: none;
+    }
+    .reveal h1 { font-size: 2.2em; text-shadow: 0 0 20px rgba(79, 195, 247, 0.3); }
+    .reveal h2 { font-size: 1.4em; margin-bottom: 0.5em; }
+    .reveal h3 { font-size: 1.05em; }
+    .reveal p, .reveal li { font-size: 0.52em; line-height: 1.7; }
+    .reveal .progress { color: var(--accent-alt); }
+    .reveal .controls { color: var(--accent-alt); }
+
+    /* === 亮暗投影片樣式 (Sandwich 結構) === */
+    .reveal section.dark-slide {
+      --bg-card: var(--card-bg-dark);
+      --border-card: var(--card-border-dark);
+      --text-primary: var(--text-dark);
+      --text-muted: var(--text-muted-dark);
+      color: var(--text-primary);
+      background: radial-gradient(circle at 50% 50%, #151a3a 0%, #070913 100%) !important;
+    }
+    .reveal section.dark-slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: center;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .reveal section.dark-slide h1,
+    .reveal section.dark-slide h2,
+    .reveal section.dark-slide h3,
+    .reveal section.dark-slide p,
+    .reveal section.dark-slide li {
+      color: var(--text-primary);
+    }
+    .reveal section.dark-slide h2 {
+      color: var(--accent-alt);
+    }
+
+    .reveal section.light-slide {
+      --bg-card: var(--card-bg-light);
+      --border-card: var(--card-border-light);
+      --text-primary: #1e2761;
+      --text-muted: var(--text-muted-light);
+      color: var(--text-primary);
+      background: radial-gradient(circle at 20% 80%, #ffffff 0%, #eef3f9 100%) !important;
+    }
+    .reveal section.light-slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(30, 39, 97, 0.02) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(30, 39, 97, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: center;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .reveal section.light-slide h1,
+    .reveal section.light-slide h2,
+    .reveal section.light-slide h3,
+    .reveal section.light-slide p,
+    .reveal section.light-slide li {
+      color: var(--text-primary);
+    }
+    .reveal section.light-slide h2 {
+      color: var(--accent);
+    }
+
+    /* === 視覺 Motif 類別 === */
+    .motif-border-left {
+      border-left: 6px solid var(--accent);
+      padding-left: 18px;
+      text-align: left;
+    }
+    .reveal section.dark-slide .motif-border-left {
+      border-left-color: var(--accent-alt);
+    }
+
+    .motif-flat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      transition: all 0.3s ease;
+      text-align: left;
+    }
+    .motif-flat-card:hover {
+      box-shadow: 0 12px 35px rgba(79, 195, 247, 0.15);
+    }
+
+    .motif-icon-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px auto;
+    }
+    .motif-icon-circle svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--accent-alt);
+    }
+    .reveal section.light-slide .motif-icon-circle {
+      background: rgba(30, 39, 97, 0.05);
+      border-color: rgba(30, 39, 97, 0.15);
+    }
+    .reveal section.light-slide .motif-icon-circle svg {
+      fill: var(--accent);
+    }
+
+    /* === 元件佈局 === */
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block;
+      background: var(--accent-alt);
+      color: #070913;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.5em;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8em;
+      font-weight: 700;
+    }
+    .title-slide .subtitle { font-size: 0.72em; color: var(--text-muted); margin-top: 0.5em; }
+    .title-slide .author   { margin-top: 2em; font-size: 0.5em; color: var(--text-muted); }
+
+    .adv-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 0.6em; }
+    .adv-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .adv-card .adv-title { font-size: 0.55em; font-weight: 700; color: var(--accent-alt); margin-bottom: 8px; }
+    .reveal section.light-slide .adv-card .adv-title { color: var(--accent); }
+    .adv-card .adv-desc  { font-size: 0.4em; color: var(--text-muted); line-height: 1.6; }
+
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+      text-align: left;
+    }
+    .two-col-grid .col-text { font-size: 0.52em; line-height: 1.7; }
+    
+    .quote-box {
+      background: var(--bg-card);
+      border-left: 5px solid var(--accent-alt);
+      border-radius: 8px;
+      padding: 18px 24px;
+      margin: 1em 0;
+      font-size: 0.5em;
+      color: var(--text-primary);
+      font-style: italic;
+      line-height: 1.7;
+      text-align: left;
+    }
+    .reveal section.light-slide .quote-box {
+      border-left-color: var(--accent);
+    }
+    .quote-author { font-size: 0.4em; color: var(--text-muted); text-align: right; margin-top: 6px; font-style: normal; }
+
+    /* === VIZ 滑桿對比 === */
+    .viz-container {
+      position: relative;
+      height: 380px;
+      width: 800px;
+      margin: 0 auto;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-card);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    .viz-slide-pane {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px;
+      box-sizing: border-box;
+      text-align: left;
+    }
+    #viz-before {
+      background: radial-gradient(circle at 10% 10%, #2f3c7e 0%, #151a3a 100%);
+      color: #fff;
+    }
+    #viz-after {
+      background: radial-gradient(circle at 90% 90%, #6d2e46 0%, #200814 100%);
+      color: #fff;
+    }
+    .viz-pane-title {
+      font-size: 1.8em;
+      font-weight: 700;
+      margin-bottom: 12px;
+      border-bottom: 2px solid rgba(255,255,255,0.2);
+      padding-bottom: 6px;
+    }
+    .viz-pane-list {
+      font-size: 0.95em;
+      line-height: 1.8;
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    .viz-pane-list li::before {
+      content: "✦ ";
+      color: var(--accent-alt);
+    }
+
+    /* === 互動式心智圖 (Mindmap) === */
+    .mindmap-container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .mindmap-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+    .mindmap-node {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-card);
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 0.44em;
+      text-align: left;
+      position: relative;
+    }
+    .mindmap-node.root-node {
+      grid-column: span 3;
+      text-align: center;
+      border-color: var(--accent-alt);
+      background: rgba(128, 222, 234, 0.08);
+      font-size: 0.6em;
+      font-weight: 700;
+    }
+    .mindmap-node .node-title {
+      font-weight: 700;
+      color: var(--accent-alt);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .reveal section.light-slide .mindmap-node .node-title {
+      color: var(--accent);
+    }
+    .mindmap-node ul {
+      margin: 0;
+      padding-left: 14px;
+      color: var(--text-muted);
+    }
+    .mindmap-node li {
+      font-size: 0.9em;
+      margin-bottom: 4px;
+    }
+
+    /* === 手機版 RWD 覆寫 === */
+    @media (max-width: 560px), (max-device-width: 560px) and (orientation: portrait) {
+      .reveal { font-size: 1.65em !important; }
+      .reveal h1 { font-size: 1.8em !important; line-height: 1.2 !important; }
+      .reveal h2 { font-size: 1.45em !important; }
+      .reveal h3 { font-size: 1.1em !important; }
+      .reveal p, .reveal li { font-size: 0.95em !important; line-height: 1.6 !important; }
+      
+      .adv-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .two-col-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+      .stat-row {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .viz-container {
+        width: 100% !important;
+        height: 280px !important;
+      }
+      .viz-slide-pane {
+        padding: 16px !important;
+      }
+      .viz-pane-title {
+        font-size: 1.3em !important;
+      }
+      .viz-pane-list {
+        font-size: 0.85em !important;
+      }
+      
+      div[style*="grid-template-columns:250px 1fr"] {
+        grid-template-columns: 1fr !important;
+        height: auto !important;
+      }
+      #wc-canvas {
+        height: 200px !important;
+      }
+      .mindmap-row {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .mindmap-node.root-node {
+        grid-column: span 1 !important;
+      }
+    }
+  </style>
+</head>
+<body class="theme-midnight">
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 頁 1：封面 -->
+    <section class="dark-slide" data-background-color="var(--bg-dark)">
+      <div class="title-slide">
+        <div class="tag">COMMUNITY INTELLIGENCE · 2026-07</div>
+        <h1>Google Antigravity</h1>
+        <h2 style="color:var(--accent-alt); margin-top:0.2em; font-size:1.10em;">30天社群監測與技術爭議報告</h2>
+        <p class="subtitle">解密 Agent-First 時代下付費配額與生態整合的交鋒</p>
+        <p class="author">報告整理：Antigravity AI 助理</p>
+      </div>
+    </section>
+
+    <!-- 頁 2：即時互動文字雲 -->
+    <section id="slide-wordcloud" class="dark-slide" data-background-color="var(--bg-dark)">
+      <h2 style="font-size:1.1em; margin-bottom:0.4em;">你對 Google Antigravity 的第一直覺與印象是什麼？</h2>
+      <div style="display:grid; grid-template-columns:250px 1fr; gap:14px; height:460px;">
+        <!-- 左欄：輸入 + 排行 -->
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px;">
+            <div style="font-size:0.38em; color:var(--accent-alt); font-weight:700; margin-bottom:8px;">輸入你的印象 (如: 鎖配額、Graveyard、高權限)</div>
+            <input id="wc-input" type="text" placeholder="輸入關鍵詞…" maxlength="20"
+              style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid rgba(79,195,247,0.3);
+                     background:rgba(255,255,255,0.08); color:#fff; font-size:13px;
+                     box-sizing:border-box; font-family:inherit; outline:none;" />
+            <button id="wc-btn"
+              style="width:100%; margin-top:8px; padding:9px; background:var(--accent-alt); color:#0d1117;
+                     border:none; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer;">
+              送出 ↵
+            </button>
+          </div>
+          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px; flex:1; overflow:hidden; display:flex; flex-direction:column;">
+            <div style="font-size:0.38em; color:var(--accent-alt); font-weight:700; margin-bottom:8px;">
+              熱門印象
+              <span style="display:inline-block; background:#ff4757; color:#fff; padding:2px 7px;
+                           border-radius:10px; font-size:0.85em; animation:pulse 1.5s infinite;">LIVE</span>
+            </div>
+            <div id="wc-list" style="font-size:0.34em; overflow-y:auto; flex:1; color:#ccc;"></div>
+            <div style="margin-top:8px; font-size:0.32em; color:#666; border-top:1px solid rgba(255,255,255,0.08); padding-top:6px;">
+              總計：<span id="wc-total" style="color:var(--accent-alt); font-weight:700;">0</span>　
+              獨立詞：<span id="wc-unique" style="color:var(--success); font-weight:700;">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右欄：文字雲 canvas -->
+        <div style="background:rgba(255,255,255,0.04); border-radius:12px; overflow:hidden;
+                    position:relative; border:1px solid rgba(255,255,255,0.07);">
+          <canvas id="wc-canvas" style="width:100%; height:100%; display:block;"></canvas>
+          <div id="wc-empty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                                     color:#666; font-size:0.42em; text-align:center;
+                                     pointer-events:none; line-height:2;">
+            輸入第一個答案<br>文字雲就會即時出現 ✨
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁 3：生態整合三要素 -->
+    <section class="light-slide" data-background-color="var(--bg-light)">
+      <h2>第三方生態整合的交鋒</h2>
+      <p style="margin-top:-0.5em; margin-bottom:1em; color:var(--text-muted-light)">開發者社群在配額限制下，主動串接第三方框架尋求解決方案</p>
+      <div class="adv-grid">
+        <div class="adv-card fragment">
+          <div class="motif-icon-circle">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 3.99L19.53 19H4.47L12 5.99zM13 16h-2v2h2v-2zm0-6h-2v4h2v-4z"/></svg>
+          </div>
+          <div class="adv-title">Omnigent Setup 支援</div>
+          <div class="adv-desc">新增 Antigravity 作為一等公民，同時支援 headless 模式與 agy CLI 調用，使 SDK 與 claude/codex 同步對齊。</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="motif-icon-circle">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+          </div>
+          <div class="adv-title">openclaw 驗證補丁</div>
+          <div class="adv-desc">社群於 7 月初發布 PR 99733，整合 `agy --print` 與快取認證導入，用以加固因官方更新而破碎的 auth 邊界。</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="motif-icon-circle">
+            <svg viewBox="0 0 24 24"><path d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0-1-.45-1-1v-6c0-.55-.45-1-1-1zm-4 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-3 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+          </div>
+          <div class="adv-title">9router 代理路由</div>
+          <div class="adv-desc">開發者積極嘗試在 agy 上游設置 API Gateway/Vertex 代理，期望藉由統一中轉繞過官方 CLI 的配額鎖定。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁 4：認證 Bug 與反差 -->
+    <section class="light-slide" data-background-color="var(--bg-light)">
+      <div class="two-col-grid">
+        <div class="col-text">
+          <div class="motif-border-left">
+            <h2 style="font-size:1.9em;">Pro/Free 帳號的奇特反差</h2>
+            <p style="margin-top:0.5em; font-size:1em;">
+              近期開發者在 **Claude Code** 整合 Antigravity 時，遭遇了令人費解的 Bug：使用 **Google AI Pro** 付費帳號會持續認證失敗，但切換成 **Google Free** 免費帳號後卻能順暢運行。
+            </p>
+          </div>
+          <div class="quote-box fragment">
+            「When using the Antigravity provider with Claude Code, requests consistently fail when authenticated with a Google Pro account. The exact same setup works correctly after switching to a Google Free account.」
+            <div class="quote-author">— Github Issue decolua/9router #2225</div>
+          </div>
+        </div>
+        <div class="col-visual">
+          <div class="motif-flat-card" style="text-align:center;">
+            <div style="font-size:2.8em; margin-bottom:10px;">⚠️</div>
+            <div style="font-size:0.55em; font-weight:700; color:red; margin-bottom:12px;">認證邊界異常阻斷</div>
+            <div style="font-size:0.42em; color:var(--text-muted); line-height:1.6; text-align:left;">
+              社群懷疑是 Google API 在回傳付費 Pro 帳號的權限標記 (Quota Tier) 時，與語言伺服器端的驗證規則發生衝突，反觀簡化版 Free 帳號沒有複雜的 Subscription 標籤而成功通行。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁 5：過渡頁 -->
+    <section class="dark-slide" data-background-color="var(--bg-dark)">
+      <h2 style="font-size: 1.6em; text-shadow: 0 0 15px rgba(255,255,255,0.15);">深入配額機制與社群炎上風暴</h2>
+      <p style="font-size: 0.6em; color: var(--accent-alt); margin-top: 1em;">— 下一部分：解析「自動路由缺失」與「限額鎖死」的核心代碼爭議</p>
+    </section>
+
+    <!-- 頁 6：限額鎖死 (Single-Model) -->
+    <section class="light-slide" data-background-color="var(--bg-light)">
+      <div class="two-col-grid">
+        <div class="col-visual">
+          <div class="motif-flat-card" style="border-top: 4px solid var(--accent); background:#fff;">
+            <div style="font-size:0.55em; font-weight:700; margin-bottom:12px; color:var(--accent);">Deliberate Design (刻意鎖定)</div>
+            <p style="font-size:0.4em; color:var(--text-muted); line-height:1.7;">
+              社群開發者在翻閱 `agy` 與官方 SDK 代碼後證實：這種「單一模型耗盡即鎖死全家」的懲罰機制並非漏洞，而是 Google 在協議端寫死的**商業限制設計**，主要用來限制高吞吐量帳號的調用頻率。
+            </p>
+          </div>
+        </div>
+        <div class="col-text">
+          <div class="motif-border-left">
+            <h2 style="font-size:1.8em;">Single-Model 限額鎖死</h2>
+            <p style="margin-top:0.5em; font-size:1em;">
+              開發者最痛恨的設計：一旦 **3.5-Flash** 的額度用盡，系統並不會降級或自動路由至其他可用模型，而是直接阻斷所有模型的運行。
+            </p>
+          </div>
+          <div class="quote-box fragment">
+            「If you exhaust the quota for one model, it will be exhausted for all models. For example, if you exhaust the quota for the 3.5-Flash model, you won't be able to use the other models.」
+            <div class="quote-author">— Github Issue google-gemini/gemini-cli #27858</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁 7：滑桿對比演示 -->
+    <section class="dark-slide" data-background-color="var(--bg-dark)">
+      <h2 style="margin-bottom:20px;">Gemini CLI vs. Antigravity CLI 抉擇</h2>
+      <div class="viz-container">
+        <!-- Before: Gemini CLI -->
+        <div id="viz-before" class="viz-slide-pane">
+          <div class="viz-pane-title">Legacy Gemini CLI</div>
+          <ul class="viz-pane-list">
+            <li><strong>Intelligent Auto-Edit</strong> - 具備流暢的代碼自動改寫體驗。</li>
+            <li><strong>Auto Routing Mode</strong> - 模型額度耗盡時，會自動分流至備用模型。</li>
+            <li><strong>彈性第三方連線</strong> - 可直接透過 LiteLLM 設定 API 代理。</li>
+          </ul>
+        </div>
+        <!-- After: Antigravity CLI -->
+        <div id="viz-after" class="viz-slide-pane" style="clip-path: inset(0 100% 0 0);">
+          <div class="viz-pane-title" style="color:var(--warn);">Antigravity CLI (agy)</div>
+          <ul class="viz-pane-list">
+            <li><strong>單一配額鎖死</strong> - 3.5-Flash 配額一乾，其餘模型全鎖。</li>
+            <li><strong>限額門檻極低</strong> - 付費 Pro 帳號開一場 session 就耗盡額度。</li>
+            <li><strong>強硬認證綁定</strong> - 不支援代理或 Vertex AI pay-as-you-go。</li>
+          </ul>
+        </div>
+        <!-- 分割線 -->
+        <div id="viz-divider" style="position:absolute; top:0; left:0; width:3px; height:100%;
+          background:linear-gradient(to bottom, transparent, var(--accent-alt), transparent);
+          box-shadow:0 0 12px var(--accent-alt); pointer-events:none;"></div>
+      </div>
+      <!-- 滑桿 -->
+      <div style="margin-top: 20px;">
+        <span style="font-size:0.42em; color:var(--text-muted);">Gemini CLI</span>
+        <input id="viz-slider" type="range" min="0" max="100" value="0" style="width:500px; margin: 0 15px; vertical-align:middle;">
+        <span style="font-size:0.42em; color:var(--warn);">Antigravity CLI</span>
+      </div>
+    </section>
+
+    <!-- 頁 8：觀點投票 -->
+    <section id="slide-poll" class="dark-slide" data-background-color="var(--bg-dark)">
+      <h2 style="font-size:1.15em;">你會考慮將 Antigravity 引入你的長期開發工作流中嗎？</h2>
+      <div id="poll-options" style="display:flex; flex-direction:column; gap:12px; margin-top:0.8em; max-width:700px; margin-left:auto; margin-right:auto;">
+        <!-- 動態生成選項 -->
+      </div>
+      <div style="font-size:0.38em; color:#888; text-align:center; margin-top:0.8em;">
+        已投票：<span id="poll-total" style="color:var(--accent-alt); font-weight:700;">0</span> 人
+      </div>
+    </section>
+
+    <!-- 頁 9：心智圖頁面 -->
+    <section class="light-slide" data-background-color="var(--bg-light)">
+      <h2>Antigravity 技術爭議與生態關係圖</h2>
+      <p style="margin-top:-0.5em; margin-bottom:1.2em; color:var(--text-muted-light)">結構化總結過去 30 天社群聚焦的爭議與整合核心</p>
+      
+      <div class="mindmap-container">
+        <!-- 根節點 -->
+        <div class="mindmap-node root-node">
+          Google Antigravity
+        </div>
+        
+        <!-- 分支行 -->
+        <div class="mindmap-row">
+          <!-- 分支 1 -->
+          <div class="mindmap-node fragment">
+            <div class="node-title">
+              <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+              生態對接
+            </div>
+            <ul>
+              <li><strong>openclaw:</strong> 提交驗證邊界補丁。</li>
+              <li><strong>omnigent:</strong> SDK/CLI 整合對齊。</li>
+              <li><strong>9router:</strong> 解決 Pro 帳號連線 bug。</li>
+            </ul>
+          </div>
+          
+          <!-- 分支 2 -->
+          <div class="mindmap-node fragment">
+            <div class="node-title">
+              <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor;"><path d="M12 2L2 22h20L12 2zm0 3.99L19.53 19H4.47L12 5.99zM13 16h-2v2h2v-2zm0-6h-2v4h2v-4z"/></svg>
+              配額鎖定
+            </div>
+            <ul>
+              <li><strong>Single-Model:</strong> 3.5-Flash 乾涸鎖全家。</li>
+              <li><strong>Pro Quota 限制:</strong> 低額度極快耗盡。</li>
+              <li><strong>Vertex 權限:</strong> standard 付費帳號缺 Vertex。</li>
+            </ul>
+          </div>
+          
+          <!-- 分支 3 -->
+          <div class="mindmap-node fragment">
+            <div class="node-title">
+              <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor;"><path d="M12 2c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l2.79-2.79C10.09 18.79 11.02 19 12 19c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+              社群風向
+            </div>
+            <ul>
+              <li><strong>產品壽命懷疑:</strong> Google Graveyard 標籤。</li>
+              <li><strong>VS Code 疲勞:</strong> 多數為 VS Code 包裝外殼。</li>
+              <li><strong>資安防備:</strong> 高權限帶來的提示注入漏洞。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁 10：封底 -->
+    <section class="dark-slide" data-background-color="var(--bg-dark)">
+      <div class="end-slide">
+        <div class="big">
+          <svg viewBox="0 0 24 24" style="width:120px; height:120px; fill:var(--accent-alt); filter:drop-shadow(0 0 20px rgba(128,222,234,0.6));">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/>
+          </svg>
+        </div>
+        <h1 style="color:var(--accent-alt); font-size:1.8em; margin-top:0.5em;">Q&A 交流與問答</h1>
+        <p class="tagline" style="color:var(--text-muted-dark); font-size:0.6em; margin-top:10px;">「好的 Agent 應該像空氣，在解決問題時無感，在無法運作時引起關注。」</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  // 偵測是否為手機/垂直螢幕，如果是，調整投影片基礎尺寸為 450x800 (9:16) 適合手機垂直觀看
+  const isMobile = window.innerHeight > window.innerWidth || window.innerWidth < 600;
+  Reveal.initialize({
+    width: isMobile ? 450 : 960,
+    height: isMobile ? 800 : 700,
+    margin: isMobile ? 0.05 : 0.1,
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    touch: true,
+    plugins: []
+  });
+
+  // VIZ 滑桿控制代碼
+  document.getElementById('viz-slider').addEventListener('input', function() {
+    const v = +this.value;
+    document.getElementById('viz-after').style.clipPath = `inset(0 ${100-v}% 0 0)`;
+    document.getElementById('viz-divider').style.left = v + '%';
+  });
+</script>
+
+<!-- Firebase module scripts -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+  import {
+    getFirestore, collection, addDoc, onSnapshot,
+    serverTimestamp, query, orderBy, doc, setDoc
+  } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAYQhNavPSce17XtvDC5xnXyl9iUhW9KjA",
+    authDomain: "teacherstudy-109ef.firebaseapp.com",
+    projectId: "teacherstudy-109ef",
+    storageBucket: "teacherstudy-109ef.firebasestorage.app",
+    messagingSenderId: "196599230156",
+    appId: "1:196599230156:web:cfe55d364df3ae1b9d5c69"
+  };
+  const app = initializeApp(firebaseConfig);
+  const fdb = getFirestore(app);
+
+  // ==================== 文字雲 (Wordcloud) ====================
+  const wordsRef = collection(fdb, 'antigravity_report_wordcloud');
+  const COLORS = ['#80deea','#cadcfc','#ffb74d','#81c784','#ce93d8','#f48fb1','#4fc3f7'];
+  let wcData = [];
+
+  window.wcSubmit = async function() {
+    const input = document.getElementById('wc-input');
+    const word = input.value.trim();
+    if (!word) return;
+    const btn = document.getElementById('wc-btn');
+    btn.disabled = true;
+    try {
+      await addDoc(wordsRef, { word, created_at: serverTimestamp() });
+      input.value = '';
+    } catch(e) { console.error(e); }
+    finally { btn.disabled = false; }
+  };
+
+  document.getElementById('wc-input')?.addEventListener('keypress', e => {
+    if (e.key === 'Enter') window.wcSubmit();
+  });
+  document.getElementById('wc-btn')?.addEventListener('click', window.wcSubmit);
+
+  onSnapshot(query(wordsRef, orderBy('created_at', 'asc')), snap => {
+    const words = [];
+    snap.forEach(doc => words.push(doc.data().word));
+    const counts = {};
+    words.forEach(w => counts[w] = (counts[w] || 0) + 1);
+    wcData = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+    document.getElementById('wc-total').textContent = words.length;
+    document.getElementById('wc-unique').textContent = wcData.length;
+
+    const listEl = document.getElementById('wc-list');
+    listEl.innerHTML = wcData.slice(0, 10).map(([w, c]) =>
+      `<div style="display:flex;justify-content:space-between;padding:4px 0;
+                   border-bottom:1px solid rgba(255,255,255,0.06);">
+        <span>${w}</span><span style="color:var(--accent-alt);font-weight:700;">${c}</span>
+      </div>`
+    ).join('') || '<div style="color:#555;padding:8px 0;">尚無資料</div>';
+
+    const empty = document.getElementById('wc-empty');
+    if (empty) empty.style.display = wcData.length > 0 ? 'none' : '';
+    drawWordCloud();
+  });
+
+  function drawWordCloud() {
+    const canvas = document.getElementById('wc-canvas');
+    if (!canvas || typeof WordCloud === 'undefined') return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 10 || rect.height < 10) return;
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    if (wcData.length === 0) return;
+    const maxCount = wcData[0][1];
+    WordCloud(canvas, {
+      list: wcData.map(([w, c]) => [w, Math.max(14, Math.round((c / maxCount) * 48))]),
+      gridSize: 8,
+      weightFactor: 1,
+      fontFamily: '"Segoe UI", "Noto Sans TC", sans-serif',
+      color: () => COLORS[Math.floor(Math.random() * COLORS.length)],
+      backgroundColor: 'transparent',
+      rotateRatio: 0.2,
+      shuffle: true,
+    });
+  }
+
+  // ==================== 單選投票 (Poll) ====================
+  const OPTIONS = [
+    { id: 'a', label: '1. 完全願意，這代表更進步的代理式開發' },
+    { id: 'b', label: '2. 保持觀望，目前的認證與限額問題過多' },
+    { id: 'c', label: '3. 拒絕使用，Legacy Gemini CLI 或 Cursor 更好' },
+  ];
+  const pollRef = doc(fdb, 'antigravity_report_poll', 'results');
+  const userId = 'user_' + Math.random().toString(36).slice(2, 9);
+  let myVote = null;
+
+  // 渲染投票選項
+  const container = document.getElementById('poll-options');
+  OPTIONS.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.id = `poll-btn-${opt.id}`;
+    btn.innerHTML = `
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="flex:0 0 24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);
+                     display:flex;align-items:center;justify-content:center;font-size:12px;"
+              id="poll-check-${opt.id}"></span>
+        <span style="flex:1;text-align:left;">${opt.label}</span>
+        <span id="poll-bar-wrap-${opt.id}"
+              style="flex:0 0 120px;height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;">
+          <div id="poll-bar-${opt.id}" style="height:100%;width:0;background:var(--accent-alt);border-radius:4px;transition:width 0.4s;"></div>
+        </span>
+        <span id="poll-pct-${opt.id}" style="flex:0 0 36px;text-align:right;font-size:0.75em;color:#888;">0%</span>
+      </div>
+    `;
+    btn.style.cssText = `width:100%;padding:12px 16px;background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;
+      font-size:0.42em;cursor:pointer;font-family:inherit;text-align:left;`;
+    btn.onclick = () => vote(opt.id);
+    container.appendChild(btn);
+  });
+
+  async function vote(optId) {
+    myVote = optId;
+    const data = {};
+    data[`votes.${userId}`] = optId;
+    data.updated_at = serverTimestamp();
+    await setDoc(pollRef, data, { merge: true });
+    
+    // 更新本地 Check 樣式
+    OPTIONS.forEach(o => {
+      const checkEl = document.getElementById(`poll-check-${o.id}`);
+      if (o.id === optId) {
+        checkEl.textContent = '✓';
+        checkEl.style.background = 'var(--accent-alt)';
+        checkEl.style.borderColor = 'var(--accent-alt)';
+      } else {
+        checkEl.textContent = '';
+        checkEl.style.background = 'transparent';
+        checkEl.style.borderColor = 'rgba(255,255,255,0.3)';
+      }
+    });
+  }
+
+  onSnapshot(pollRef, snap => {
+    const data = snap.data() || {};
+    const votes = data.votes || {};
+    const counts = {};
+    OPTIONS.forEach(o => counts[o.id] = 0);
+    Object.values(votes).forEach(v => { if (counts[v] !== undefined) counts[v]++; });
+    const total = Object.values(counts).reduce((a, b) => a + b, 0);
+
+    document.getElementById('poll-total').textContent = total;
+    OPTIONS.forEach(opt => {
+      const pct = total > 0 ? Math.round((counts[opt.id] / total) * 100) : 0;
+      document.getElementById(`poll-bar-${opt.id}`).style.width = pct + '%';
+      document.getElementById(`poll-pct-${opt.id}`).textContent = pct + '%';
+    });
+  });
+
+  // Reveal 切換事件重繪
+  Reveal.on('slidechanged', e => {
+    if (e.currentSlide?.id === 'slide-wordcloud') setTimeout(drawWordCloud, 150);
+  });
+</script>
+</body>
+</html>

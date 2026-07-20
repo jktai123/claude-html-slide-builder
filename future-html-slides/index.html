@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>別再被傳統簡報軟體綁架！帶你看見未來教學簡報的完全體</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+  <style>
+    /* === 全域變數 === */
+    :root {
+      --accent:  #e8643a;   /* 橘紅 */
+      --accent2: #4fc3f7;   /* 青 */
+      --success: #81c784;   /* 綠 */
+      --warn:    #ffb74d;   /* 琥珀 */
+    }
+
+    .reveal {
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .reveal h1 { font-size: 2.0em; text-shadow: 0 0 20px rgba(232,100,58,0.3); }
+    .reveal h2 { font-size: 1.5em; color: var(--accent2); text-shadow: 0 0 10px rgba(79,195,247,0.3); }
+    .reveal .progress { color: var(--accent); }
+    .reveal .fragment { opacity: 0.15; }
+    .reveal .fragment.visible { opacity: 1; }
+
+    /* === 封面 === */
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 4px 16px;
+      border-radius: 20px;
+      font-size: 0.5em;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8em;
+      font-weight: 600;
+      box-shadow: 0 0 10px rgba(232,100,58,0.5);
+    }
+    .title-slide .subtitle { font-size: 0.75em; color: #ccc; margin-top: 0.5em; }
+    .title-slide .author   { margin-top: 2em; font-size: 0.45em; color: #888; }
+
+    /* === 優勢卡（並列特點）=== */
+    .adv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 0.8em; }
+    .adv-card {
+      background: rgba(255,255,255,0.04);
+      border-top: 4px solid var(--accent2);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .adv-card.accent-card {
+      border-top-color: var(--accent);
+    }
+    .adv-card .adv-icon { margin-bottom: 12px; }
+    .adv-card .adv-icon img {
+      width: 64px; height: 64px; object-fit: contain;
+      display: block; margin: 0 auto;
+      filter: drop-shadow(0 0 8px rgba(79,195,247,0.5));
+    }
+    .adv-card.accent-card .adv-icon img {
+      filter: drop-shadow(0 0 8px rgba(232,100,58,0.5));
+    }
+    .adv-card .adv-title { font-size: 0.55em; font-weight: 700; color: var(--accent2); margin-bottom: 8px; }
+    .adv-card.accent-card .adv-title { color: var(--accent); }
+    .adv-card .adv-desc  { font-size: 0.42em; color: #bbb; line-height: 1.6; text-align: left; }
+
+    /* === LIVE 動畫 === */
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1. 封面 -->
+    <section data-background-image="images/cover.png"
+             data-background-opacity="0.3"
+             data-background-size="cover">
+      <div class="title-slide">
+        <div class="tag">AI AGENTS 簡報完全體</div>
+        <h1>別再被傳統簡報軟體綁架！</h1>
+        <h2 style="color:var(--accent2); margin-top:0.2em;">未來教學簡報的完全體</h2>
+        <p class="subtitle">打破死板排版與單向輸出，開啟極致互動與自動化的新時代</p>
+        <p class="author">三師爸 Sense Bar · 未來簡報系列</p>
+      </div>
+    </section>
+
+    <!-- 2. 破冰提問：即時文字雲 -->
+    <section id="slide-wordcloud">
+      <h2 style="font-size:1.1em; margin-bottom:0.4em;">你做簡報時，最痛苦的死穴是什麼？</h2>
+      <div style="display:grid; grid-template-columns:260px 1fr; gap:16px; height:460px;">
+        
+        <!-- 左欄：輸入 + 排行 -->
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px; border:1px solid rgba(255,255,255,0.1);">
+            <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px;">輸入你的痛點 (如:排版/找圖)</div>
+            <input id="wc-input" type="text" placeholder="例如：排版太慢…" maxlength="20"
+              style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid rgba(79,195,247,0.3);
+                     background:rgba(255,255,255,0.08); color:#fff; font-size:13px;
+                     box-sizing:border-box; font-family:inherit; outline:none;" />
+            <button id="wc-btn"
+              style="width:100%; margin-top:8px; padding:9px; background:var(--accent2); color:#0d1117;
+                     border:none; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer;">
+              送出痛點 ↵
+            </button>
+          </div>
+          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px; flex:1; overflow:hidden; display:flex; flex-direction:column; border:1px solid rgba(255,255,255,0.08);">
+            <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px;">
+              熱門答案
+              <span style="display:inline-block; background:#ff4757; color:#fff; padding:2px 7px;
+                           border-radius:10px; font-size:0.85em; animation:pulse 1.5s infinite; font-weight:normal;">LIVE</span>
+            </div>
+            <div id="wc-list" style="font-size:0.34em; overflow-y:auto; flex:1; color:#ccc;"></div>
+            <div style="margin-top:8px; font-size:0.32em; color:#666; border-top:1px solid rgba(255,255,255,0.08); padding-top:6px;">
+              總提交：<span id="wc-total" style="color:var(--accent); font-weight:700;">0</span>　
+              不同回答：<span id="wc-unique" style="color:var(--accent2); font-weight:700;">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右欄：文字雲畫布 -->
+        <div style="background:rgba(255,255,255,0.04); border-radius:12px; overflow:hidden;
+                    position:relative; border:1px solid rgba(255,255,255,0.07);">
+          <canvas id="wc-canvas" style="width:100%; height:100%; display:block;"></canvas>
+          <div id="wc-empty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                                     color:#666; font-size:0.42em; text-align:center;
+                                     pointer-events:none; line-height:2;">
+            輸入答案並送出，<br>即時文字雲就會在這裡投影 ✨
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 傳統簡報三大死穴 -->
+    <section>
+      <h2>傳統簡報軟體的三大死穴 😢</h2>
+      <p style="font-size:0.5em; color:#aaa; margin-top:-10px;">為什麼我們該挑戰 PowerPoint / Keynote？</p>
+      <div class="adv-grid">
+        <div class="adv-card accent-card fragment">
+          <div class="adv-icon"><img src="images/icon_lock.png" alt="死板受限"></div>
+          <div class="adv-title">排版死板受限</div>
+          <div class="adv-desc">排版與動畫受到軟體本身的固有工具框架限制，不易實現自由的客製化與進階版面配置。</div>
+        </div>
+        <div class="adv-card accent-card fragment">
+          <div class="adv-icon"><img src="images/icon_cheap.png" alt="廉價Emoji"></div>
+          <div class="adv-title">Emoji 廉價同質化</div>
+          <div class="adv-desc">許多 AI 工具只會塞滿俗套、廉價的系統 Emoji，缺乏專業感與一致性的精緻設計。</div>
+        </div>
+        <div class="adv-card accent-card fragment">
+          <div class="adv-icon"><img src="images/icon_hourglass.png" alt="效率黑洞"></div>
+          <div class="adv-title">排版效率黑洞</div>
+          <div class="adv-desc">耗費大量時間在瑣碎的手動對齊、拉線、尋找外部素材與調整字型，難以專注在內容的教學邏輯。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 滑桿對決演示 -->
+    <section id="slide-viz">
+      <h2>世代交替：PowerPoint vs HTML 簡報</h2>
+      
+      <div style="position:relative; width:100%; height:420px; border-radius:12px; overflow:hidden; background:#111; border:1px solid rgba(255,255,255,0.1);">
+        <!-- Before: 傳統 PPT (白底死板文字) -->
+        <div id="viz-before" style="position:absolute; inset:0; background:#ffffff; color:#333333; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:30px; text-align:center;">
+          <div style="font-size:0.85em; font-weight:800; margin-bottom:12px; color:#111;">傳統 PowerPoint 簡報 (單向傳輸)</div>
+          <ul style="font-size:0.48em; text-align:left; line-height:2.0; color:#555; list-style-type:square; width:80%; max-width:500px;">
+            <li>死板條列文字，聽眾看一眼就開始滑手機 📵</li>
+            <li>滿滿的系統內建 Emoji，看起來極具廉價感 🤡</li>
+            <li>台下學員無法參與，只有台上的講者單向口述 🔇</li>
+            <li>想改版面或修改大綱時，得手動一頁一頁點選調整 ⏰</li>
+          </ul>
+        </div>
+        
+        <!-- After: 未來 HTML (霓虹暗色動態互動) -->
+        <div id="viz-after" style="position:absolute; inset:0; background:radial-gradient(circle at center, #1b263b 0%, #0d1b2a 100%); color:#ffffff; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:30px; text-align:center; clip-path:inset(0 100% 0 0); transition:none;">
+          <div style="font-size:0.85em; font-weight:800; margin-bottom:12px; color:var(--accent2); text-shadow:0 0 10px rgba(79,195,247,0.5);">未來 HTML 互動簡報 (完全體)</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; width:90%; max-width:550px;">
+            <div style="background:rgba(255,255,255,0.06); padding:16px; border-radius:8px; border-top:4px solid var(--accent); border:1px solid rgba(255,255,255,0.06);">
+              <div style="font-size:0.5em; font-weight:700; color:var(--accent); margin-bottom:6px;">👥 即時雙向互動</div>
+              <div style="font-size:0.38em; color:#ccc; line-height:1.6; text-align:left;">內建即時文字雲與隨堂投票，聽眾掃碼直接參與投影，雙向教學。</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06); padding:16px; border-radius:8px; border-top:4px solid var(--accent2); border:1px solid rgba(255,255,255,0.06);">
+              <div style="font-size:0.5em; font-weight:700; color:var(--accent2); margin-bottom:6px;">🤖 AI Agents 自動化</div>
+              <div style="font-size:0.38em; color:#ccc; line-height:1.6; text-align:left;">透過 AI 自動分析教材，生成專屬霓虹背景與裁切去背圖示，效率飛躍。</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 分割線 -->
+        <div id="viz-divider" style="position:absolute; top:0; left:0; width:4px; height:100%; background:linear-gradient(to bottom, transparent, var(--accent2), transparent); box-shadow:0 0 12px var(--accent2); pointer-events:none;"></div>
+        
+        <!-- 左右標記標籤 -->
+        <div style="position:absolute; top:12px; left:12px; background:rgba(0,0,0,0.6); color:#fff; padding:3px 8px; border-radius:4px; font-size:11px; pointer-events:none;">傳統 PowerPoint</div>
+        <div style="position:absolute; top:12px; right:12px; background:rgba(79,195,247,0.2); border:1px solid var(--accent2); color:var(--accent2); padding:3px 8px; border-radius:4px; font-size:11px; pointer-events:none;">HTML 完全體</div>
+      </div>
+      
+      <!-- Slider 控制條 -->
+      <div style="margin-top:16px; display:flex; align-items:center; justify-content:center; gap:12px;">
+        <span style="font-size:0.42em; color:#888;">← 左右滑動進行對手對比 →</span>
+        <input id="viz-slider" type="range" min="0" max="100" value="0" style="width:280px; cursor:pointer;">
+      </div>
+    </section>
+
+    <!-- 5. HTML 簡報四大優勢 -->
+    <section>
+      <h2>未來 HTML 簡報的四大優勢 🚀</h2>
+      <p style="font-size:0.5em; color:#aaa; margin-top:-10px;">為什麼這是高算力時代最優的簡報完全體？</p>
+      <div class="adv-grid">
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_chat.png" alt="即時互動"></div>
+          <div class="adv-title">雙向即時互動</div>
+          <div class="adv-desc">可自由插入文字雲、即時投票與問答，投影畫面與手機即時同步，大幅拉近教學距離。</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_density.png" alt="資訊密度"></div>
+          <div class="adv-title">高資訊密度配置</div>
+          <div class="adv-desc">採用現代化的排版與字體，能流暢呈現豐富的數據與圖示卡片，降低台下的閱讀認知負擔。</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_robot.png" alt="AI 自動化"></div>
+          <div class="adv-title">AI Agents 生態系</div>
+          <div class="adv-desc">完全契合 AI 代理工作流，能從文字大綱自動產出底圖、切圖去背及程式碼組裝，極速產出。</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_globe.png" alt="極速部署"></div>
+          <div class="adv-title">一鍵跨平台發佈</div>
+          <div class="adv-desc">簡報以 HTML 網頁格式存在，一鍵發佈即可在任何手機或電腦上開啟，不再受限於作業系統。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 封底 -->
+    <section data-background-image="images/ending.png"
+             data-background-opacity="0.3"
+             data-background-size="cover">
+      <div class="title-slide" style="margin-top: 1.5em;">
+        <div class="tag">三師爸 Sense Bar · 簡報完全體</div>
+        <h1 style="color:var(--accent2); text-shadow:0 0 20px rgba(79,195,247,0.5);">擁抱 AI 時代，解放簡報生產力！</h1>
+        <p class="subtitle" style="margin-top: 0.6em; font-size: 0.65em;">當 AI 代理人能幫你處理排版與設計，你唯一需要做的，就是專注你的核心內容。</p>
+        <p class="author" style="margin-top: 3.5em;">謝謝大家 · 簡報網址：https://svn12.github.io/Gemini/future-html-slides/</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    plugins: []
+  });
+</script>
+
+<!-- Firebase 即時文字雲模組 -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+  import {
+    getFirestore, collection, addDoc, onSnapshot,
+    serverTimestamp, query, orderBy
+  } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+  // 共用示範專案設定
+  const firebaseConfig = {
+    apiKey: "AIzaSyAYQhNavPSce17XtvDC5xnXyl9iUhW9KjA",
+    authDomain: "teacherstudy-109ef.firebaseapp.com",
+    projectId: "teacherstudy-109ef",
+    storageBucket: "teacherstudy-109ef.firebasestorage.app",
+    messagingSenderId: "196599230156",
+    appId: "1:196599230156:web:cfe55d364df3ae1b9d5c69"
+  };
+  
+  const app = initializeApp(firebaseConfig);
+  const fdb = getFirestore(app);
+  const wordsRef = collection(fdb, 'ultimate_presentation_wordcloud');
+
+  const COLORS = ['#4fc3f7','#e8643a','#ffb74d','#81c784','#ce93d8','#80deea','#f48fb1'];
+  let wcData = [];
+  let useMock = false;
+  let mockWords = [];
+
+  // 從 localStorage 初始化本地端數據
+  try {
+    const saved = localStorage.getItem('future_slides_wordcloud_mock');
+    if (saved) {
+      mockWords = JSON.parse(saved);
+    } else {
+      // 預填一些預設詞彙作為基礎展示
+      mockWords = ["排版慢", "找圖難", "沒質感", "字體死板", "效率低", "對齊麻煩", "排版慢", "找圖難", "沒質感"];
+      localStorage.setItem('future_slides_wordcloud_mock', JSON.stringify(mockWords));
+    }
+  } catch(e) {
+    console.error("無法讀取 localStorage", e);
+  }
+
+  function renderWordCloudData(words) {
+    const counts = {};
+    words.forEach(w => counts[w] = (counts[w] || 0) + 1);
+    wcData = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+    document.getElementById('wc-total').textContent = words.length;
+    document.getElementById('wc-unique').textContent = wcData.length;
+
+    const listEl = document.getElementById('wc-list');
+    listEl.innerHTML = wcData.slice(0, 10).map(([w, c]) =>
+      `<div style="display:flex;justify-content:space-between;padding:4px 0;
+                   border-bottom:1px solid rgba(255,255,255,0.06); font-size:12px;">
+        <span>${w}</span><span style="color:var(--accent);font-weight:700;">${c}</span>
+      </div>`
+    ).join('') || '<div style="color:#555;padding:8px 0;">尚無資料</div>';
+
+    const empty = document.getElementById('wc-empty');
+    if (empty) empty.style.display = wcData.length > 0 ? 'none' : '';
+    drawWordCloud();
+  }
+
+  window.wcSubmit = async function() {
+    const input = document.getElementById('wc-input');
+    const word = input.value.trim();
+    if (!word) return;
+    const btn = document.getElementById('wc-btn');
+    btn.disabled = true;
+
+    if (useMock) {
+      mockWords.push(word);
+      try {
+        localStorage.setItem('future_slides_wordcloud_mock', JSON.stringify(mockWords));
+      } catch(e) {}
+      renderWordCloudData(mockWords);
+      input.value = '';
+      btn.disabled = false;
+      return;
+    }
+
+    try {
+      await addDoc(wordsRef, { word, created_at: serverTimestamp() });
+      input.value = '';
+    } catch(e) {
+      console.warn("寫入 Firestore 失敗，無縫切換至 LocalStorage 模式！", e);
+      useMock = true;
+      mockWords.push(word);
+      try {
+        localStorage.setItem('future_slides_wordcloud_mock', JSON.stringify(mockWords));
+      } catch(ex) {}
+      renderWordCloudData(mockWords);
+      input.value = '';
+    } finally {
+      btn.disabled = false;
+    }
+  };
+
+  document.getElementById('wc-input')?.addEventListener('keypress', e => {
+    if (e.key === 'Enter') window.wcSubmit();
+  });
+  document.getElementById('wc-btn')?.addEventListener('click', window.wcSubmit);
+
+  // 訂閱 Firestore 機制，並在失敗時切換到 LocalStorage
+  onSnapshot(query(wordsRef, orderBy('created_at', 'asc')), snap => {
+    if (useMock) return; // 已經切換到 Mock 時忽略 snapshot
+    const words = [];
+    snap.forEach(doc => words.push(doc.data().word));
+    // 如果線上資料為空，且本地有舊的 mock 資料，優先展示 mock 資料避免空空如也
+    if (words.length === 0 && mockWords.length > 0) {
+      renderWordCloudData(mockWords);
+    } else {
+      renderWordCloudData(words);
+    }
+  }, err => {
+    console.warn("Firestore 載入失敗（權限不足或安全規則過期），無縫切換至 LocalStorage 模式！", err);
+    useMock = true;
+    renderWordCloudData(mockWords);
+  });
+
+  function drawWordCloud() {
+    const canvas = document.getElementById('wc-canvas');
+    if (!canvas || typeof WordCloud === 'undefined') return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 10 || rect.height < 10) return;
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    if (wcData.length === 0) return;
+    const maxCount = wcData[0][1];
+    WordCloud(canvas, {
+      list: wcData.map(([w, c]) => [w, Math.max(16, Math.round((c / maxCount) * 56))]),
+      gridSize: 5,
+      weightFactor: 1,
+      fontFamily: '"Microsoft JhengHei", "Noto Sans TC", sans-serif',
+      color: () => COLORS[Math.floor(Math.random() * COLORS.length)],
+      backgroundColor: 'transparent',
+      rotateRatio: 0.25,
+      shuffle: true,
+    });
+  }
+
+  // 確保 Reveal.js 切頁後畫布能重繪
+  Reveal.on('slidechanged', e => {
+    if (e.currentSlide?.id === 'slide-wordcloud') {
+      setTimeout(drawWordCloud, 200);
+    }
+  });
+  
+  // 視窗大小改變時重繪
+  window.addEventListener('resize', () => {
+    if (document.querySelector('.present')?.id === 'slide-wordcloud') {
+      drawWordCloud();
+    }
+  });
+</script>
+
+<!-- 滑桿對決演示控制 Script -->
+<script>
+  const slider = document.getElementById('viz-slider');
+  const vizAfter = document.getElementById('viz-after');
+  const vizDivider = document.getElementById('viz-divider');
+
+  function updateSlider() {
+    const val = +slider.value;
+    vizAfter.style.clipPath = `inset(0 ${100 - val}% 0 0)`;
+    vizDivider.style.left = val + '%';
+  }
+
+  slider.addEventListener('input', updateSlider);
+  
+  // 初始觸發一次
+  updateSlider();
+</script>
+
+</body>
+</html>

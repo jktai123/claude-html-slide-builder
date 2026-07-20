@@ -1,0 +1,12 @@
+{
+  "Title": "Google Vids - 影片版 Google Docs / AI 影片創作工具",
+  "日期": "2026-07-17",
+  "URL": "https://workspace.google.com/products/vids/",
+  "摘要": "Google Vids 是一款整合在 Google Workspace 中的 AI 影片創作與編輯平台。使用者能利用自然語言或導入文件簡報自動生成影片腳本與故事板，內建數位分身虛擬主播與即時協作功能，讓商務影片製作如簡報般簡單。",
+  "category": "科技",
+  "tags": ["GoogleVids", "AI影片", "GoogleWorkspace", "虛擬主播", "科技"],
+  "importance": "高",
+  "content": "# Google Vids - AI 影片協作工具介紹\n\n## 1. 什麼是 Google Vids？\n- **定位**：Google 內建於 Google Workspace 辦公生態系中的 AI 影片創作工具。官方對其的願景是「讓影片製作像建立 Google 簡報 (Slides) 一樣簡單」，幫助企業與個人用戶在無專業影片剪輯技能的情況下，快速產出具備專業質感的商務與教育影片。\n\n## 2. 核心功能與 AI 特色\n- **文檔一鍵轉影片 (Doc-to-Video)**：使用者只需匯入現成的 Google 文件 (Docs) 或簡報 (Slides)，內建的 Gemini AI 便會分析內容，自動生成影片大綱、配音腳本，並為每一幕匹配合適的範本與視覺元素。\n- **個人化數位分身 (Personal Avatars)**：利用最新的 AI 技術，使用者可以建立與自己長相和聲音一致的數位分身。只需輸入文字稿，AI 虛擬主播便會幫你完成播報，徹底省去親自化妝、錄影與多回重錄的繁瑣過程。\n- **即時多人協作**：承襲 Google Docs 的協作基因，多名團隊成員可以同時在同一個影片專案中調整時間軸、修改文案腳本、甚至即時留言進行討論。\n- **對話式影片編輯 (Gemini Omni)**：支援透過聊天方式下指令進行影片修改，例如「幫我把背景換成明亮的辦公室」或「微調這一段的燈光」，免去傳統影音軟體的複雜參數調整。\n- **SynthID 數位浮水印**：為保障資訊的真實性與合規安全，所有由 AI 產生的多媒體內容皆會被自動蓋上不可見的數位水印，符合企業級安全規範與透明度原則。",
+  "mindmap": "mindmap\n  root((Google Vids))\n    核心優勢\n      Workspace 整合\n      多人即時協作\n      簡報般簡單的操作\n    AI 引擎 Gemini\n      文檔一鍵轉影片\n      AI 自動生成大綱腳本\n      Gemini Omni 聊天編輯\n    關鍵功能\n      數位分身 Avatar\n      螢幕相機錄製\n      免版權影音庫\n    安全與防護\n      SynthID 數位浮水印\n      企業級安全標準",
+  "images": ["/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/output/vids_screenshot.png"]
+}

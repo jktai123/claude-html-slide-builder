@@ -1,0 +1,107 @@
+# Scrape 專案 JS 檔案功能摘要
+此專案位於 `/Volumes/1T_HDD_2/Scrape`，共包含 101 個 JavaScript 檔案。
+分析時間：2026-07-17 18:07:53
+
+## 檔案清單與功能說明
+
+- **Crawler_github.js**: 此檔案使用 Puppeteer 爬取 GitHub 搜尋結果頁面中指定關鍵字的儲存庫資訊，並將結果儲存為本地的 JSON 和 CSV 檔案。
+- **Dividended.js**: 此檔案使用 Puppeteer 從 `goodinfo.tw` 網站爬取來自 Google Sheet 輸入的股票代碼之股利資訊，並將結果儲存回指定的 Google Sheet。
+- **Download_midi.js**: 此檔案使用 Puppeteer 從 `bitmidi.com` 網站隨機抓取 MIDI 檔案的連結，並將這些 MIDI 檔案下載至本地的 `midi_files` 目錄。
+- **ETF2Gsheet.js**: 此檔案使用 Puppeteer 從 CMoney 網站抓取來自 Google Sheet 輸入的 ETF 成分股資訊，並將資料（包含 Google Finance 公式）儲存到指定的 Google Sheet。
+- **ETF2Gsheet_ETF1_wETF_notUse.js**: 此檔案使用 Puppeteer 從 CMoney 網站爬取來自 Google Sheet 輸入的 ETF 成分股資訊，並將資料（包含 Google Finance 公式）儲存到指定的 Google Sheet。
+- **ETF2Gsheet_ETF_woETF_notUse.js**: 此檔案使用 Puppeteer 從 CMoney 網站爬取來自 Google Sheet 輸入的 ETF 成分股資訊，並將資料儲存到指定的 Google Sheet。
+- **ETFNet2Gsheet.js**: 此檔案使用 Puppeteer 從台灣證券交易所和證券櫃檯買賣中心的 ETF 指標揭露頁面爬取 ETF 淨值與折溢價等資訊，並依市值篩選後儲存至指定的 Google Sheet。
+- **ETF持股2Gsheet.js**: 此檔案使用 Puppeteer 從 CMoney 網站批次抓取來自 Google Sheet 輸入的 ETF 之成分股資訊，並將所有抓取的資料彙整後儲存到指定的 Google Sheet。
+- **GoogleSheet_RW_test.js**: 此檔案使用 `google-spreadsheet` API 演示對指定 Google Sheet 進行新增、讀取、更新和刪除資料以及操作儲存格與工作表的基本功能。
+- **KTV2Gsheet.js**: 此檔案使用 Puppeteer 從 `song.corp.com.tw` 網站爬取來自 Google Sheet 輸入的 KTV 歌曲列表資訊，並將結果儲存到指定的 Google Sheet。
+- **Line_Send.js**: 此檔案使用 LINE Messaging API 向指定用戶發送包含圖片和連結的訊息。
+- **OutputLocalflist.js**: 此檔案遞迴地列出指定目錄下所有特定副檔名的檔案路徑，並將結果寫入本地 output.txt 檔案。
+- **RD_Finance_TW.js**: 此檔案從台灣證券交易所（TWSE）API 抓取指定股票及日期的每日交易資料，並將結果輸出到控制台。
+- **Reserve_台大.js**: 此檔案使用 Puppeteer 自動化操作，查詢並嘗試填寫台灣大學醫學院附設醫院（NTUH）的線上掛號系統表單。
+- **SaveGSht.js**: 此檔案提供功能，透過 google-spreadsheet 函式庫及 Google Apps Script API 讀取、儲存或新增資料至指定的 Google Sheet 工作表。
+- **SaveGoogleSheet.js**: 此檔案透過 google-spreadsheet 函式庫實作讀取、清空後寫入及新增資料至指定的 Google Sheet 工作表。
+- **SaveGoogleSheet_script.js**: 此檔案透過 Axios 向 Google Apps Script Web API 發送請求，以實現讀取、儲存或新增資料至指定的 Google Sheet 工作表。
+- **Schedule.js**: 此檔案根據預設排程，定時抓取特定網頁上的看診資訊，並將其增補至 Google Sheet 中的「軒琪」工作表。
+- **Schedule3.js**: 此檔案根據預設排程，定時抓取特定網頁上的看診資訊，並將新資料同時增補至本地 JSON 檔案及 Google Sheet 中的「軒琪」工作表。
+- **Scrape_591_Rent.js**: 此檔案使用 Puppeteer 爬取 591 租屋網站上指定條件的租屋資訊，並將詳細資料儲存為本地 JSON 及 CSV 檔案。
+- **Scrape_ETF.js**: 此檔案從 CMoney 網站爬取特定 ETF 的成分股資料，並將結果儲存為本地 JSON/CSV 檔案。
+- **Scrape_Google.js**: 此檔案在 Google 圖片搜尋指定關鍵字，抓取圖片連結、名稱、寬度、高度等資訊，並將結果儲存至 Google Sheet 的「圖片」工作表。
+- **Scrape_HiStkRank2Gsheet.js**: 此檔案從 Histock 網站爬取股票排行榜資料，依分類擷取股票代碼、名稱、連結及類別，並將結果儲存至指定 Google Sheet 的各個工作表。
+- **Scrape_Myweb.js**: 此檔案從大光網站（GloryPress）層次式地抓取聖經經文內容，包含詩、節和詳細描述，並將結果附加至 Google Sheet 的「大光經文」工作表。
+- **Scrape_SouthWest.js**: 此檔案從 Southwest 航空網站爬取指定起訖點的單程航班資訊，包含停靠站、價格與時間，並將結果輸出至控制台。
+- **Scrape_StkCatGsheet.js**: 此檔案從 Goodinfo! 網站爬取股票的概念股與產業細項分類及其對應連結，並將結果儲存至 Google Sheet 的「Scrape1」工作表。
+- **Scrape_StkCode2Gsheet-na.js**: 此檔案從證券交易所網站爬取上市櫃股票的代碼、名稱、上市日、市場別、產業別等詳細資料，並將結果儲存至 Google Sheet 的「上市」與「上櫃」工作表。
+- **Scrape_StkRank2Gsheet.js**: 此檔案從 Goodinfo! 網站爬取多種股票排行資料，包括代號、名稱和各項指標，並將結果依類別儲存至 Google Sheet 的各工作表，同時處理並輸出月營收增長與累月營收年增長資料。
+- **Scrape_StkSales.js**: 此檔案從 Goodinfo! 網站爬取上市櫃股票的月營收詳細資料，計算並篩選出營收大幅增長或成交值較高的股票，將原始數據儲存至一個 Google Sheet，並將篩選結果儲存至另一個 Google Sheet 的「月營收增」與「累月營收年增」工作表。
+- **Scrape_WantgooGsheet.js**: 此檔案從 WantGoo 網站爬取多種股票熱門排行分類，並針對特定分類抓取前 40 檔股票的代碼、名稱及排名，然後將結果儲存至 Google Sheet 的各個分類工作表。
+- **Scrape_dropbox_聖詩.js**: 此程式從 Google Sheet 提供的 Dropbox 連結中抓取聖詩檔案的標題、連結和時間資訊，並將結果儲存到指定的 Google Sheet 中的「drop聖詩」工作表。
+- **Scrape_farewell.js**: 此程式從 crazybless.com 網站抓取吉祥話內容，並將每條吉祥話的標題和內文逐一儲存到指定的 Google Sheet 中的「吉祥話」工作表。
+- **Scrape_fb_老夫子.js**: 此程式登入 Facebook 後，從指定的老夫子粉絲團照片頁面抓取所有圖片連結，並將這些連結儲存為本地 imageLinks.json 檔案。
+- **Scrape_fb_聖詩.js**: 此程式登入 Facebook 後，從指定聖詩社團的文件頁面抓取檔案名稱、PowerPoint 連結及備註資訊，並將這些資料儲存到指定的 Google Sheet 中的「fb聖詩」工作表。
+- **Scrape_fb_聖詩_download.js**: 此程式登入 Facebook 後，讀取 Google Sheet 中「fb聖詩」工作表提供的 PowerPoint 檔案連結，並自動點擊連結以下載這些聖詩檔案。
+- **Scrape_line_stick.js**: 此程式從 LINE Store 依關鍵字搜尋貼圖，抓取貼圖組的連結、標題和價格，然後進入每個貼圖組頁面下載所有貼圖圖片，並將貼圖資訊儲存為本地 JSON 及 CSV 檔案。
+- **Scrape_pinterest-Large.js**: 此程式啟動瀏覽器並設定使用者代理，但提供的程式碼片段並未實作從 Pinterest 頁面抓取或儲存圖片的具體邏輯。
+- **Scrape_pinterest.js**: 此程式從 Pinterest 根據關鍵字搜尋圖片，透過捲動頁面載入更多結果後，將搜尋到的圖片下載至本地 download/pinterest/ 資料夾。
+- **Scrape_url_image.js**: 此程式從 Pinterest 根據關鍵字搜尋圖片，透過捲動頁面載入更多結果後，將搜尋到的圖片下載至本地 download/ 資料夾。
+- **Scrape_youtube.js**: 此程式從 YouTube 依關鍵字搜尋影片和播放清單，抓取其標題、URL、時長、作者和類型等資訊，並將結果儲存為本地 JSON 及 CSV 檔案。
+- **Scrape_youtube_list(notuse).js**: 此檔案使用 Puppeteer 從指定 YouTube 播放清單抓取影片標題與網址，並將結果輸出到控制台。
+- **Scrape_youtube_list.js**: 此檔案利用 Puppeteer 爬取指定 YouTube 播放清單的影片標題、網址及作者，並將整理後的資料儲存至本地 `/yt` 資料夾下的 JSON 與 CSV 檔案。
+- **Scrape_youtube_video.js**: 此檔案使用 Puppeteer 抓取指定 YouTube 頻道的影片標題、網址與作者，並將資料儲存為本地 `/yt` 資料夾下的 JSON 與 CSV 檔案。
+- **Scrape_北車微風.js**: 此檔案使用 Puppeteer 從微風廣場官網抓取各分店的店家名稱、連結及詳細資訊（如地址、描述、聯絡方式等），並將結果儲存至本地 JSON 檔案。
+- **Scrape_大光.js**: 此檔案使用 Puppeteer 從「大光出版社」網站爬取分層的聖經經文內容，包含詩歌、章節與細節，並將這些資料連同分類與類型儲存到指定的 Google Sheet。
+- **Scrape_摺紙.js**: 此檔案使用 Puppeteer 從俄羅斯摺紙網站抓取摺紙模型圖片及其詳情頁連結，接著進入每個詳情頁獲取特定圖片來源，並將這些資料儲存到指定的 Google Sheet。
+- **Scrape_摺紙2025.js**: 此檔案使用 Puppeteer 從 origami.me 網站爬取簡易摺紙教學的名稱、連結及圖片來源，並將抓取到的資料儲存至指定的 Google Sheet。
+- **Scrape_米其林.js**: 此檔案使用 Puppeteer 從米其林指南網站爬取餐廳列表及詳細資訊，包括餐廳名稱、類型、地區、評級、地址、價格、描述與服務等，並將資料儲存為本地 JSON 與 CSV 檔案。
+- **Scrape_聖經金句.js**: 此檔案使用 Puppeteer 從 dailyverses.net 網站爬取每日聖經金句的圖片，按主題分類並處理圖片輪播以收集所有圖片來源，最終將資料儲存到指定的 Google Sheet。
+- **Scrape_華人教會.js**: 此檔案使用 Puppeteer 從「華人教會名錄」網站爬取台灣各教會的名稱、類型、地區、聯絡資訊與詳細地址及經緯度，並將結果儲存為本地 JSON 與 CSV 檔案。
+- **Scrape_週報.js**: 此程式碼使用 Puppeteer 抓取「南門教會」網站 `https://www.pctnm.tw/download_weekly.php` 的週報連結與日期，並將結果儲存至 Google Sheet `1yt3EfSIVBi-NOvoeqwEtp-DcnIODM9LK84alJLh9JJI` 的「南門週報」分頁。
+- **StockAVG2Gsheet.js**: 此程式碼使用 Puppeteer 從 `goodinfo.tw` 爬取上市櫃股票的移動均線資料，計算股價與多條均線的偏差百分比，並將原始資料及篩選出的「破年線」、「破半年線」、「破200均」股票數據儲存至多個 Google Sheet (`1-ZavnN8fmUklM9_mkNqdzKmpIu6Df96jkXJi_OLkUBA` 和 `17HaNXr0vNtZbRqu8scTM5CfVylsym_8aCP3MhxvUc2k`)。
+- **TDownloadFile.js**: 此程式碼提供一個下載 HTTP 檔案至本地路徑的功能，範例中用於下載台灣銀行 (`rate.bot.com.tw`) 的每日歷史匯率 CSV 檔並儲存為 `a.csv`。
+- **Test_SaveGsheet.js**: 此程式碼從指定的 Google Sheet `18sT6CKuJzMPJnp4JDcOt3484rDVyj5YGh6IBLOB7S9I` 的「軒琪」分頁讀取資料，並將其標題與內容輸出至控制台。
+- **Test_SaveGsheet2.js**: 此程式碼旨在從指定的 Google Sheet `18sT6CKuJzMPJnp4JDcOt3484rDVyj5YGh6IBLOB7S9I` 的「軒琪」分頁讀取資料並輸出至控制台，但 `ReadGoogleSheet` 函式未被正確調用與等待。
+- **WikiDailyPic-2.js**: 此程式碼使用 Puppeteer 抓取維基百科中文站 (zh.m.wikipedia.org) 從 2010 年 1 月到 2025 年 8 月的每日圖片及其資訊，並將結果儲存至本地的 JSON 和 CSV 檔案，同時也寫入 Google Sheet `1-ilHZPwGq_nGIHBLerb49LHqf-RsOqYiaCWryc7hhfw` 的「wiki2」分頁。
+- **WikiDailyPic.js**: 此程式碼使用 Puppeteer 抓取維基百科中文站 `zh.m.wikipedia.org` 上特定月份的每日圖片 (如 2010 年 1 月的頁面)，並將圖片連結與替代文字等資訊儲存至本地的 JSON 檔案 `wikipedia_daily_pictures_2023_01.json` 和 CSV 檔案 `wikipedia_daily_pictures_2023_01.csv`。
+- **YTChanSearch2Gsheet.js**: 此程式碼從 Google Sheet `1SoMEYJbCHBd3FDl8gjaiQMZ1WBCkDTazGHALGnKgMpk` 的「YTChan」分頁讀取 YouTube 頻道連結清單，然後使用 Puppeteer 爬取每個頻道的影片標題與連結，並將這些資料儲存至 Google Sheet `1yt3EfSIVBi-NOvoeqwEtp-DcnIODM9LK84alJLh9JJI` 中對應的分頁。
+- **YTList2Gsheet.js**: 此程式碼從 Google Sheet `1SoMEYJbCHBd3FDl8gjaiQMZ1WBCkDTazGHALGnKgMpk` 的「YTList」分頁讀取 YouTube 播放清單連結，使用 Puppeteer 爬取清單內的影片標題與連結，並將影片資訊（包含 YouTube ID、嵌入連結）儲存至 Google Sheet `1xAZ810fin7AY4azNgN-sPr4fuIx0a77ASFOymfvxTXk` 中依類別命名的分頁。
+- **YTList2Gsheet_Auto.js**: 此程式碼自動化地從 Google Sheet `1SoMEYJbCHBd3FDl8gjaiQMZ1WBCkDTazGHALGnKgMpk` 的「YTList」分頁讀取 YouTube 播放清單，使用 Puppeteer 爬取並解析清單內的影片標題、連結與 ID，最終將這些結構化資料連同原始播放清單資訊一同儲存至 Google Sheet `1xAZ810fin7AY4azNgN-sPr4fuIx0a77ASFOymfvxTXk` 中依類別命名的分頁。
+- **YTVideos2Gsheet.js**: 此檔案使用 Puppeteer 從 Google Sheet (Type_doc_Id) 讀取 YouTube 頻道/播放列表網址，抓取影片標題、連結與頻道名稱，並將結果儲存到另一個 Google Sheet (doc_Id) 中的新工作表。
+- **check_stocks.js**: 此檔案排程在台灣股市交易時段內，從台灣證券交易所（TWSE）取得指定股票的即時價格資訊，並計算總市值與損益，然後將結果輸出到控制台。
+- **data1.js**: 此檔案從環境變數載入電子郵件的服務提供商、認證資訊與收發件人等配置，並定義了多個網址，供其他模組使用。
+- **download_church_url_image.js**: 此檔案讀取本地 JSON 檔案 (churchDetail.json) 中包含的教會圖片網址，並使用 Axios 將這些圖片下載並儲存至本地 `./church/pic` 資料夾。
+- **download_url_abc.js**: 此檔案從預定義的網址列表下載 `.abc` 音樂符號檔案，並將它們儲存到本地磁碟的 `/Volumes/512G/LilyPond/ABC` 資料夾。
+- **download_url_image.js**: 此檔案從本地 JSON 檔案 (churchDetail.json) 和硬編碼的測試網址下載圖片與音訊檔案，並將它們儲存至本地 `./church/pic` 或 `download` 資料夾。
+- **email.js**: 此檔案使用 Nodemailer 模組，根據提供的配置數據與內容，透過 SMTP 伺服器（例如 Gmail）向指定收件人發送電子郵件通知。
+- **exec_cmd.js**: 此檔案執行從命令列參數傳入的指令，並將指令的標準輸出與錯誤輸出顯示在控制台上。
+- **file_group.js**: 此檔案掃描本地 `download` 資料夾中的檔案，並依據其副檔名將檔案分類移動到 `images`、`documents`、`pdf` 和 `media` 等子資料夾中。
+- **getLocalflist.js**: 此檔案遞迴地掃描指定路徑下的所有資料夾和檔案，並將所有符合特定副檔名（例如 .html）的檔案完整路徑輸出到控制台。
+- **pdf-extractor.js**: 此檔案從指定的本地路徑或網址抓取 PDF 文件，提取其中的繁體中文字符，並將提取的文字內容儲存為本地 .txt 檔案。
+- **ppt_extractor.js**: 此檔案從本地路徑或網址讀取 PPT 或 PPTX 檔案，解析並提取其中的文字內容（包含備註），然後將提取的文字儲存為本地 .txt 檔案。
+- **resultAnalysis1.js**: 此檔案連接至 MongoDB，比較新抓取的資料與資料庫中現有內容，若發現差異則更新資料庫並透過電子郵件發送通知。
+- **save_jsoncsv.js**: 此檔案將傳入的資料以 JSON 和 CSV 兩種格式儲存到指定的本地目錄中。
+- **scrape_church.js**: 此檔案使用 Puppeteer 從台灣基督長老教會網站抓取全台百大教會機構的基本資訊，並將資料儲存為本地 JSON 檔案。
+- **scrape_church2.js**: 此檔案利用 Puppeteer 和 Cheerio 從台灣基督長老教會網站抓取全台百大教會機構的列表資訊，並將結果儲存為本地 JSON 和 CSV 檔案。
+- **scrape_church_all.js**: 此檔案使用 Puppeteer 和 Cheerio 遍歷台灣基督長老教會網站的城市選單，抓取所有城市的教會機構基本資訊，並將結果儲存為本地 JSON 和 CSV 檔案。
+- **scrape_church_all_w_json.js**: 此檔案讀取本地現有的教會列表 JSON 檔案，然後使用 Puppeteer 和 Cheerio 進入每個教會的詳細頁面，抓取更完整的資訊後，將結果儲存為新的本地 JSON 和 CSV 檔案。
+- **scrape_商品信息.js**: 此檔案使用 Puppeteer 從蘇寧易購網站模擬搜尋「筆記型電腦」，抓取多頁商品資訊（包含名稱、品牌和價格），並將結果儲存為本地 JSON 檔案。
+- **testAPI.js**: 此檔案透過 Google Apps Script API 從指定的 Google Sheet 讀取資料，將其轉換成 JSON 物件格式，並在控制台顯示結果。
+- **testAPI_YT_List.js**: 該檔案使用 Puppeteer 爬取 YouTube 播放列表的影片數量、標題和連結，並結合 Google Sheets API 讀取 ETF 類型資料。
+- **testPOST.js**: 該檔案透過 HTTP POST 請求將指定的資料列附加到一個 Google Sheet (由其 URL 和工作表名稱定義) 中。
+- **twse-stocks.js**: 該檔案透過呼叫臺灣證券交易所 (TWSE) 的公開 API，抓取單一或多個股票的即時交易資訊。
+- **webscraping1.js**: 該檔案使用 Puppeteer 啟動瀏覽器並爬取指定網頁，從中提取醫師名稱與計數資訊。
+- **youtube-playlist-scraper-fail.js**: 該檔案使用 Puppeteer 爬取指定的 YouTube 播放列表，提取影片標題、頻道和連結，並將結果顯示在控制台或保存到本地文字檔。
+- **上市櫃個股.js**: 該檔案使用 Puppeteer 從 Goodinfo 網站爬取台灣上市櫃公司的個股即時行情資訊，並將資料儲存至 Google Sheet 的「上市櫃全」工作表。
+- **上市櫃個股＿fail.js**: 該檔案使用 Puppeteer 從 Goodinfo 網站爬取台灣上市櫃公司的個股即時行情資訊，包含處理登入限制的機制，並將資料儲存至 Google Sheet 的「上市櫃全」工作表。
+- **個股報價.js**: 該檔案使用 Puppeteer 瀏覽器自動前往 Yahoo 奇摩股市，爬取指定股票與指數的即時報價資訊，並將處理後的結果儲存至 Google Sheet 的「R_Stock」工作表。
+- **個股股利.js**: 該檔案使用 Puppeteer 從 Goodinfo 網站爬取指定個股的歷年股利發放資訊 (包含現金股利、股票股利與總股利)，並將資料儲存至 Google Sheet 的「個股股利」工作表。
+- **台漢聖經2Gsheet.js**: 該檔案使用 Puppeteer 從「台漢聖經」部落格爬取聖經章節圖片連結與相關資訊，並將爬取的內容分批儲存至 Google Sheet 的「Subj」與「頁聖經4」工作表。
+- **抓網頁Links.js**: 此檔案使用 Puppeteer 從 Google Sheet (ID: `1_uCdSvDYD02ShgwIVgS2GANQO-gkko-sUWrxHajFknY`, 工作表: 'Main') 讀取網站連結清單，然後瀏覽每個連結以抓取 `<li>` 元素下的 `<a>` 標籤資訊，並將結果儲存回同一 Google Sheet 的個別工作表中。
+- **抓網頁Links_lists.js**: 此檔案使用 Puppeteer 從 Google Sheet (ID: `1_uCdSvDYD02ShgwIVgS2GANQO-gkko-sUWrxHajFknY`, 工作表: 'Lists') 讀取網站連結清單，然後遍歷每個連結，抓取頁面中 `<li>` 元素下的 `<a>` 標籤與 `<iframe>` 元素的連結，並將這些連結與其類型儲存至 Google Sheet 的個別工作表中。
+- **抓網頁Links_mylist.js**: 此檔案使用 Puppeteer 從 Google Sheet (ID: `1_uCdSvDYD02ShgwIVgS2GANQO-gkko-sUWrxHajFknY`, 工作表: 'jktai123') 讀取網站連結清單，然後瀏覽每個連結並計算頁面中 `<li>` 元素下的 `<a>` 標籤數量，最後將連結、檔名及數量儲存至 Google Sheet 的 'jktai123_1' 工作表中。
+- **新聖詩歌詞.js**: 此檔案使用 Puppeteer 從「台灣基督長老教會聖詩」網站 (`https://hymn.pct.org.tw`) 抓取所有聖詩的連結，然後逐一進入各聖詩頁面擷取其標題與歌詞，最終將所有聖詩資料儲存為本地 `hymns.json` 檔案。
+- **玉明冷氣-o.js**: 此檔案使用 Puppeteer 從「玉明冷氣」網站 (`https://www.3uo.tw`) 的日立冷氣產品頁面抓取單一產品的名稱、原始價格和目前價格，並將這些資訊輸出到控制台。
+- **玉明冷氣.js**: 此檔案使用 Puppeteer 瀏覽「玉明冷氣」網站 (`https://www.3uo.tw`) 的空調產品類別頁面，透過模擬捲動載入所有產品資訊，然後抓取每個產品的標題、價格、描述與連結，並將結果儲存至 Google Sheet (ID: `1-ZavnN8fmUklM9_mkNqdzKmpIu6Df96jkXJi_OLkUBA`, 工作表: '玉明冷氣')。
+- **直播統計.js**: 此檔案使用 Puppeteer 從指定的 YouTube 頻道直播頁面 (`https://www.youtube.com/@台灣基督長老教會台北/live`) 抓取直播標題、日期、觀看人數與時間戳記，並將這些資料寫入 Google Sheets 的 'Sheet1' 工作表中。
+- **米其林2Gsheet.js**: 此檔案使用 Puppeteer 瀏覽米其林指南網站 (`https://guide.michelin.com/tw/zh_TW/selection/taipei-taichung/restaurants`)，先抓取所有餐廳的基本資訊，然後逐一進入各餐廳詳細頁面擷取地址、價格、風格、描述等詳細資料，最終將所有米其林餐廳資料儲存至 Google Sheet (ID: `1-ZavnN8fmUklM9_mkNqdzKmpIu6Df96jkXJi_OLkUBA`, 工作表: '米其林2')。
+- **舊聖詩2Gsheet.js**: 此檔案使用 Puppeteer 遍歷 Xuite 部落格 (`https://blog.xuite.net/weikuo.mr/tahymns`) 的多個頁面，抓取其中包含「聖詩」關鍵字的連結，並進入這些連結頁面擷取聖詩圖片的 URL，最終將聖詩主題與圖片連結儲存至 Google Sheet (ID: `1yt3EfSIVBi-NOvoeqwEtp-DcnIODM9LK84alJLh9JJI`, 工作表: '舊聖詩')。
+- **蒔美班表2Gsheet.js**: 此檔案使用 Puppeteer 瀏覽「蒔美牙醫」診所的各分院班表頁面 (`https://www.smile-dental.tw/xizhismile` 等)，抓取每個週班表圖片的 URL，並將醫院名稱、圖片連結與週次資訊儲存至 Google Sheet (ID: `1yt3EfSIVBi-NOvoeqwEtp-DcnIODM9LK84alJLh9JJI`, 工作表: '蒔美')。
+- **蒔美班表2Gsht2024.js**: 這個 JavaScript 檔案利用 Puppeteer 從「蒔美牙醫」各分院的網站爬取門診班表資訊，並將處理後的資料儲存至指定的 Google Sheet (ID: 1yt3EfSIVBi-NOvoeqwEtp-DcnIODM9LK84alJLh9JJI)。

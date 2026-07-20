@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Cut Pro 歌譜×音樂同步製作 SOP</title>
+  <meta name="description" content="完整教學：如何在 Final Cut Pro 中高效率結合 MP3 音訊與直式歌譜 JPG，達到畫面滿版、依節奏自動切換的同步效果。" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+  <style>
+    /* === 全域變數 === */
+    :root {
+      --bg-dark: #1a1a1a;
+      --bg-light: #f7f7f7;
+      --text-dark: #ffffff;
+      --text-light: #212121;
+      --accent: #36454f;
+      --accent2: #4fc3f7;
+      --accent-alt: #212121;
+      --success: #81c784;
+      --warn: #ffb74d;
+    }
+
+    /* === Charcoal Minimal Theme Override === */
+    .theme-charcoal {
+      --bg-dark: #141414;
+      --bg-light: #f5f5f5;
+      --text-dark: #ffffff;
+      --text-light: #1a1a1a;
+      --accent: #36454f;
+      --accent2: #4fc3f7;
+      --accent-alt: #a0b0bb;
+    }
+
+    /* === Reveal.js 基礎 === */
+    .reveal {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .reveal h1 { font-size: 2.1em; line-height: 1.15; }
+    .reveal h2 { font-size: 1.45em; }
+    .reveal h3 { font-size: 1.05em; }
+    .reveal .progress { color: var(--accent2); }
+    .reveal .fragment { opacity: 0.15; transition: opacity 0.4s; }
+    .reveal .fragment.visible { opacity: 1; }
+
+    /* === 亮暗頁面 === */
+    .reveal section.dark-slide {
+      --text-primary: var(--text-dark);
+      --text-muted: rgba(255,255,255,0.65);
+      --bg-card: rgba(255,255,255,0.07);
+      --border-card: rgba(255,255,255,0.13);
+      color: var(--text-primary);
+    }
+    .reveal section.dark-slide h1,
+    .reveal section.dark-slide h3,
+    .reveal section.dark-slide p,
+    .reveal section.dark-slide li { color: var(--text-primary); }
+    .reveal section.dark-slide h2 { color: var(--accent2); }
+
+    .reveal section.light-slide {
+      --text-primary: var(--text-light);
+      --text-muted: rgba(0,0,0,0.55);
+      --bg-card: rgba(0,0,0,0.04);
+      --border-card: rgba(0,0,0,0.09);
+      color: var(--text-primary);
+    }
+    .reveal section.light-slide h1,
+    .reveal section.light-slide h3,
+    .reveal section.light-slide p,
+    .reveal section.light-slide li { color: var(--text-primary); }
+    .reveal section.light-slide h2 { color: var(--accent); }
+
+    /* === Motif: 左側彩色粗線 === */
+    .motif-border-left {
+      border-left: 5px solid var(--accent2);
+      padding-left: 16px;
+      text-align: left;
+    }
+    .reveal section.light-slide .motif-border-left {
+      border-left-color: var(--accent);
+    }
+
+    /* === Motif: 微光卡片 === */
+    .motif-flat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+    .reveal section.dark-slide .motif-flat-card:hover {
+      border-color: rgba(79,195,247,0.4);
+      box-shadow: 0 0 18px rgba(79,195,247,0.15);
+    }
+    .reveal section.light-slide .motif-flat-card:hover {
+      border-color: rgba(54,69,79,0.3);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+
+    /* === 封面 === */
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block;
+      background: var(--accent2);
+      color: #0d1117;
+      padding: 4px 16px;
+      border-radius: 20px;
+      font-size: 0.5em;
+      letter-spacing: 0.1em;
+      margin-bottom: 1em;
+      font-weight: 700;
+    }
+    .title-slide .subtitle { font-size: 0.7em; color: rgba(255,255,255,0.7); margin-top: 0.5em; }
+    .title-slide .author { margin-top: 2em; font-size: 0.45em; color: rgba(255,255,255,0.5); }
+
+    /* === 優勢卡 === */
+    .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 0.5em; }
+    .adv-grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 0.6em; }
+    .adv-card {
+      background: var(--bg-card);
+      border-top: 3px solid var(--accent2);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+    }
+    .reveal section.light-slide .adv-card { border-top-color: var(--accent); }
+    .adv-card .adv-icon { margin-bottom: 8px; }
+    .adv-card .adv-icon img {
+      width: 52px; height: 52px; object-fit: contain;
+      display: block; margin: 0 auto;
+      filter: drop-shadow(0 0 8px rgba(79,195,247,0.7));
+    }
+    .reveal section.light-slide .adv-card .adv-icon img {
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+    }
+    .adv-card .adv-title { font-size: 0.6em; font-weight: 700; color: var(--accent2); margin-bottom: 5px; }
+    .reveal section.light-slide .adv-card .adv-title { color: var(--accent); }
+    .adv-card .adv-desc { font-size: 0.6em; color: var(--text-muted); line-height: 1.6; }
+
+    /* === 步驟時間軸 === */
+    .step-list { list-style: none; padding: 0; margin: 0.4em 0; }
+    .step-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 0.65em; padding: 10px 14px;
+      border-left: 3px solid var(--border-card);
+      margin-bottom: 8px; position: relative;
+      line-height: 1.6;
+    }
+    .step-list li:last-child { margin-bottom: 0; }
+    .step-num {
+      flex-shrink: 0;
+      width: 26px; height: 26px;
+      background: var(--accent2);
+      color: #0d1117;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1.1em;
+      line-height: 1;
+    }
+    .reveal section.light-slide .step-num {
+      background: var(--accent); color: #fff;
+    }
+
+    /* === 快捷鍵徽章 === */
+    .kbd {
+      display: inline-block;
+      background: rgba(79,195,247,0.15);
+      border: 1px solid rgba(79,195,247,0.4);
+      border-radius: 6px;
+      padding: 1px 8px;
+      font-family: 'Inter', monospace;
+      font-size: 0.92em;
+      font-weight: 700;
+      color: var(--accent2);
+      white-space: nowrap;
+    }
+    .reveal section.light-slide .kbd {
+      background: rgba(54,69,79,0.1);
+      border-color: rgba(54,69,79,0.35);
+      color: var(--accent);
+    }
+
+    /* === 統計數字卡 === */
+    .stat-row { display: flex; gap: 16px; justify-content: center; margin-top: 0.8em; }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 18px 24px;
+      text-align: center;
+      flex: 1;
+    }
+    .stat-card .num { font-size: 1.9em; font-weight: 900; color: var(--accent2); line-height: 1; }
+    .reveal section.light-slide .stat-card .num { color: var(--accent); }
+    .stat-card .label { font-size: 0.65em; color: var(--text-muted); margin-top: 6px; }
+
+    /* === VS 對比 === */
+    .vs-grid { display: grid; grid-template-columns: 1fr 48px 1fr; gap: 0; align-items: stretch; margin-top: 0.5em; }
+    .vs-col { background: var(--bg-card); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; }
+    .vs-col.left-col  { border-top: 3px solid var(--accent2); }
+    .vs-col.right-col { border-top: 3px solid var(--accent-alt); }
+    .vs-label { font-size: 0.85em; font-weight: 700; margin-bottom: 8px; }
+    .vs-label.left  { color: var(--accent2); }
+    .vs-label.right { color: var(--accent-alt); }
+    .vs-center { display: flex; align-items: center; justify-content: center; font-size: 1.3em; font-weight: 900; color: var(--text-muted); }
+    .vs-col ul { font-size: 0.6em; list-style: none; padding: 0; margin: 0; }
+    .vs-col ul li { padding: 5px 0; border-bottom: 1px solid var(--border-card); line-height: 1.5; }
+    .vs-col ul li:last-child { border-bottom: none; }
+    .vs-col ul li::before { content: "✦ "; opacity: 0.5; }
+
+    /* === 雙欄排版 === */
+    .two-col-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; align-items: start; text-align: left;
+    }
+    .two-col-grid .col-text { font-size: 0.65em; line-height: 1.75; }
+
+    /* === 心智圖 === */
+    .mindmap-container { position: relative; width: 100%; }
+    .mm-center {
+      background: linear-gradient(135deg, #36454f, #4fc3f7);
+      color: #fff;
+      border-radius: 50%;
+      width: 120px; height: 120px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.52em;
+      text-align: center; line-height: 1.3;
+      box-shadow: 0 0 30px rgba(79,195,247,0.4);
+      margin: 0 auto;
+      position: relative; z-index: 2;
+    }
+    .mm-branch-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 10px; margin-top: 12px;
+    }
+    .mm-branch {
+      background: var(--bg-card);
+      border: 1px solid rgba(79,195,247,0.25);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.45em;
+      line-height: 1.5;
+      position: relative;
+    }
+    .mm-branch::before {
+      content: '';
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translateX(-50%);
+      width: 2px; height: 12px;
+      background: rgba(79,195,247,0.4);
+    }
+    .mm-branch .mm-title {
+      font-weight: 700; color: var(--accent2);
+      font-size: 1.2em; margin-bottom: 5px;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .mm-branch ul { list-style: none; padding: 0; margin: 0; color: var(--text-muted); }
+    .mm-branch ul li { padding: 2px 0; }
+    .mm-branch ul li::before { content: "→ "; opacity: 0.6; }
+
+    /* === VIZ Slider === */
+    .viz-wrap { position: relative; height: 340px; border-radius: 14px; overflow: hidden; border: 1px solid var(--border-card); }
+    #viz-before, #viz-after { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    #viz-before {
+      background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+      flex-direction: column; gap: 12px; font-size: 0.38em; color: #666;
+    }
+    #viz-after {
+      background: linear-gradient(135deg, #141a20 0%, #1e2d3d 100%);
+      clip-path: inset(0 100% 0 0);
+      flex-direction: column; gap: 12px; font-size: 0.38em; color: #aed6f1;
+    }
+    #viz-divider {
+      position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+      background: linear-gradient(to bottom, transparent, #4fc3f7, transparent);
+      box-shadow: 0 0 12px #4fc3f7;
+      pointer-events: none;
+    }
+    #viz-slider {
+      width: 70%; margin: 10px auto 0; display: block;
+      -webkit-appearance: none; height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(to right, #4fc3f7 0%, rgba(255,255,255,0.15) 0%);
+      outline: none; cursor: pointer;
+    }
+    #viz-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 20px; height: 20px;
+      border-radius: 50%; background: #4fc3f7;
+      box-shadow: 0 0 8px rgba(79,195,247,0.7); cursor: pointer;
+    }
+    .viz-label {
+      position: absolute; top: 10px;
+      font-size: 0.35em; font-weight: 700;
+      padding: 3px 10px; border-radius: 6px;
+      transition: opacity 0.3s;
+    }
+    .viz-label.before-label { left: 12px; color: #888; background: rgba(0,0,0,0.3); }
+    .viz-label.after-label  { right: 12px; color: #4fc3f7; background: rgba(79,195,247,0.15); }
+
+    /* === 封底 === */
+    .end-slide { text-align: center; }
+    .end-slide .big { font-size: 2.8em; margin-bottom: 0.2em; }
+    .end-slide .tagline { font-size: 0.6em; color: rgba(255,255,255,0.65); margin-top: 0.4em; }
+
+    /* === LIVE 動畫 === */
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
+    @keyframes glow {
+      0%,100% { box-shadow: 0 0 10px rgba(79,195,247,0.3); }
+      50% { box-shadow: 0 0 25px rgba(79,195,247,0.6); }
+    }
+
+    /* === 頁面引言 === */
+    .phase-badge {
+      display: inline-block;
+      background: rgba(79,195,247,0.12);
+      border: 1px solid rgba(79,195,247,0.35);
+      border-radius: 20px;
+      padding: 3px 14px;
+      font-size: 0.48em;
+      font-weight: 700;
+      color: var(--accent2);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4em;
+    }
+    .reveal section.light-slide .phase-badge {
+      background: rgba(54,69,79,0.1);
+      border-color: rgba(54,69,79,0.3);
+      color: var(--accent);
+    }
+
+    /* === 提示框 === */
+    .tip-box {
+      background: rgba(79,195,247,0.08);
+      border: 1px solid rgba(79,195,247,0.25);
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 0.5em;
+      color: rgba(255,255,255,0.8);
+      margin-top: 10px;
+      line-height: 1.6;
+      text-align: left;
+    }
+    .tip-box .tip-icon { color: var(--accent2); font-weight: 700; }
+    .reveal section.light-slide .tip-box {
+      background: rgba(54,69,79,0.06);
+      border-color: rgba(54,69,79,0.2);
+      color: rgba(0,0,0,0.7);
+    }
+    .reveal section.light-slide .tip-box .tip-icon { color: var(--accent); }
+
+    /* === 手機版 RWD === */
+    @media (max-width: 560px), (max-device-width: 560px) and (orientation: portrait) {
+      .reveal { font-size: 1.65em !important; }
+      .reveal h1 { font-size: 1.8em !important; line-height: 1.2 !important; }
+      .reveal h2 { font-size: 1.45em !important; }
+      .adv-grid, .adv-grid-4, .two-col-grid, .vs-grid, .mm-branch-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+      }
+      .vs-center { padding: 8px 0; font-size: 1.2em; }
+      .stat-row { flex-direction: column; gap: 10px; }
+      .mindmap-container { font-size: 0.8em !important; }
+      #viz-slider { width: 90% !important; }
+      .step-list li { font-size: 0.9em !important; }
+    }
+  </style>
+</head>
+<body class="theme-charcoal">
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ① 封面 [DARK][BG] -->
+    <section class="dark-slide"
+             data-background-image="images/cover.jpg"
+             data-background-opacity="0.35"
+             data-background-size="cover"
+             data-background-color="#141414">
+      <div class="title-slide">
+        <div class="tag">Final Cut Pro · 實作教學 SOP</div>
+        <h1>歌譜 × 音樂<br>同步製作</h1>
+        <h2 style="color:var(--accent2); margin-top:0.2em;">節奏精準 · 滿版呈現 · 高效完成</h2>
+        <p class="subtitle">MP3 音訊 + 直式歌譜 JPG → 同步影片一次搞定</p>
+        <p class="author">掌握 Mark · Crop · Snapping 三大核心工具</p>
+      </div>
+    </section>
+
+    <!-- ② 互動文字雲 [LIGHT][INTERACT:wordcloud] -->
+    <section id="slide-wordcloud" class="light-slide" data-background-color="#f5f5f5">
+      <h2 style="font-size:1.05em; margin-bottom:0.3em;">你平常怎麼讓歌譜跟音樂同步？</h2>
+      <div style="display:grid; grid-template-columns:240px 1fr; gap:14px; height:430px;">
+        <!-- 左欄 -->
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="background:rgba(0,0,0,0.05); border-radius:10px; padding:14px;">
+            <div style="font-size:0.38em; color:var(--accent); font-weight:700; margin-bottom:8px;">輸入你的方法</div>
+            <input id="wc-input" type="text" placeholder="例：手動切帧…" maxlength="20"
+              style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid rgba(54,69,79,0.3);
+                     background:rgba(255,255,255,0.9); color:#1a1a1a; font-size:13px;
+                     box-sizing:border-box; font-family:inherit; outline:none;" />
+            <button id="wc-btn"
+              style="width:100%; margin-top:8px; padding:9px; background:var(--accent); color:#fff;
+                     border:none; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer;">
+              送出 ↵
+            </button>
+          </div>
+          <div style="background:rgba(0,0,0,0.05); border-radius:10px; padding:14px; flex:1; overflow:hidden; display:flex; flex-direction:column;">
+            <div style="font-size:0.38em; color:var(--accent); font-weight:700; margin-bottom:8px;">
+              熱門答案
+              <span style="display:inline-block; background:#ff4757; color:#fff; padding:2px 7px;
+                           border-radius:10px; font-size:0.85em; animation:pulse 1.5s infinite;">LIVE</span>
+            </div>
+            <div id="wc-list" style="font-size:0.34em; overflow-y:auto; flex:1; color:#555;"></div>
+            <div style="margin-top:8px; font-size:0.32em; color:#999; border-top:1px solid rgba(0,0,0,0.08); padding-top:6px;">
+              總提交：<span id="wc-total" style="color:var(--accent); font-weight:700;">0</span>　
+              不同答案：<span id="wc-unique" style="color:var(--accent); font-weight:700;">0</span>
+            </div>
+          </div>
+        </div>
+        <!-- 右欄：文字雲 -->
+        <div style="background:rgba(0,0,0,0.04); border-radius:12px; overflow:hidden;
+                    position:relative; border:1px solid rgba(0,0,0,0.08);">
+          <canvas id="wc-canvas" style="width:100%; height:100%; display:block;"></canvas>
+          <div id="wc-empty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                                    color:#aaa; font-size:0.42em; text-align:center;
+                                    pointer-events:none; line-height:2;">
+            輸入第一個答案<br>文字雲就會出現 ✨
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ③ 流程總覽 [LIGHT][ICON] -->
+    <section class="light-slide" data-background-color="#f5f5f5">
+      <div class="phase-badge">完整流程概覽</div>
+      <h2>四大核心工具 × 四大階段</h2>
+      <div class="adv-grid-4 fragment">
+        <div class="adv-card">
+          <div class="adv-icon"><img src="images/icon_music.png" alt="Mark 標記"></div>
+          <div class="adv-title">Mark 標記</div>
+          <div class="adv-desc">按 <strong>M 鍵</strong> 在節奏點打上藍色 Marker，精準標出換頁時機</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon"><img src="images/icon_crop.png" alt="Crop 裁剪"></div>
+          <div class="adv-title">Crop 裁剪</div>
+          <div class="adv-desc">按 <strong>Shift+C</strong> 去除黑邊，手動框住歌譜目標行數</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon"><img src="images/icon_blade.png" alt="Blade 切割"></div>
+          <div class="adv-title">Blade 切割</div>
+          <div class="adv-desc">按 <strong>Cmd+B</strong> 在標記點精準切斷，依節奏分段</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon"><img src="images/icon_snap.png" alt="Snapping 磁吸"></div>
+          <div class="adv-title">Snapping 磁吸</div>
+          <div class="adv-desc">按 <strong>N 鍵</strong> 開啟磁吸，拖曳自動吸附 Marker 完美對齊</div>
+        </div>
+      </div>
+      <div class="stat-row fragment" style="margin-top:12px;">
+        <div class="stat-card">
+          <div class="num">4</div>
+          <div class="label">大製作階段</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">2</div>
+          <div class="label">彈性操作做法</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">7+</div>
+          <div class="label">關鍵快捷鍵</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ④ 準備工作 [DARK][BG] -->
+    <section class="dark-slide"
+             data-background-image="images/phase1.jpg"
+             data-background-opacity="0.2"
+             data-background-size="cover"
+             data-background-color="#141414">
+      <div class="phase-badge">準備工作</div>
+      <h2>建立專案與匯入媒體</h2>
+      <ul class="step-list">
+        <li class="fragment">
+          <span class="step-num">1</span>
+          <span>建立新專案：<span class="kbd">Cmd + N</span>，設定為橫式影片 <strong>1080p HD</strong></span>
+        </li>
+        <li class="fragment">
+          <span class="step-num">2</span>
+          <span>匯入檔案：將 <strong>MP3 音訊</strong> 與 <strong>歌譜 JPG</strong> 拖入媒體庫</span>
+        </li>
+        <li class="fragment">
+          <span class="step-num">3</span>
+          <span>佈置時間軸：先將 <strong>MP3 拖入時間軸</strong>，再將歌譜 JPG 拖至 MP3 <strong>上方軌道</strong></span>
+        </li>
+      </ul>
+      <div class="tip-box fragment">
+        <span class="tip-icon">💡 小提示：</span>
+        確保專案設定與 MP3 採樣率一致，JPG 建議使用高解析度（300dpi 以上）可避免放大後模糊。
+      </div>
+    </section>
+
+    <!-- ⑤ 第一階段：節奏標記 [LIGHT] -->
+    <section class="light-slide" data-background-color="#f5f5f5">
+      <div class="phase-badge">第一階段</div>
+      <h2>音樂節奏點標記（抓出換頁時間）</h2>
+      <div class="two-col-grid">
+        <div class="col-text">
+          <ul class="step-list">
+            <li class="fragment">
+              <span class="step-num">1</span>
+              <span>開啟磁吸：確認時間軸右上方<strong>磁鐵圖示亮起藍燈</strong>，或按 <span class="kbd">N</span></span>
+            </li>
+            <li class="fragment">
+              <span class="step-num">2</span>
+              <span>點選 MP3 音軌，按 <span class="kbd">空白鍵</span> 開始播放聆聽</span>
+            </li>
+            <li class="fragment">
+              <span class="step-num">3</span>
+              <span>跟著音樂，在需要換頁的瞬間立刻按 <span class="kbd">M</span>，在時間軸留下<strong>藍色 Marker</strong></span>
+            </li>
+          </ul>
+          <div class="tip-box fragment">
+            <span class="tip-icon">🎯 技巧：</span>
+            第一次可以先大概打，不用太精準。播完後再用鍵盤 <span class="kbd">←</span><span class="kbd">→</span> 微調每個 Marker 的位置。
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; padding-top:10px;">
+          <div class="motif-flat-card fragment">
+            <div style="font-size:0.48em; font-weight:700; color:var(--accent); margin-bottom:8px;">🎵 Marker 視覺效果</div>
+            <div style="height:60px; background:#2a2a2a; border-radius:8px; position:relative; overflow:hidden;">
+              <!-- 模擬時間軸 -->
+              <div style="position:absolute; bottom:0; left:0; right:0; height:24px; background:#3a3a3a;"></div>
+              <div style="position:absolute; bottom:22px; left:20%; width:2px; height:38px; background:#4fc3f7; box-shadow:0 0 6px #4fc3f7;"></div>
+              <div style="position:absolute; bottom:22px; left:45%; width:2px; height:38px; background:#4fc3f7; box-shadow:0 0 6px #4fc3f7;"></div>
+              <div style="position:absolute; bottom:22px; left:72%; width:2px; height:38px; background:#4fc3f7; box-shadow:0 0 6px #4fc3f7;"></div>
+              <div style="position:absolute; bottom:24px; left:19%; font-size:8px; color:#4fc3f7;">▼</div>
+              <div style="position:absolute; bottom:24px; left:44%; font-size:8px; color:#4fc3f7;">▼</div>
+              <div style="position:absolute; bottom:24px; left:71%; font-size:8px; color:#4fc3f7;">▼</div>
+            </div>
+            <div style="font-size:0.32em; color:#888; margin-top:6px; text-align:center;">← 藍色垂直線即為 Marker →</div>
+          </div>
+          <div class="motif-flat-card fragment">
+            <div style="font-size:0.45em; font-weight:700; color:var(--accent); margin-bottom:5px;">快捷鍵速查</div>
+            <div style="font-size:0.38em; line-height:2;">
+              <span class="kbd" style="color:var(--accent);border-color:rgba(54,69,79,0.4);background:rgba(54,69,79,0.1);">M</span> 打 Marker　
+              <span class="kbd" style="color:var(--accent);border-color:rgba(54,69,79,0.4);background:rgba(54,69,79,0.1);">N</span> 切換磁吸　
+              <span class="kbd" style="color:var(--accent);border-color:rgba(54,69,79,0.4);background:rgba(54,69,79,0.1);">空白鍵</span> 播放/暫停
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑥ 第二階段：Crop 模板 [LIGHT][VIZ] -->
+    <section class="light-slide" data-background-color="#f5f5f5">
+      <div class="phase-badge">第二階段</div>
+      <h2>設定首張歌譜「滿版與裁剪」模板</h2>
+      <div class="two-col-grid">
+        <div class="col-text">
+          <ul class="step-list" style="margin-bottom:8px;">
+            <li class="fragment">
+              <span class="step-num">1</span>
+              <span>將第一張歌譜圖片右側邊緣<strong>向右拉長</strong>，蓋過前幾個 Marker</span>
+            </li>
+            <li class="fragment">
+              <span class="step-num">2</span>
+              <span>點選圖片，按 <span class="kbd">Shift + C</span> 進入 Crop 模式，調整綠框<strong>精準框住第一、二行</strong></span>
+            </li>
+            <li class="fragment">
+              <span class="step-num">3</span>
+              <span>點擊右上角 <strong>Done</strong>，再按 <span class="kbd">Cmd + C</span> 複製當作模板</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <!-- VIZ Slider: 裁剪前後對比 -->
+          <div style="font-size:0.36em; color:var(--accent); font-weight:700; margin-bottom:6px; text-align:center;">
+            ← 拖曳滑桿查看裁剪前後
+          </div>
+          <div class="viz-wrap">
+            <div id="viz-before">
+              <div style="text-align:center;">
+                <div style="font-size:1.1em; color:#555; margin-bottom:8px;">🖼 原始 JPG</div>
+                <!-- 模擬歌譜 with 黑邊 -->
+                <div style="width:220px; background:#111; border-radius:6px; padding:4px; border:2px solid #333;">
+                  <div style="background:#1e1e1e; border-radius:4px; padding:8px;">
+                    <div style="color:#666; font-size:0.7em; margin-bottom:4px;">黑邊區域</div>
+                    <div style="background:#f5f5f5; border-radius:3px; padding:10px;">
+                      <div style="color:#333; font-size:0.65em; line-height:1.8; font-family:serif;">
+                        ♪ 第一行歌詞 歌詞 歌詞<br>
+                        ♪ 第二行歌詞 歌詞 歌詞<br>
+                        <span style="color:#bbb;">♪ 第三行歌詞 歌詞 歌詞<br>
+                        ♪ 第四行歌詞 歌詞 歌詞</span>
+                      </div>
+                    </div>
+                    <div style="color:#666; font-size:0.7em; margin-top:4px;">黑邊區域</div>
+                  </div>
+                </div>
+                <div style="font-size:0.65em; color:#555; margin-top:6px;">有多餘黑邊 / 顯示多行</div>
+              </div>
+            </div>
+            <div id="viz-after">
+              <div style="text-align:center;">
+                <div style="font-size:1.1em; color:#4fc3f7; margin-bottom:8px;">✅ Crop 後</div>
+                <div style="width:220px; background:#111; border-radius:6px; padding:4px; border:2px solid rgba(79,195,247,0.5); box-shadow:0 0 15px rgba(79,195,247,0.2);">
+                  <div style="background:#f5f5f5; border-radius:3px; padding:14px;">
+                    <div style="color:#333; font-size:0.65em; line-height:2; font-family:serif;">
+                      ♪ 第一行歌詞 歌詞 歌詞<br>
+                      ♪ 第二行歌詞 歌詞 歌詞
+                    </div>
+                  </div>
+                </div>
+                <div style="font-size:0.65em; color:#4fc3f7; margin-top:6px;">滿版顯示，黑邊去除 ✨</div>
+              </div>
+            </div>
+            <div id="viz-divider"></div>
+            <span class="viz-label before-label" id="viz-lbl-before">裁剪前</span>
+            <span class="viz-label after-label" id="viz-lbl-after">裁剪後</span>
+          </div>
+          <input id="viz-slider" type="range" min="0" max="100" value="0">
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑦ 做法 A [DARK][BG] -->
+    <section class="dark-slide"
+             data-background-image="images/method_a.jpg"
+             data-background-opacity="0.25"
+             data-background-size="cover"
+             data-background-color="#141414">
+      <div class="phase-badge">第三階段 · 做法 A（最推薦）</div>
+      <h2>先拉長再切斷，效率最高</h2>
+      <ul class="step-list">
+        <li class="fragment">
+          <span class="step-num">1</span>
+          <span><strong>拉滿長度</strong>：將設定好的滿版圖片一路向右拉長，<strong>覆蓋整首歌</strong>的時間軸範圍</span>
+        </li>
+        <li class="fragment">
+          <span class="step-num">2</span>
+          <span><strong>精準切斷</strong>：指針移到第一個藍色 Marker，按 <span class="kbd">Cmd + B</span>（刀片）；移到下一個再按，依此類推</span>
+        </li>
+        <li class="fragment">
+          <span class="step-num">3</span>
+          <span><strong>修正顯示範圍</strong>：第一小段保持第一、二行不動；點選第二小段按 <span class="kbd">Shift + C</span>，直接將綠框<strong>往下拖曳</strong>至第三、四行</span>
+        </li>
+      </ul>
+      <div class="tip-box fragment">
+        <span class="tip-icon">⚡ 優勢：</span>
+        整首歌只需設定一次 Crop 大小，後續只需移動框的位置，圖片放大比例<strong>完全不會跑掉</strong>，效率提升 3 倍！
+      </div>
+    </section>
+
+    <!-- ⑧ 做法 B [LIGHT][ICON] -->
+    <section class="light-slide" data-background-color="#f5f5f5">
+      <div class="phase-badge">第三階段 · 做法 B（多張 JPG）</div>
+      <h2>磁吸對齊 + 貼上屬性</h2>
+      <div class="adv-grid" style="margin-bottom:12px;">
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_snap.png" alt="磁吸"></div>
+          <div class="adv-title">① 磁吸對齊</div>
+          <div class="adv-desc">從媒體庫拖入下一張 JPG，靠近藍色 Marker 會自動吸附（出現<strong>黃色垂直線</strong>），放開即精準對齊</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_crop.png" alt="貼上屬性"></div>
+          <div class="adv-title">② 貼上屬性</div>
+          <div class="adv-desc">選取剛放進來的新圖片，按 <strong>Shift + Cmd + V</strong>（貼上屬性），勾選「Crop」後點 Paste，<strong>一鍵複製格式</strong></div>
+        </div>
+      </div>
+      <div class="vs-grid fragment">
+        <div class="vs-col left-col">
+          <div class="vs-label left">做法 A 適合</div>
+          <ul>
+            <li>同一首歌全用同一張歌譜圖</li>
+            <li>需要切換不同行（同圖不同區域）</li>
+            <li>追求最高效率，一氣呵成</li>
+            <li>圖片尺寸一致，比例不變</li>
+          </ul>
+        </div>
+        <div class="vs-center">VS</div>
+        <div class="vs-col right-col">
+          <div class="vs-label right">做法 B 適合</div>
+          <ul>
+            <li>每頁歌譜是獨立 JPG 檔</li>
+            <li>不同頁歌譜有不同版型</li>
+            <li>需要對各張圖片做微調裁剪</li>
+            <li>圖片數量多，彈性操作</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑨ 第四階段：輸出 [LIGHT] -->
+    <section class="light-slide" data-background-color="#f5f5f5">
+      <div class="phase-badge">第四階段</div>
+      <h2>檢查與輸出</h2>
+      <ul class="step-list">
+        <li class="fragment">
+          <span class="step-num">1</span>
+          <span><strong>監聽音量調整</strong>：點擊時間軸右下角「雙波形」圖示，拉動垂直滑桿調整監聽音量（<strong>不影響輸出</strong>）</span>
+        </li>
+        <li class="fragment">
+          <span class="step-num">2</span>
+          <span><strong>增加轉場（選用）</strong>：覺得畫面切換太硬，在圖片切點按 <span class="kbd">Cmd + T</span> 加上<strong>淡入淡出效果</strong></span>
+        </li>
+        <li class="fragment">
+          <span class="step-num">3</span>
+          <span><strong>導出影片</strong>：按 <span class="kbd">Cmd + E</span> 輸出檔案，完成同步歌譜影片！</span>
+        </li>
+      </ul>
+      <div class="adv-grid fragment" style="margin-top:14px;">
+        <div class="motif-flat-card" style="text-align:left; padding:14px 16px;">
+          <div style="font-size:0.45em; font-weight:700; color:var(--accent); margin-bottom:6px;">📤 輸出格式建議</div>
+          <div style="font-size:0.38em; color:var(--text-muted); line-height:1.8;">
+            • <strong>H.264</strong>：相容性最佳，適合上傳 YouTube / Facebook<br>
+            • <strong>HEVC (H.265)</strong>：同畫質檔案更小，適合儲存<br>
+            • <strong>1080p / 4K</strong>：依歌譜原始解析度選擇
+          </div>
+        </div>
+        <div class="motif-flat-card" style="text-align:left; padding:14px 16px;">
+          <div style="font-size:0.45em; font-weight:700; color:var(--accent); margin-bottom:6px;">✅ 輸出前最後確認</div>
+          <div style="font-size:0.38em; color:var(--text-muted); line-height:1.8;">
+            • 每個 Marker 切換點畫面正確<br>
+            • 最後一張歌譜延伸至歌曲結尾<br>
+            • 音量正常，無爆音或靜音段
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑩ 心智圖總覽 [DARK][VIZ:mindmap] -->
+    <section class="dark-slide" data-background-color="#141414">
+      <div class="phase-badge">全流程心智圖</div>
+      <h2>FCP 歌譜同步 · 核心結構總覽</h2>
+      <div class="mindmap-container" style="margin-top:10px;">
+        <!-- 中心節點 -->
+        <div class="mm-center">
+          FCP<br>歌譜同步
+        </div>
+        <!-- 分支網格 -->
+        <div class="mm-branch-grid" style="margin-top:6px;">
+          <div class="mm-branch fragment">
+            <div class="mm-title">🎹 準備工作</div>
+            <ul>
+              <li>Cmd+N 新建專案</li>
+              <li>匯入 MP3 + JPG</li>
+              <li>MP3 置入時間軸</li>
+              <li>JPG 放 MP3 上方</li>
+            </ul>
+          </div>
+          <div class="mm-branch fragment">
+            <div class="mm-title">🎵 節奏標記</div>
+            <ul>
+              <li>N 鍵開磁吸</li>
+              <li>空白鍵播放</li>
+              <li>M 鍵打 Marker</li>
+              <li>↔ 微調位置</li>
+            </ul>
+          </div>
+          <div class="mm-branch fragment">
+            <div class="mm-title">✂️ 做法 A</div>
+            <ul>
+              <li>Shift+C 設 Crop</li>
+              <li>拉滿整首歌長度</li>
+              <li>Cmd+B 按標記切斷</li>
+              <li>各段 Crop 往下移</li>
+            </ul>
+          </div>
+          <div class="mm-branch fragment">
+            <div class="mm-title">🧲 做法 B</div>
+            <ul>
+              <li>各 JPG 磁吸對齊</li>
+              <li>Shift+Cmd+V 貼屬性</li>
+              <li>勾選 Crop → Paste</li>
+              <li>各別微調行數</li>
+            </ul>
+          </div>
+        </div>
+        <!-- 第二排：輸出 -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px;">
+          <div class="mm-branch fragment" style="grid-column:1/2;">
+            <div class="mm-title">📤 導出輸出</div>
+            <ul>
+              <li>Cmd+T 加轉場（選用）</li>
+              <li>雙波形調監聽音量</li>
+              <li>Cmd+E 輸出影片</li>
+            </ul>
+          </div>
+          <div class="mm-branch fragment" style="grid-column:2/3;">
+            <div class="mm-title">⭐ 關鍵原則</div>
+            <ul>
+              <li>Snapping 保持開啟</li>
+              <li>Crop 比例一次設定</li>
+              <li>只移框位，不改大小</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑪ 封底 [DARK][BG] -->
+    <section class="dark-slide"
+             data-background-image="images/ending.jpg"
+             data-background-opacity="0.35"
+             data-background-size="cover"
+             data-background-color="#141414">
+      <div class="end-slide">
+        <div class="big">🎬</div>
+        <h1 style="color:var(--accent2); font-size:1.9em;">開始製作你的歌譜影片！</h1>
+        <p class="tagline">Mark 節奏 → Crop 滿版 → Blade 切斷 → Snap 對齊 → Export 完成</p>
+        <div class="stat-row" style="margin-top:1.2em; justify-content:center; gap:12px;">
+          <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(79,195,247,0.25); border-radius:10px; padding:10px 18px; font-size:0.4em; color:rgba(255,255,255,0.7);">
+            <div style="font-size:1.8em; font-weight:900; color:var(--accent2); line-height:1;">M</div>
+            <div>Mark 標記</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(79,195,247,0.25); border-radius:10px; padding:10px 18px; font-size:0.4em; color:rgba(255,255,255,0.7);">
+            <div style="font-size:1.8em; font-weight:900; color:var(--accent2); line-height:1;">Shift+C</div>
+            <div>Crop 裁剪</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(79,195,247,0.25); border-radius:10px; padding:10px 18px; font-size:0.4em; color:rgba(255,255,255,0.7);">
+            <div style="font-size:1.8em; font-weight:900; color:var(--accent2); line-height:1;">Cmd+B</div>
+            <div>Blade 切斷</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(79,195,247,0.25); border-radius:10px; padding:10px 18px; font-size:0.4em; color:rgba(255,255,255,0.7);">
+            <div style="font-size:1.8em; font-weight:900; color:var(--accent2); line-height:1;">Cmd+E</div>
+            <div>Export 輸出</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  const isMobile = window.innerHeight > window.innerWidth || window.innerWidth < 600;
+  Reveal.initialize({
+    width: isMobile ? 450 : 960,
+    height: isMobile ? 800 : 700,
+    margin: isMobile ? 0.05 : 0.08,
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    touch: true,
+    plugins: []
+  });
+
+  // VIZ Slider
+  const slider = document.getElementById('viz-slider');
+  if (slider) {
+    slider.addEventListener('input', function () {
+      const v = +this.value;
+      const after = document.getElementById('viz-after');
+      const divider = document.getElementById('viz-divider');
+      const lblBefore = document.getElementById('viz-lbl-before');
+      const lblAfter = document.getElementById('viz-lbl-after');
+      if (after) after.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+      if (divider) divider.style.left = v + '%';
+      this.style.background = `linear-gradient(to right, #4fc3f7 ${v}%, rgba(255,255,255,0.15) ${v}%)`;
+      if (lblBefore) lblBefore.style.opacity = v > 60 ? Math.max(0, 1 - (v - 60) / 20) : 1;
+      if (lblAfter) lblAfter.style.opacity = v < 40 ? Math.max(0, v / 20) : 1;
+    });
+  }
+</script>
+
+<!-- Firebase 文字雲 -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+  import {
+    getFirestore, collection, addDoc, onSnapshot,
+    serverTimestamp, query, orderBy
+  } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAYQhNavPSce17XtvDC5xnXyl9iUhW9KjA",
+    authDomain: "teacherstudy-109ef.firebaseapp.com",
+    projectId: "teacherstudy-109ef",
+    storageBucket: "teacherstudy-109ef.firebasestorage.app",
+    messagingSenderId: "196599230156",
+    appId: "1:196599230156:web:cfe55d364df3ae1b9d5c69"
+  };
+  const app = initializeApp(firebaseConfig);
+  const fdb = getFirestore(app);
+  const wordsRef = collection(fdb, 'fcp_score_sync_wordcloud');
+  const COLORS = ['#4fc3f7','#81c784','#ffb74d','#ce93d8','#80deea','#f48fb1','#a5d6a7'];
+  let wcData = [];
+
+  window.wcSubmit = async function () {
+    const input = document.getElementById('wc-input');
+    const word = input.value.trim();
+    if (!word) return;
+    const btn = document.getElementById('wc-btn');
+    btn.disabled = true;
+    try {
+      await addDoc(wordsRef, { word, created_at: serverTimestamp() });
+      input.value = '';
+    } catch (e) { console.error(e); }
+    finally { btn.disabled = false; }
+  };
+
+  document.getElementById('wc-input')?.addEventListener('keypress', e => {
+    if (e.key === 'Enter') window.wcSubmit();
+  });
+  document.getElementById('wc-btn')?.addEventListener('click', window.wcSubmit);
+
+  onSnapshot(query(wordsRef, orderBy('created_at', 'asc')), snap => {
+    const words = [];
+    snap.forEach(doc => words.push(doc.data().word));
+    const counts = {};
+    words.forEach(w => counts[w] = (counts[w] || 0) + 1);
+    wcData = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+    document.getElementById('wc-total').textContent = words.length;
+    document.getElementById('wc-unique').textContent = wcData.length;
+
+    const listEl = document.getElementById('wc-list');
+    listEl.innerHTML = wcData.slice(0, 12).map(([w, c]) =>
+      `<div style="display:flex;justify-content:space-between;padding:4px 0;
+                   border-bottom:1px solid rgba(0,0,0,0.07);">
+        <span>${w}</span><span style="color:var(--accent);font-weight:700;">${c}</span>
+      </div>`
+    ).join('') || '<div style="color:#aaa;padding:8px 0;">尚無資料</div>';
+
+    const empty = document.getElementById('wc-empty');
+    if (empty) empty.style.display = wcData.length > 0 ? 'none' : '';
+    drawWordCloud();
+  });
+
+  function drawWordCloud() {
+    const canvas = document.getElementById('wc-canvas');
+    if (!canvas || typeof WordCloud === 'undefined') return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 10 || rect.height < 10) return;
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    if (wcData.length === 0) return;
+    const maxCount = wcData[0][1];
+    WordCloud(canvas, {
+      list: wcData.map(([w, c]) => [w, Math.max(18, Math.round((c / maxCount) * 72))]),
+      gridSize: 6,
+      weightFactor: 1,
+      fontFamily: '"Microsoft JhengHei", "Noto Sans TC", sans-serif',
+      color: () => COLORS[Math.floor(Math.random() * COLORS.length)],
+      backgroundColor: 'transparent',
+      rotateRatio: 0.2,
+      shuffle: true,
+    });
+  }
+
+  Reveal.on('slidechanged', e => {
+    if (e.currentSlide?.id === 'slide-wordcloud') setTimeout(drawWordCloud, 200);
+  });
+</script>
+
+</body>
+</html>

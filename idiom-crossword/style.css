@@ -1,0 +1,776 @@
+/* ==========================================================================
+   成語十字接龍 - style.css (古風現代水墨視覺系統)
+   ========================================================================== */
+
+/* 全域變數與重置 */
+:root {
+    --bg-color: #f5f0e6;       /* 宣紙底色 */
+    --paper-border: #d4c5b3;   /* 宣紙邊框 */
+    --primary-color: #5c3c24;  /* 古木深褐色，用於主文字 */
+    --accent-red: #c0392b;     /* 朱砂紅，用於選中/警示 */
+    --accent-green: #2e7d32;   /* 翡翠綠，用於正確字 */
+    --wood-bg: #eae3d2;        /* 木牌底色 */
+    --wood-border: #c8b99f;    /* 木牌邊框 */
+    --shadow-light: rgba(0, 0, 0, 0.05);
+    --shadow-medium: rgba(92, 60, 36, 0.15);
+    --font-ancient: 'Noto Serif TC', serif;
+    --font-sans: 'Noto Sans TC', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent; /* 消除行動端點擊高亮 */
+}
+
+body {
+    background-color: #e5dec9;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(0,0,0,0.05) 100%);
+    font-family: var(--font-sans);
+    color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* 遊戲外容器 */
+.game-container {
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
+    max-height: 900px;
+    background-color: var(--bg-color);
+    background-image: 
+        radial-gradient(circle at 10% 10%, rgba(92, 60, 36, 0.03) 0%, transparent 60%),
+        radial-gradient(circle at 90% 80%, rgba(92, 60, 36, 0.03) 0%, transparent 50%); /* 水墨微染效果 */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-left: 2px solid var(--paper-border);
+    border-right: 2px solid var(--paper-border);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+@media (min-height: 901px) {
+    .game-container {
+        height: 90vh;
+        border-radius: 16px;
+        border: 2px solid var(--paper-border);
+        overflow: hidden;
+    }
+}
+
+/* ==========================================================================
+   頂部資訊欄
+   ========================================================================== */
+.game-header {
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px dashed var(--paper-border);
+    z-index: 10;
+}
+
+/* 關卡木牌 */
+.level-badge {
+    background-color: #e6dfd0;
+    border: 2px solid var(--primary-color);
+    border-radius: 6px;
+    padding: 6px 20px;
+    font-family: var(--font-ancient);
+    font-weight: 900;
+    font-size: 20px;
+    box-shadow: 0 4px 0 var(--primary-color);
+    transform: translateY(-2px);
+    letter-spacing: 2px;
+}
+
+/* 金幣計數器 */
+.coin-badge {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.6);
+    border: 1.5px solid var(--paper-border);
+    border-radius: 20px;
+    padding: 3px 3px 3px 10px;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.coin-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+    animation: spin-pulse 3s infinite ease-in-out;
+}
+
+#coin-count {
+    font-size: 16px;
+    margin-right: 8px;
+    min-width: 35px;
+    text-align: center;
+}
+
+/* 加號按鈕 */
+.add-coin-btn {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 2px 4px rgba(39, 174, 96, 0.3);
+}
+
+.add-coin-btn:hover {
+    background-color: #219653;
+}
+
+.add-coin-btn:active {
+    transform: scale(0.9);
+}
+
+/* 通用按鈕 */
+.icon-btn-text {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.icon-btn-text:hover {
+    opacity: 1;
+}
+
+.icon-btn-text:active {
+    transform: scale(0.95);
+}
+
+.icon-btn-text svg {
+    margin-bottom: 2px;
+}
+
+/* ==========================================================================
+   棋盤區域 (Board)
+   ========================================================================== */
+.board-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    touch-action: none;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.grid-board {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    gap: 3px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 440px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 6px;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.03);
+}
+
+/* 單個格子樣式 */
+.grid-cell {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-ancient);
+    font-weight: 700;
+    font-size: 20px;
+    border-radius: 6px;
+    user-select: none;
+    position: relative;
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    min-width: 0;
+    min-height: 0;
+    width: 100%;
+}
+
+/* 空白背景無成語的格子 */
+.grid-cell.empty {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    pointer-events: none;
+}
+
+/* 包含成語的格子基底 */
+.grid-cell.char {
+    background-color: var(--wood-bg);
+    border: 1.5px solid var(--wood-border);
+    box-shadow: 
+        0 2px 0 var(--wood-border), 
+        inset 0 1px 0 rgba(255,255,255,0.6);
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+/* 玩家需要挖空填字的格子 */
+.grid-cell.blank {
+    background-color: #dfd8c8;
+    border: 1.5px dashed #a89985;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* 選中的空格（紅色背景與呼吸效果） */
+.grid-cell.selected {
+    background-color: var(--accent-red);
+    border-color: #922b21;
+    color: white;
+    box-shadow: 
+        0 0 10px rgba(192, 57, 43, 0.4),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+    transform: scale(1.05);
+    z-index: 5;
+    animation: pulse-red 1.5s infinite ease-in-out;
+}
+
+/* 玩家已填入文字的空格 */
+.grid-cell.filled {
+    background-color: #ffffff;
+    border: 2.5px solid var(--primary-color);
+    box-shadow: 0 4px 0 var(--primary-color);
+    font-weight: 900;
+    transform: translateY(-2px);
+}
+
+/* 當前成語全部正確時的綠色高亮 */
+.grid-cell.correct {
+    background-color: var(--accent-green) !important;
+    border-color: #1b5e20 !important;
+    color: white !important;
+    box-shadow: 
+        0 4px 0 #1b5e20,
+        inset 0 1px 0 rgba(255,255,255,0.2) !important;
+    font-weight: 900;
+    transform: translateY(-2px);
+    animation: correct-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 填字錯誤的紅色閃爍 */
+.grid-cell.error {
+    animation: shake-error 0.4s ease-in-out;
+    background-color: #fadbd8;
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+}
+
+/* 文字大小與網格適應 (手機端) */
+@media (max-width: 380px) {
+    .grid-cell {
+        font-size: 16px;
+    }
+    .grid-board {
+        gap: 2px;
+        padding: 4px;
+    }
+    .board-wrapper {
+        padding: 8px;
+    }
+}
+
+/* ==========================================================================
+   控制與候選字區域
+   ========================================================================== */
+.control-panel {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-top: 1px dashed var(--paper-border);
+    padding: 15px 15px 25px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.candidate-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.candidate-row {
+    display: flex;
+    justify-content: space-around;
+    gap: 6px;
+    width: 100%;
+}
+
+/* 候選字牌 */
+.candidate-tile {
+    flex: 1;
+    max-width: 60px;
+    aspect-ratio: 1 / 1;
+    background-color: #ffffff;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 0 var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-ancient);
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--primary-color);
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease-out;
+}
+
+.candidate-tile:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 var(--primary-color);
+}
+
+/* 已被選中填入網格的候選字（置灰/隱藏） */
+.candidate-tile.used {
+    opacity: 0.15;
+    pointer-events: none;
+    box-shadow: none;
+    transform: translateY(2px);
+}
+
+/* 功能按鈕欄 */
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+/* 圓形按鈕 */
+.action-btn {
+    background-color: #ffffff;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    box-shadow: 0 3px 0 var(--primary-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+.action-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 0 0 var(--primary-color);
+}
+
+.circle-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+}
+
+/* 文字按鈕 (提示) */
+.text-btn {
+    flex: 1;
+    max-width: 140px;
+    height: 44px;
+    border-radius: 22px;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    gap: 4px;
+}
+
+.btn-icon {
+    display: flex;
+    align-items: center;
+}
+
+/* 廣告角標 */
+.badge-ad {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--accent-red);
+    color: white;
+    font-size: 8px;
+    font-weight: 900;
+    padding: 1px 4px;
+    border-radius: 4px;
+    border: 1px solid white;
+}
+
+/* ==========================================================================
+   彈窗系統 (Modals)
+   ========================================================================== */
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 宣紙古籍風格彈窗 */
+.modal-content.paper-style {
+    background-color: var(--bg-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    width: 85%;
+    max-width: 380px;
+    padding: 30px 20px;
+    position: relative;
+    max-height: 80%;
+    overflow-y: auto;
+    /* 雙線古典邊框裝飾 */
+    outline: 1.5px solid var(--primary-color);
+    outline-offset: -6px;
+}
+
+/* 關卡選單需要寬一點，長一點 */
+.modal-content.paper-style.full-height {
+    max-height: 85%;
+    width: 90%;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: var(--primary-color);
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    font-family: Arial, sans-serif;
+    z-index: 10;
+}
+
+.modal-close:hover {
+    opacity: 1;
+}
+
+.modal-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    letter-spacing: 2px;
+    border-bottom: 1px dashed var(--paper-border);
+    padding-bottom: 8px;
+}
+
+.modal-title.highlight {
+    color: var(--accent-red);
+}
+
+/* 1. 釋義彈窗 */
+.expl-section {
+    margin-bottom: 12px;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.expl-label {
+    font-weight: 700;
+    color: var(--accent-red);
+}
+
+.expl-text {
+    font-family: var(--font-sans);
+    font-weight: 500;
+}
+
+.expl-text-block {
+    margin-top: 4px;
+    padding-left: 8px;
+    border-left: 2px solid var(--paper-border);
+    text-align: justify;
+}
+
+/* 2. 設定彈窗 */
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10px;
+    border-bottom: 1px dashed var(--paper-border);
+    font-weight: 700;
+}
+
+.setting-item-btn {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* 切換開關 */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .3s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .3s;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* 3. 關卡列表網格 */
+.levels-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 10px 5px;
+}
+
+.level-item {
+    aspect-ratio: 1 / 1;
+    background-color: #ffffff;
+    border: 1.5px solid var(--paper-border);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-ancient);
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* 關卡鎖定樣式 */
+.level-item.locked {
+    background-color: #e5dec9;
+    color: #a89985;
+    cursor: not-allowed;
+}
+
+.level-item.locked svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* 當前進度關卡 */
+.level-item.current {
+    border: 2px solid var(--accent-red);
+    color: var(--accent-red);
+    box-shadow: 0 0 6px rgba(192, 57, 43, 0.2);
+}
+
+/* 已通關樣式 */
+.level-item.completed {
+    background-color: var(--accent-green);
+    border-color: #1b5e20;
+    color: white;
+}
+
+/* 4. 結算彈窗 */
+.win-msg, .complete-msg {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.win-rewards {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.reward-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #fce4d6;
+    border: 1.5px solid #f8cbad;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 900;
+    font-size: 18px;
+    color: #e27d3c;
+}
+
+.win-actions {
+    display: flex;
+    justify-content: center;
+}
+
+/* 按鈕系統 */
+.btn {
+    border: 2px solid var(--primary-color);
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 0 var(--primary-color);
+}
+
+.btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 var(--primary-color);
+}
+
+.btn-primary {
+    background-color: var(--accent-red);
+    color: white;
+    border-color: #922b21;
+    box-shadow: 0 4px 0 #922b21;
+}
+
+.btn-primary:active {
+    box-shadow: 0 0 0 #922b21;
+}
+
+.btn-secondary {
+    background-color: #ffffff;
+    color: var(--primary-color);
+}
+
+/* 書卷古典線條效果，用於通關大彈窗 */
+.scroll-decoration {
+    border: 1px solid var(--paper-border);
+    padding: 15px;
+    background-color: #faf6ee;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.complete-sub {
+    font-family: var(--font-ancient);
+    font-size: 18px;
+    font-weight: 900;
+    margin-top: 10px;
+    color: var(--accent-red);
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* ==========================================================================
+   動畫效果 (Keyframes)
+   ========================================================================== */
+@keyframes spin-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes pulse-red {
+    0%, 100% { box-shadow: 0 0 4px rgba(192, 57, 43, 0.4); }
+    50% { box-shadow: 0 0 12px rgba(192, 57, 43, 0.7); }
+}
+
+@keyframes correct-pop {
+    0% { transform: scale(1) translateY(-2px); }
+    50% { transform: scale(1.15) translateY(-5px); }
+    100% { transform: scale(1) translateY(-2px); }
+}
+
+@keyframes shake-error {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
+}
+
+.animate-pop {
+    animation: pop-up 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes pop-up {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* 書法字體樣式 */
+.font-ancient {
+    font-family: var(--font-ancient);
+    font-weight: 900;
+}

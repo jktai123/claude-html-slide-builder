@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拼音島大冒險 - 中文拼音與注音學習遊戲</title>
+  <link rel="stylesheet" href="style.css?v=1.0.4">
+  <!-- 引入 Google Fonts 適合學習的現代字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="game-container">
+    
+    <!-- 頂部通用資訊與控制列 -->
+    <header id="global-header" class="hidden">
+      <button id="btn-back-home" class="btn-icon">🏠 首頁</button>
+      <div id="game-progress-container" class="hidden">
+        <span class="progress-label">進度:</span>
+        <div class="progress-bar-outer">
+          <div id="progress-bar-inner"></div>
+        </div>
+        <span id="progress-text">1/5</span>
+      </div>
+      <div class="score-display">
+        <span class="star-icon">⭐</span>
+        <span id="score-val">0</span>
+      </div>
+    </header>
+
+    <!-- 1. 遊戲首頁 -->
+    <section id="start-screen" class="screen active">
+      <div class="background-decor animate-pulse-slow"></div>
+      <div class="logo-container">
+        <h1 class="game-title">
+          <span class="word color-cyan">拼</span>
+          <span class="word color-violet">音</span>
+          <span class="word color-pink">島</span>
+          <span class="word color-yellow">大</span>
+          <span class="word color-green">冒</span>
+          <span class="word color-orange">險</span>
+        </h1>
+        <p class="subtitle">Pinyin & Zhuyin Learning Adventure</p>
+      </div>
+
+      <!-- 首頁吉祥物/視覺 -->
+      <div class="mascot-section">
+        <div class="mascot-glow"></div>
+        <div class="mascot-avatar">🌴</div>
+      </div>
+
+      <div class="main-actions">
+        <button id="btn-to-modes" class="btn btn-primary pulse">
+          <span>開始冒險 🚀</span>
+        </button>
+        <button id="btn-to-tutorial" class="btn btn-secondary">
+          <span>互動拼音課堂 📖</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 2. 遊戲模式選擇畫面 -->
+    <section id="mode-screen" class="screen">
+      <h2 class="section-title">選擇冒險關卡</h2>
+      <div class="modes-grid">
+        <!-- 模式 1: 聲韻拼拼樂 -->
+        <div class="mode-card" data-mode="constructor">
+          <div class="mode-icon">🧩</div>
+          <h3>聲韻拼拼樂</h3>
+          <p>組合聲母、韻母與聲調，拼出完美拼音！</p>
+          <span class="difficulty easy">簡單 ★☆☆</span>
+        </div>
+
+        <!-- 模式 2: 聲調大考驗 -->
+        <div class="mode-card" data-mode="balloons">
+          <div class="mode-icon">🎈</div>
+          <h3>聲調大考驗</h3>
+          <p>看字聽音，點擊正確的聲調氣球！</p>
+          <span class="difficulty medium">中等 ★★☆</span>
+        </div>
+
+        <!-- 模式 3: 聽音辨字挑戰 -->
+        <div class="mode-card" data-mode="listening">
+          <div class="mode-icon">🔊</div>
+          <h3>聽音辨字挑戰</h3>
+          <p>聽標準發音，找出對應的拼音！</p>
+          <span class="difficulty medium">中等 ★★☆</span>
+        </div>
+
+        <!-- 模式 4: 雙向連連看 -->
+        <div class="mode-card" data-mode="matcher">
+          <div class="mode-icon">🔗</div>
+          <h3>注音拼音對照</h3>
+          <p>挑戰 ㄅㄆㄇ 與 Hanyu Pinyin 的連連看配對！</p>
+          <span class="difficulty hard">困難 ★★★</span>
+        </div>
+      </div>
+      <button id="btn-mode-back" class="btn btn-secondary mt-4">返回</button>
+    </section>
+
+    <!-- 3. 互動拼音課堂 (Tutorial) 畫面 -->
+    <section id="tutorial-screen" class="screen">
+      <h2 class="section-title">互動拼音課堂</h2>
+      
+      <!-- 課堂標籤頁 -->
+      <div class="tutorial-tabs">
+        <button class="tab-btn active" data-tab="initials">聲母 (Initials)</button>
+        <button class="tab-btn" data-tab="finals">韻母 (Finals)</button>
+        <button class="tab-btn" data-tab="tones">四聲調 (Tones)</button>
+        <button class="tab-btn" data-tab="rules">拼讀規則 (Rules)</button>
+        <button class="tab-btn" data-tab="idioms">成語例子 (Idioms)</button>
+      </div>
+
+      <!-- 課堂內容 -->
+      <div class="tutorial-content">
+        <!-- 聲母面板 -->
+        <div id="tab-initials" class="tab-panel active">
+          <p class="tab-intro">點擊下方卡片聆聽發音，學習聲母與對應注音符號：</p>
+          <div class="letters-grid" id="initials-list"></div>
+        </div>
+
+        <!-- 韻母面板 -->
+        <div id="tab-finals" class="tab-panel">
+          <p class="tab-intro">韻母包含單韻母、複韻母與鼻韻母。點擊卡片聆聽發音：</p>
+          <div class="letters-grid" id="finals-list"></div>
+        </div>
+
+        <!-- 聲調面板 -->
+        <div id="tab-tones" class="tab-panel">
+          <p class="tab-intro">中文有四個聲調及輕聲。點擊下方聲調，聽聽 `ma` 的變化，觀察音高起伏：</p>
+          <div class="tones-interactive">
+            <div class="tone-card-interactive" data-tone="1">
+              <span class="tone-mark">¯</span>
+              <span class="tone-name">第一聲 (mā)</span>
+              <div class="tone-pitch-chart tone-1"></div>
+              <span class="tone-desc">高平 55</span>
+            </div>
+            <div class="tone-card-interactive" data-tone="2">
+              <span class="tone-mark">ˊ</span>
+              <span class="tone-name">第二聲 (má)</span>
+              <div class="tone-pitch-chart tone-2"></div>
+              <span class="tone-desc">中升 35</span>
+            </div>
+            <div class="tone-card-interactive" data-tone="3">
+              <span class="tone-mark">ˇ</span>
+              <span class="tone-name">第三聲 (mǎ)</span>
+              <div class="tone-pitch-chart tone-3"></div>
+              <span class="tone-desc">降升 214</span>
+            </div>
+            <div class="tone-card-interactive" data-tone="4">
+              <span class="tone-mark">ˋ</span>
+              <span class="tone-name">第四聲 (mà)</span>
+              <div class="tone-pitch-chart tone-4"></div>
+              <span class="tone-desc">全降 51</span>
+            </div>
+            <div class="tone-card-interactive" data-tone="0">
+              <span class="tone-mark">·</span>
+              <span class="tone-name">輕聲 (ma)</span>
+              <div class="tone-pitch-chart tone-0"></div>
+              <span class="tone-desc">短促 2</span>
+            </div>
+          </div>
+          <div class="tone-demo-box">
+            <button id="btn-tone-all-play" class="btn btn-audio">🔊 連續播放四聲</button>
+          </div>
+        </div>
+
+        <!-- 拼讀規則面板 -->
+        <div id="tab-rules" class="tab-panel">
+          <p class="tab-intro">拼音拼寫的小魔法，學會就不容易出錯喔！</p>
+          <div class="rules-carousel">
+            <div class="rule-card" id="rule-display">
+              <div class="rule-badge" id="rule-index">規則 1/4</div>
+              <h3 id="rule-title">ü 碰 j q x 要去點</h3>
+              <p id="rule-detail">當小魚母 `ü` 遇到聲母 `j`, `q`, `x` 時，頭上的兩點要擦掉。例如：ju (局)、qu (區)、xu (許)。但遇到 `n`, `l` 時不能去掉喔！例如：nǚ (女)、lǘ (驢)。</p>
+              <div class="rule-example" id="rule-example">例：j + ü ➔ ju (橘子 🍊)</div>
+            </div>
+            <div class="carousel-controls">
+              <button id="btn-rule-prev" class="btn btn-secondary">◀ 上一則</button>
+              <button id="btn-rule-next" class="btn btn-secondary">下一則 ▶</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 成語例子面板 -->
+        <div id="tab-idioms" class="tab-panel">
+          <p class="tab-intro">精選 100 組成語拼讀例子。點擊卡片聆聽發音，查看詳細釋義與拼音拆解：</p>
+          <div class="idioms-search-container">
+            <input type="text" id="idioms-search-input" placeholder="🔍 輸入關鍵字或拼音搜尋成語...">
+          </div>
+          <div class="idioms-list-container" id="idioms-tutorial-list">
+            <!-- 由 JS 動態生成 100 組成語卡片 -->
+          </div>
+        </div>
+      </div>
+      
+      <button id="btn-tutorial-back" class="btn btn-secondary mt-4">返回主選單</button>
+    </section>
+
+    <!-- 4. 遊戲主畫面 -->
+    <section id="play-screen" class="screen">
+      <!-- 各模式會在此動態渲染內容 -->
+      <div id="game-workspace">
+        
+        <!-- A. 聲韻拼拼樂 (Constructor) 區域 -->
+        <div id="workspace-constructor" class="workspace-panel">
+          <div class="word-card">
+            <div class="word-emoji" id="const-emoji">🍎</div>
+            <div class="word-text-large" id="const-word">蘋果</div>
+            <div class="word-translation" id="const-trans">Apple</div>
+          </div>
+          
+          <div class="instruction-text">拼出 <span id="const-target-char" class="highlight">蘋</span> 的拼音：</div>
+          
+          <!-- 拼音格 slots -->
+          <div class="pinyin-slots">
+            <div class="pinyin-slot" data-slot="initial">
+              <div class="slot-label">聲母</div>
+              <div class="slot-value" id="slot-initial">?</div>
+            </div>
+            <div class="pinyin-slot" data-slot="final">
+              <div class="slot-label">韻母</div>
+              <div class="slot-value" id="slot-final">?</div>
+            </div>
+            <div class="pinyin-slot" data-slot="tone">
+              <div class="slot-label">聲調</div>
+              <div class="slot-value" id="slot-tone">?</div>
+            </div>
+          </div>
+
+          <div class="result-pinyin-display" id="const-combined-pinyin">
+            拼合結果：<span id="const-pinyin-output">_ _ _</span>
+          </div>
+
+          <!-- 卡片候選池 -->
+          <div class="pool-container">
+            <div class="pool-group">
+              <h4>聲母候選</h4>
+              <div class="cards-pool" id="pool-initials"></div>
+            </div>
+            <div class="pool-group">
+              <h4>韻母候選</h4>
+              <div class="cards-pool" id="pool-finals"></div>
+            </div>
+            <div class="pool-group">
+              <h4>聲調候選</h4>
+              <div class="cards-pool" id="pool-tones"></div>
+            </div>
+          </div>
+
+          <div class="action-bar">
+            <button id="btn-const-reset" class="btn btn-secondary">重置清除</button>
+            <button id="btn-const-speak" class="btn btn-audio">🔊 聽發音</button>
+            <button id="btn-const-submit" class="btn btn-primary">送出檢查</button>
+          </div>
+        </div>
+
+        <!-- B. 聲調氣球大考驗 (Balloons) 區域 -->
+        <div id="workspace-balloons" class="workspace-panel">
+          <div class="word-card">
+            <div class="word-emoji" id="balloon-emoji">🐕</div>
+            <div class="word-text-large" id="balloon-word">小狗</div>
+            <div class="word-translation" id="balloon-trans">Dog</div>
+          </div>
+
+          <div class="instruction-text">
+            字詞的拼音為 <span class="highlight" id="balloon-pinyin-blank">xiǎo g_</span><br>
+            請點擊正確的聲調氣球填補空格！
+          </div>
+
+          <!-- 浮動氣球容器 -->
+          <div class="balloons-stage" id="balloons-stage">
+            <!-- 由 JS 動態生成氣球 -->
+          </div>
+
+          <div class="action-bar">
+            <button id="btn-balloon-speak" class="btn btn-audio">🔊 聽整詞發音</button>
+          </div>
+        </div>
+
+        <!-- C. 聽音辨字挑戰 (Listening) 區域 -->
+        <div id="workspace-listening" class="workspace-panel">
+          <div class="listening-card">
+            <div class="speaker-animation-container">
+              <span class="pulse-ring"></span>
+              <button id="btn-listen-play" class="btn btn-speaker">🔊</button>
+            </div>
+            <p class="listening-prompt">點擊喇叭，聽聽這是哪一個詞？</p>
+          </div>
+
+          <div class="options-grid" id="listening-options">
+            <!-- 4 個選項卡片 -->
+          </div>
+
+          <div class="action-bar">
+            <button id="btn-listen-replay" class="btn btn-audio">🔊 再聽一次</button>
+          </div>
+        </div>
+
+        <!-- D. 注音拼音連連看 (Matcher) 區域 -->
+        <div id="workspace-matcher" class="workspace-panel">
+          <div class="instruction-text">請將左側的注音與右側的對應拼音連線配對！</div>
+          
+          <div class="matcher-container" id="matcher-container">
+            <!-- Canvas 用於繪製連線 -->
+            <canvas id="matcher-canvas"></canvas>
+            
+            <!-- 左側欄：注音卡片 -->
+            <div class="matcher-column" id="matcher-left"></div>
+            <!-- 右側欄：拼音卡片 -->
+            <div class="matcher-column" id="matcher-right"></div>
+          </div>
+
+          <div class="action-bar">
+            <button id="btn-matcher-reset" class="btn btn-secondary">清除重連</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. 答對詳情知識卡彈窗 (Modal Success) -->
+    <div id="modal-success" class="modal">
+      <div class="modal-content bounce-in">
+        <div class="success-header">
+          <span class="success-badge">🎉 太棒了！答對了！</span>
+        </div>
+        
+        <!-- 字詞與拼音注音展示 -->
+        <div class="vocab-showcase">
+          <div class="vocab-emoji" id="modal-vocab-emoji">🍎</div>
+          <h2 class="vocab-word" id="modal-vocab-word">蘋果</h2>
+          <div class="vocab-phonetics">
+            <span class="phonetic-tag pinyin" id="modal-vocab-pinyin">píng guǒ</span>
+            <span class="phonetic-tag zhuyin" id="modal-vocab-zhuyin">ㄆㄧㄥˊ ㄍㄨㄛˇ</span>
+          </div>
+          <div class="vocab-english" id="modal-vocab-english">Apple</div>
+        </div>
+
+        <div class="vocab-breakdown">
+          <h3>🔍 拼讀拆解：</h3>
+          <div class="breakdown-cards" id="modal-vocab-breakdown-cards">
+            <!-- 每個漢字的聲韻調拆解 -->
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button id="btn-modal-speak" class="btn btn-audio">
+            <span>🔊 聽語音</span>
+          </button>
+          <button id="btn-modal-next" class="btn btn-primary">
+            <span>下一關 ➔</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. 關卡結算畫面 -->
+    <section id="end-screen" class="screen">
+      <div class="end-content zoom-in">
+        <div class="badge-container">
+          <div class="badge-ring">
+            <span class="badge-emoji">🏆</span>
+          </div>
+        </div>
+        <h2 class="end-title">大冒險通關成功！</h2>
+        <p class="end-subtitle">你已經學會拼讀拼音，成為拼音小勇士囉！</p>
+        
+        <div class="end-stats">
+          <div class="stat-box">
+            <span class="stat-num" id="end-score-val">0</span>
+            <span class="stat-label">獲得星星</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num" id="end-stars">⭐⭐⭐⭐•</span>
+            <span class="stat-label">評價</span>
+          </div>
+        </div>
+
+        <div class="end-actions">
+          <button id="btn-end-restart" class="btn btn-primary">
+            <span>再玩一次 🔄</span>
+          </button>
+          <button id="btn-end-home" class="btn btn-secondary">
+            <span>回首頁 🏠</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 紙花效果 Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <script src="game.js?v=1.0.4"></script>
+</body>
+</html>

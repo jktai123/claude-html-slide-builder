@@ -1,0 +1,11 @@
+{
+  "Title": "熱門免費 AI 與實用數位工具清單整理",
+  "日期": "2026-07-17",
+  "URL": "",
+  "摘要": "本文整理了 8 個熱門的免費 AI 與實用數位工具，涵蓋免費無審圖像生成、Google 實驗性工具（Opal/Vids/Flow）、AI 影片/虛擬主播生成、去浮水印及臨時信箱等功能。",
+  "category": "科技",
+  "tags": ["免費工具", "AI工具", "Google", "圖像生成", "科技"],
+  "importance": "高",
+  "content": "# 熱門免費 AI 與實用數位工具清單\n\n## 1. 圖像與角色生成\n- **[AI Character Generator (Perchance)](https://perchance.org/ai-character-generator)**：免費且免註冊的 AI 角色與肖像生成工具，因審查機制極為自由、無限制使用而廣受創作者喜愛。\n\n## 2. Google 實驗性 AI 與 Workspace 工具\n- **[Google Opal](https://opal.google/)**：Google 推出的實驗性 AI 工具，專注於個人化 AI 互動與效率提升。\n- **[Google Vids](https://workspace.google.com/products/vids)**：Google Workspace 最新內建的 AI 影片生成與剪輯工具，可一鍵將文字大綱或簡報轉化為具備旁白與動畫的影片。\n- **[Google Flow](https://labs.google/fx/tools/flow)**：Google Labs 旗下的實驗性生成式 AI 工具，用於創意工作流或多模式寫作輔助。\n\n## 3. AI 影片生成與設計\n- **[DIGEN](https://digen.ai)**：新興的 AI 虛擬人影片生成平台，支援快速合成極度逼真的真人播報影片與語音。\n- **[Dreamina (CapCut AI)](https://dreamina.capcut.com/ai-tool/home)**：字節跳動（CapCut）旗下的強大 AI 圖像與影片創作工具，支援高品質文生圖、圖生圖以及文字生成短影片。\n\n## 4. 實用日常數位工具\n- **[Temp-Mail](https://temp-mail.org)**：臨時免費用後即丟的電子郵件信箱服務，用於快速註冊或測試，有效防止垃圾郵件騷擾。\n- **[EzRemove (去浮水印)](https://ezremove.ai/video-watermark-removal)**：利用 AI 演算法一鍵抹除影片浮水印、字幕或多餘路人的線上工具。",
+  "mindmap": "mindmap\n  root((免費工具清單))\n    圖像與設計\n      Perchance\n        免費無審\n      Dreamina\n        文生圖影片\n    Google_AI\n      Opal\n      Vids_Workspace\n      Flow_Labs\n    AI影片主播\n      DIGEN\n        虛擬人主播\n    日常實用\n      Temp_Mail\n        臨時信箱\n      EzRemove\n        影片去浮水印"
+}

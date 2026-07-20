@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>三國吟詩對決與大局智慧</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  <style>
+    /* === 全域變數 === */
+    :root {
+      --accent:  #e8643a;   /* 橘紅 - 周瑜之怒 */
+      --accent2: #4fc3f7;   /* 青藍 - 孔明之智 */
+      --success: #81c784;   /* 嫩綠 - 魯肅和平 */
+      --warn:    #ffb74d;   /* 琥珀 - 現代抗疫 */
+    }
+
+    .reveal {
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .reveal h1 { font-size: 2.2em; text-shadow: 0 0 10px rgba(232, 100, 58, 0.4); }
+    .reveal h2 { font-size: 1.5em; color: var(--accent2); text-shadow: 0 0 8px rgba(79, 195, 247, 0.3); }
+    .reveal .progress { color: var(--accent); }
+    
+    /* === 封面 === */
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.55em;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8em;
+      font-weight: 600;
+    }
+    .title-slide .subtitle { font-size: 0.75em; color: #ccc; margin-top: 0.5em; }
+    .title-slide .author   { margin-top: 2em; font-size: 0.5em; color: #888; }
+
+    /* === VS 對比排版 === */
+    .vs-grid {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      gap: 15px;
+      align-items: start;
+      margin-top: 0.4em;
+    }
+    .vs-col {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease;
+    }
+    .vs-col:hover {
+      transform: translateY(-5px);
+    }
+    .vs-col.left-col  { border-top: 4px solid var(--accent); }
+    .vs-col.right-col { border-top: 4px solid var(--accent2); }
+    
+    .vs-label { font-size: 0.7em; font-weight: 700; margin-bottom: 8px; }
+    .vs-label.left  { color: var(--accent); }
+    .vs-label.right { color: var(--accent2); }
+    
+    .vs-icon-img {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 10px;
+    }
+    .vs-col.left-col .vs-icon-img { filter: drop-shadow(0 0 10px rgba(232,100,58,0.6)); }
+    .vs-col.right-col .vs-icon-img { filter: drop-shadow(0 0 10px rgba(79,195,247,0.6)); }
+
+    .vs-poem {
+      font-size: 0.48em;
+      color: #fff;
+      line-height: 1.6;
+      text-align: left;
+      background: rgba(0,0,0,0.2);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    .vs-poem p { margin: 0 0 6px; }
+    .vs-poem p:last-child { margin-bottom: 0; font-weight: 700; color: var(--warn); }
+
+    .vs-desc { font-size: 0.38em; color: #ccc; text-align: left; line-height: 1.5; }
+
+    .vs-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5em;
+      font-weight: 900;
+      color: rgba(255,255,255,0.15);
+      height: 100%;
+      align-self: center;
+    }
+
+    /* === 引用區塊 === */
+    .quote-box {
+      background: rgba(255,255,255,0.05);
+      border-left: 4px solid var(--success);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 0.8em 0;
+      font-size: 0.55em;
+      color: #ddd;
+      font-style: italic;
+      line-height: 1.7;
+      text-align: left;
+    }
+    .quote-author { font-size: 0.4em; color: #888; text-align: right; margin-top: 8px; font-style: normal; }
+
+    /* === 滑桿拼字演示 (VIZ) === */
+    .viz-container {
+      position: relative;
+      height: 260px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 0.5em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .char-display {
+      font-size: 5.5em;
+      font-weight: 900;
+      font-family: '楷體', 'Kaiti', 'Noto Sans TC', sans-serif;
+      position: relative;
+      width: 1.2em;
+      height: 1.2em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    /* 偏旁與主字結構的拼裝動畫 */
+    .radical-left {
+      position: absolute;
+      left: 0;
+      color: var(--accent2);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .radical-right {
+      position: absolute;
+      right: 0;
+      color: #fff;
+    }
+    .radical-top {
+      position: absolute;
+      top: -0.1em;
+      color: var(--warn);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      font-size: 0.8em;
+    }
+
+    .slider-wrap {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .slider-label {
+      font-size: 0.4em;
+      color: #aaa;
+    }
+    input[type=range] {
+      width: 60%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent2);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--accent2);
+    }
+
+    /* === 三欄並列卡片 (手勢與智慧) === */
+    .tri-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 15px;
+      margin-top: 0.6em;
+    }
+    .tri-card {
+      background: rgba(255,255,255,0.04);
+      border-top: 4px solid var(--success);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .tri-card .tc-icon img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      margin: 0 auto 10px;
+      filter: drop-shadow(0 0 8px rgba(129,199,132,0.6));
+    }
+    .tri-card .tc-title { font-size: 0.48em; font-weight: 700; color: var(--success); margin-bottom: 6px; }
+    .tri-card .tc-desc { font-size: 0.38em; color: #ccc; line-height: 1.5; text-align: left; }
+
+    /* === 封底 === */
+    .end-slide { text-align: center; }
+    .end-slide .big { margin-bottom: 0.4em; }
+    .end-slide .big img {
+      width: 140px; height: 140px; object-fit: contain;
+      filter: drop-shadow(0 0 20px rgba(255,183,77,0.6));
+    }
+    .end-slide .tagline { font-size: 0.7em; color: #ccc; margin-top: 1em; line-height: 1.6; }
+
+    /* === 響應式與行動裝置優化 === */
+    @media (max-width: 768px) {
+      .reveal .slides {
+        font-size: 1.3em;
+      }
+      .reveal h1 { font-size: 1.6em !important; }
+      .reveal h2 { font-size: 1.2em !important; }
+      
+      .vs-grid { grid-template-columns: 1fr !important; gap: 16px; }
+      .vs-center { display: none; }
+      .tri-grid { grid-template-columns: 1fr !important; gap: 12px; }
+
+      .vs-poem { font-size: 0.7em !important; }
+      .vs-desc { font-size: 0.6em !important; }
+      .vs-label { font-size: 0.8em !important; }
+      
+      .tri-card .tc-title { font-size: 0.8em !important; }
+      .tri-card .tc-desc { font-size: 0.65em !important; }
+      
+      .char-display { font-size: 4em !important; }
+      .slider-label { font-size: 0.6em !important; }
+      input[type=range] { width: 90% !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1. 封面 -->
+    <section data-background-image="images/cover_bg.jpg"
+             data-background-opacity="0.3"
+             data-background-size="cover">
+      <div class="title-slide">
+        <div class="tag">三國千古交鋒 · 智者博弈</div>
+        <h1>既生瑜，何生亮</h1>
+        <h2 style="color:var(--accent); margin-top:0.2em;">宴會上的吟詩對決</h2>
+        <p class="subtitle">一段由文字、尊嚴與大局觀交織的經典龍虎鬥</p>
+        <p class="author">故人化黃土 · 智慧傳千古</p>
+      </div>
+    </section>
+
+    <!-- 2. 互動投票 -->
+    <section id="slide-poll">
+      <h2>誰的詩才與表現最令你折服？</h2>
+      <div style="font-size:0.42em; color:#aaa; margin-bottom: 0.6em;">請投下你的一票（點選以下選項查看即時百分比）：</div>
+      <div id="poll-options" style="display:flex; flex-direction:column; gap:12px; margin-top:0.5em; max-width:650px; margin-left:auto; margin-right:auto;">
+        <!-- 動態生成 -->
+      </div>
+      <div style="font-size:0.38em; color:#777; text-align:center; margin-top:0.8em;">
+        已投票：<span id="poll-total" style="color:var(--accent2); font-weight:700;">0</span> 人
+      </div>
+    </section>
+
+    <!-- 3. 第一回合 -->
+    <section>
+      <h2>第一回合：龍虎爭雄</h2>
+      <div class="vs-grid">
+        <!-- 周瑜 -->
+        <div class="vs-col left-col fragment">
+          <div class="vs-label left">周瑜 · 步步進逼</div>
+          <img src="images/icon_flame.png" alt="Flame" class="vs-icon-img">
+          <div class="vs-poem">
+            <p>有水便是溪，無水也是奚，</p>
+            <p>去掉溪邊水，加鳥便是鷄；</p>
+            <p>得志貓兒勝過虎，</p>
+            <p>落魄鳳凰不如鷄。</p>
+          </div>
+          <div class="vs-desc">周瑜主動挑釁，暗諷諸葛亮是落入江東掌心的「落魄鳳凰」，得志貓兒勝過虎。</div>
+        </div>
+
+        <div class="vs-center">VS</div>
+
+        <!-- 諸葛亮 -->
+        <div class="vs-col right-col fragment">
+          <div class="vs-label right">諸葛亮 · 從容借力</div>
+          <img src="images/icon_fan.png" alt="Fan" class="vs-icon-img">
+          <div class="vs-poem">
+            <p>有木便是棋，無木也是其，</p>
+            <p>去掉棋邊木，加欠便是欺；</p>
+            <p>龍遊淺水遭蝦戲，</p>
+            <p>虎落平陽被犬欺。</p>
+          </div>
+          <div class="vs-desc">諸葛亮順理借字反擊，以龍遊淺水、虎落平陽自況，反譏周瑜是戲龍的「蝦」與欺虎的「犬」。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 魯肅和解一 -->
+    <section>
+      <h2>魯肅和解：自掃門前雪</h2>
+      <div class="quote-box">
+        「有水也是湘，無水也是相，去掉湘邊水，加雨便是霜；各人自掃門前雪，莫管他人瓦上霜。」
+        <div class="quote-author">—— 魯肅 · 和事佬的智慧</div>
+      </div>
+
+      <!-- VIZ: 滑桿字謎拆解 -->
+      <div class="viz-container">
+        <div class="char-display" id="char-viz">
+          <span class="radical-left" id="rad-left">氵</span>
+          <span class="radical-top" id="rad-top" style="opacity:0; transform:translateY(-20px);">雨</span>
+          <span class="radical-right" id="rad-right">相</span>
+        </div>
+      </div>
+
+      <div class="slider-wrap">
+        <div class="slider-label" id="slider-desc">有水也是湘 (0%)</div>
+        <input id="viz-slider" type="range" min="0" max="100" value="0">
+      </div>
+    </section>
+
+    <!-- 5. 第二回合 -->
+    <section>
+      <h2>第二回合：夫人之爭</h2>
+      <div class="vs-grid">
+        <!-- 周瑜 -->
+        <div class="vs-col left-col fragment">
+          <div class="vs-label left">周瑜 · 人身攻擊</div>
+          <img src="images/icon_flame.png" alt="Flame" class="vs-icon-img">
+          <div class="vs-poem">
+            <p>有手便是扭，無手便是丑，</p>
+            <p>去掉扭邊手，加女便是妞；</p>
+            <p>隆中有女長得醜，</p>
+            <p>江南沒有更醜妞。</p>
+          </div>
+          <div class="vs-desc">周瑜見一計不成，改而嘲笑諸葛亮的夫人黃月英（黃阿醜）長相不好看，試圖激怒孔明。</div>
+        </div>
+
+        <div class="vs-center">VS</div>
+
+        <!-- 諸葛亮 -->
+        <div class="vs-col right-col fragment">
+          <div class="vs-label right">諸葛亮 · 痛擊死穴</div>
+          <img src="images/icon_fan.png" alt="Fan" class="vs-icon-img">
+          <div class="vs-poem">
+            <p>有木便是橋，無木也是喬，</p>
+            <p>去掉橋邊木，加女便是嬌；</p>
+            <p>江東美女大小喬，</p>
+            <p>銅雀奸雄鎖二嬌。</p>
+          </div>
+          <div class="vs-desc">諸葛亮立刻反擊，指名江東著名的喬公之女（大喬、小喬），暗諷曹操蓋銅雀台就是為了鎖這兩位江東美女，直戳周瑜死穴。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 魯肅再勸：破曹大局 -->
+    <section data-background-image="images/strategy_bg.jpg"
+             data-background-opacity="0.25"
+             data-background-size="cover">
+      <h2>大局為重：當今之計在破曹</h2>
+      <p style="font-size:0.42em; color:#ccc;">周瑜怒髮衝冠之時，魯肅再度以幽默大度化解了劍拔弩張的危機：</p>
+      
+      <div class="quote-box" style="border-left-color: var(--accent); background: rgba(13,17,23,0.85); margin-top: 1em;">
+        「有木便是槽，無木也是曹，去掉槽邊木，加米便是糟；當今之計在破曹，龍虎相鬥豈不糟！」
+        <div class="quote-author" style="color: var(--accent2);">—— 魯肅 · 關鍵的和解</div>
+      </div>
+      
+      <p class="fragment" style="font-size:0.45em; color: var(--success); font-weight: 700; margin-top: 1em;">
+        ★ 點醒眾人：曹兵壓境，孫劉若龍虎相鬥，大局必糟！
+      </p>
+    </section>
+
+    <!-- 7. 智慧啟示 -->
+    <section>
+      <h2>化干戈為玉帛的智慧</h2>
+      <p style="font-size:0.42em; color:#aaa; margin-bottom: 0.5em;">千載已過，我們能從魯肅的調解藝術中學到什麼？</p>
+      
+      <div class="tri-grid">
+        <div class="tri-card fragment">
+          <div class="tc-icon"><img src="images/icon_handshake.png" alt="Handshake"></div>
+          <div class="tc-title">跳脫情緒 · 聚焦大局</div>
+          <div class="tc-desc">當局者常為面子與情緒意氣之爭（如周瑜與諸葛亮），調解者必須高瞻遠矚，時時點醒共同的威脅（曹操）。</div>
+        </div>
+
+        <div class="tri-card fragment">
+          <div class="tc-icon"><img src="images/icon_handshake.png" alt="Handshake"></div>
+          <div class="tc-title">幽默化解 · 顧全顏面</div>
+          <div class="tc-desc">魯肅沒有板起臉說教，而是順著對方的遊戲規則（拆字詩），以同樣風趣的方式給周瑜台階下，讓兩人都保住面子。</div>
+        </div>
+
+        <div class="tri-card fragment">
+          <div class="tc-icon"><img src="images/icon_handshake.png" alt="Handshake"></div>
+          <div class="tc-title">求同存異 · 促成同盟</div>
+          <div class="tc-desc">孫劉同盟在猜忌中前行，魯肅穿針引線化干戈為玉帛，是赤壁之戰乃至三分天下最不可或缺的幕後推手。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. 現代延伸：萬眾抗疫情 -->
+    <section>
+      <h2>現代延伸：萬眾一心抗疫情</h2>
+      <p style="font-size:0.42em; color:#aaa; margin-bottom: 0.6em;">網友借古諷今，以相同的拆字格式，傳唱了現代的防毒順口溜：</p>
+      
+      <div class="vs-grid">
+        <div class="vs-col left-col fragment" style="border-top-color: var(--warn);">
+          <div class="vs-label" style="color: var(--warn);">萬眾一心 · 防疫情</div>
+          <img src="images/icon_shield.png" alt="Shield" class="vs-icon-img" style="filter: drop-shadow(0 0 10px rgba(255,183,77,0.6));">
+          <div class="vs-poem">
+            <p>有水便是清，無水也是青，</p>
+            <p>去掉清邊水，加心便是情；</p>
+            <p>國家有難不用怕，</p>
+            <p>萬眾一心抗疫情。</p>
+          </div>
+        </div>
+
+        <div class="vs-center">🛡️</div>
+
+        <div class="vs-col right-col fragment" style="border-top-color: var(--success);">
+          <div class="vs-label" style="color: var(--success);">勸君莫在外 · 防傳播</div>
+          <img src="images/icon_shield.png" alt="Shield" class="vs-icon-img" style="filter: drop-shadow(0 0 10px rgba(129,199,132,0.6));">
+          <div class="vs-poem">
+            <p>有人就是傳，無人則是專，</p>
+            <p>除掉傳邊人，加車便是轉；</p>
+            <p>要使病毒不再傳，</p>
+            <p>勸君莫在外面轉。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. 尾聲 -->
+    <section data-background-image="images/ending_bg.jpg"
+             data-background-opacity="0.35"
+             data-background-size="cover">
+      <div class="end-slide">
+        <div class="big">
+          <img src="images/icon_handshake.png" alt="Handshake"
+               style="width:160px;height:160px;object-fit:contain;
+                      filter:drop-shadow(0 0 24px rgba(129,199,132,0.7));">
+        </div>
+        <h1 style="color:var(--success);">分享佳文 · 啟迪智慧</h1>
+        <p class="tagline">
+          「千年彈指已過，故人化為黃土。<br>
+          而魯肅化干戈為玉帛的智慧表演，卻一直流傳在中華大地上！」
+        </p>
+        <p style="font-size:0.38em; color:#888; margin-top:2em;">千萬別私存，轉送給你最愛的朋友吧！✨</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    width: 1050,
+    height: 700,
+    margin: 0.05,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: []
+  });
+
+  // --- VIZ 字謎滑桿動畫控制 ---
+  const slider = document.getElementById('viz-slider');
+  const radLeft = document.getElementById('rad-left');
+  const radTop = document.getElementById('rad-top');
+  const radRight = document.getElementById('rad-right');
+  const sliderDesc = document.getElementById('slider-desc');
+
+  if (slider) {
+    slider.addEventListener('input', function() {
+      const v = parseInt(this.value);
+      if (v < 33) {
+        // 第一階段：有水便是湘 (0% - 32%)
+        // 水在左邊，相在右邊。水淡入、雨完全隱藏。
+        const localPct = Math.min(1, v / 20); // 很快就完全淡入
+        radLeft.style.opacity = localPct;
+        radLeft.style.transform = `translateX(${ (1 - localPct) * -20 }px)`;
+        
+        radTop.style.opacity = '0';
+        radTop.style.transform = 'translateY(-20px)';
+        
+        radRight.style.transform = 'translateX(0px)';
+        sliderDesc.textContent = "有水便是湘";
+      } else if (v >= 33 && v < 66) {
+        // 第二階段：無水也是相 (33% - 65%)
+        // 水淡出，剩相。
+        const localPct = Math.min(1, (v - 33) / 15);
+        radLeft.style.opacity = 1 - localPct;
+        radLeft.style.transform = `translateX(${ localPct * -20 }px)`;
+        
+        radTop.style.opacity = '0';
+        radTop.style.transform = 'translateY(-20px)';
+        
+        radRight.style.transform = 'translateX(0px)';
+        sliderDesc.textContent = "無水也是相";
+      } else {
+        // 第三階段：加雨便是霜 (66% - 100%)
+        // 雨從上方淡入並壓下，相稍微往下移一點點
+        const localPct = Math.min(1, (v - 66) / 20);
+        radLeft.style.opacity = '0';
+        
+        radTop.style.opacity = localPct;
+        radTop.style.transform = `translateY(${ (1 - localPct) * -20 }px)`;
+        
+        // 相可以往下移一點，配合上方雨字頭
+        radRight.style.transform = `translateY(${ localPct * 10 }px) scale(0.95)`;
+        sliderDesc.textContent = "加雨便是霜";
+      }
+    });
+
+    // 初始化狀態
+    slider.dispatchEvent(new Event('input'));
+  }
+</script>
+
+<!-- Firebase & LocalStorage 混合投票模組 -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+  import {
+    getFirestore, doc, setDoc, onSnapshot
+  } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+  // 選項設定
+  const OPTIONS = [
+    { id: 'zhou', label: '周瑜（氣勢磅礴，語帶鋒芒）' },
+    { id: 'zhuge', label: '諸葛亮（從容化險，語帶機鋒）' },
+    { id: 'lu', label: '魯肅（顧全大局，化干戈為玉帛）' }
+  ];
+
+  const SLUG = 'sanguo-poem-battle';
+  const userId = 'user_' + Math.random().toString(36).slice(2, 9);
+  let myVote = localStorage.getItem(`${SLUG}_my_vote`) || null;
+
+  // LocalStorage 備份資料庫（無網路/無 Firebase 時運作）
+  let localVotes = JSON.parse(localStorage.getItem(`${SLUG}_local_votes`)) || {
+    'zhou': 3,
+    'zhuge': 5,
+    'lu': 4
+  };
+
+  // 初始化 Firebase (若載入失敗，會 fallback 到 LocalStorage)
+  let fdb = null;
+  let pollRef = null;
+  let useFirebase = false;
+
+  try {
+    const firebaseConfig = {
+      apiKey: "AIzaSyAYQhNavPSce17XtvDC5xnXyl9iUhW9KjA",
+      authDomain: "teacherstudy-109ef.firebaseapp.com",
+      projectId: "teacherstudy-109ef",
+      storageBucket: "teacherstudy-109ef.firebasestorage.app",
+      messagingSenderId: "196599230156",
+      appId: "1:196599230156:web:cfe55d364df3ae1b9d5c69"
+    };
+    const app = initializeApp(firebaseConfig);
+    fdb = getFirestore(app);
+    pollRef = doc(fdb, `${SLUG}_poll`, 'results');
+    useFirebase = true;
+    console.log("Firebase 連結成功！");
+  } catch (e) {
+    console.warn("無法連接 Firebase，將使用 LocalStorage 進行本地投票展示：", e);
+  }
+
+  // 渲染選項 UI
+  const container = document.getElementById('poll-options');
+  container.innerHTML = ''; // 清空
+
+  OPTIONS.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.id = `poll-btn-${opt.id}`;
+    btn.innerHTML = `
+      <div style="display:flex;align-items:center;gap:12px;width:100%;">
+        <span style="flex:0 0 24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);
+                     display:flex;align-items:center;justify-content:center;font-size:12px;"
+              id="poll-check-${opt.id}"></span>
+        <span style="flex:1;text-align:left;">${opt.label}</span>
+        <span id="poll-bar-wrap-${opt.id}"
+              style="flex:0 0 120px;height:8px;background:rgba(255,255,255,0.15);border-radius:4px;overflow:hidden;">
+          <div id="poll-bar-${opt.id}" style="height:100%;width:0;background:var(--accent2);border-radius:4px;transition:width 0.4s;"></div>
+        </span>
+        <span id="poll-pct-${opt.id}" style="flex:0 0 45px;text-align:right;font-size:0.75em;color:#aaa;">0%</span>
+      </div>
+    `;
+    btn.style.cssText = `width:100%;padding:14px 18px;background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;
+      font-size:0.48em;cursor:pointer;font-family:inherit;text-align:left;outline:none;
+      transition: background 0.3s;`;
+    
+    btn.onmouseover = () => { btn.style.background = 'rgba(255,255,255,0.12)'; };
+    btn.onmouseout = () => { btn.style.background = 'rgba(255,255,255,0.06)'; };
+    btn.onclick = () => vote(opt.id);
+    container.appendChild(btn);
+  });
+
+  // 投票動作
+  async function vote(optId) {
+    if (myVote === optId) return; // 重複點選同一項不處理
+    
+    myVote = optId;
+    localStorage.setItem(`${SLUG}_my_vote`, optId);
+
+    if (useFirebase && pollRef) {
+      try {
+        const data = {};
+        data[`votes.${userId}`] = optId;
+        await setDoc(pollRef, data, { merge: true });
+      } catch (err) {
+        console.error("Firebase 寫入失敗，改用本地紀錄", err);
+        submitLocalVote(optId);
+      }
+    } else {
+      submitLocalVote(optId);
+    }
+  }
+
+  function submitLocalVote(optId) {
+    localVotes[optId] = (localVotes[optId] || 0) + 1;
+    localStorage.setItem(`${SLUG}_local_votes`, JSON.stringify(localVotes));
+    updateUI(localVotes);
+  }
+
+  // 更新 UI 數據與進度條
+  function updateUI(votesMap) {
+    const counts = {};
+    OPTIONS.forEach(o => counts[o.id] = 0);
+    Object.values(votesMap).forEach(v => {
+      if (counts[v] !== undefined) counts[v]++;
+    });
+    const total = Object.values(counts).reduce((a, b) => a + b, 0);
+
+    document.getElementById('poll-total').textContent = total;
+    OPTIONS.forEach(opt => {
+      const pct = total > 0 ? Math.round((counts[opt.id] / total) * 100) : 0;
+      document.getElementById(`poll-bar-${opt.id}`).style.width = pct + '%';
+      document.getElementById(`poll-pct-${opt.id}`).textContent = pct + '%';
+      
+      const check = document.getElementById(`poll-check-${opt.id}`);
+      if (myVote === opt.id) {
+        check.textContent = '✓';
+        check.style.background = 'var(--accent2)';
+        check.style.borderColor = 'var(--accent2)';
+        check.style.color = '#0d1117';
+      } else {
+        check.textContent = '';
+        check.style.background = 'transparent';
+        check.style.borderColor = 'rgba(255,255,255,0.3)';
+      }
+    });
+  }
+
+  // 監聽 Firebase 數據變化
+  if (useFirebase && pollRef) {
+    onSnapshot(pollRef, snap => {
+      const data = snap.data() || {};
+      const votes = data.votes || {};
+      updateUI(votes);
+    }, err => {
+      console.warn("無法取得即時 Firebase 監聽，切換至本地資料渲染：", err);
+      updateUI(localVotes);
+    });
+  } else {
+    // 預設渲染 LocalStorage 備份資料
+    updateUI(localVotes);
+  }
+</script>
+
+</body>
+</html>

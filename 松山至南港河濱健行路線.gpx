@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Antigravity Coding Assistant" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>松山捷運站-內湖復育園區-南港LaLaport河濱健行路線</name>
+    <desc>從捷運松山站出發，跨越彩虹橋至右岸，沿河濱行經成美橋、成功橋、內湖復育園區，最後由南湖大橋跨回左岸，抵達南港 LaLaport。全長約 7.5~8 公里，適合8人團體健行與單車活動。</desc>
+    <author>
+      <name>Antigravity</name>
+    </author>
+    <time>2026-07-15T05:42:00Z</time>
+  </metadata>
+  <trk>
+    <name>松山-內湖復育園區-南港LaLaport</name>
+    <desc>平緩舒適的台北河濱跨區健行路線</desc>
+    <type>Walking</type>
+    <trkseg>
+      <trkpt lat="25.04889" lon="121.57778">
+        <name>捷運松山站 5 號出口</name>
+      </trkpt>
+      <trkpt lat="25.05050" lon="121.57750">
+        <name>饒河疏散門（基4號水門）</name>
+      </trkpt>
+      <trkpt lat="25.05150" lon="121.57720">
+        <name>彩虹橋（松山端）</name>
+      </trkpt>
+      <trkpt lat="25.05215" lon="121.57665">
+        <name>彩虹橋（內湖端，進入成美右岸河濱公園）</name>
+      </trkpt>
+      <trkpt lat="25.05380" lon="121.57850"/>
+      <trkpt lat="25.05450" lon="121.58150"/>
+      <trkpt lat="25.05580" lon="121.58550">
+        <name>成美橋下（大陰影休息區、流動廁所）</name>
+      </trkpt>
+      <trkpt lat="25.05700" lon="121.58800"/>
+      <trkpt lat="25.05920" lon="121.59100"/>
+      <trkpt lat="25.06080" lon="121.59450">
+        <name>成功橋下（大陰影休息區、流動廁所）</name>
+      </trkpt>
+      <trkpt lat="25.06180" lon="121.59800"/>
+      <trkpt lat="25.06200" lon="121.60200">
+        <name>葫蘆洲吊橋舊址（右岸單車道往復育園區岔路）</name>
+      </trkpt>
+      <trkpt lat="25.060938" lon="121.604779">
+        <name>內湖復育園區（高架觀景平台、大合照點、公廁）</name>
+      </trkpt>
+      <trkpt lat="25.06250" lon="121.60700"/>
+      <trkpt lat="25.06280" lon="121.60950"/>
+      <trkpt lat="25.06300" lon="121.61100">
+        <name>南湖大橋（右岸牽引道上橋處，準備跨河）</name>
+      </trkpt>
+      <trkpt lat="25.06100" lon="121.61300">
+        <name>南湖大橋（跨越基隆河中）</name>
+      </trkpt>
+      <trkpt lat="25.05920" lon="121.61460">
+        <name>南湖大橋（左岸下橋，往經貿疏散門）</name>
+      </trkpt>
+      <trkpt lat="25.05900" lon="121.61500">
+        <name>經貿疏散門（出水門往南港市區）</name>
+      </trkpt>
+      <trkpt lat="25.05944" lon="121.61806">
+        <name>南港 LaLaport（終點）</name>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

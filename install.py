@@ -33,6 +33,7 @@ def head(msg): print(f"\n{B}{msg}{X}")
 def find_claude_skills_dir() -> Path | None:
     home = Path.home()
     candidates = [
+        home / ".gemini" / "config" / "skills",
         home / ".claude" / "skills",
         home / ".claude-skills",
     ]
@@ -40,7 +41,7 @@ def find_claude_skills_dir() -> Path | None:
         if p.exists():
             return p
     # 試著建立預設位置
-    default = home / ".claude" / "skills"
+    default = home / ".gemini" / "config" / "skills"
     default.mkdir(parents=True, exist_ok=True)
     return default
 

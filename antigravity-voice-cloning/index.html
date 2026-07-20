@@ -118,6 +118,95 @@
 
     /* === LIVE 動畫 === */
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+    /* === 響應式佈局與字體優化 === */
+    @media (max-width: 850px) {
+      .reveal {
+        font-size: 34px !important;
+      }
+      .reveal h1 { font-size: 1.4em !important; }
+      .reveal h2 { font-size: 1.0em !important; margin-bottom: 0.4em !important; }
+      .reveal p, .reveal li { font-size: 0.68em !important; }
+      
+      /* 卡片改單欄 */
+      .adv-grid-3, .adv-grid-4 {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+        max-height: 480px;
+        overflow-y: auto;
+      }
+      .adv-card {
+        padding: 10px 14px !important;
+        display: flex !important;
+        align-items: center !important;
+        text-align: left !important;
+        gap: 12px;
+      }
+      .adv-card .adv-icon {
+        margin-bottom: 0 !important;
+        flex: 0 0 40px;
+      }
+      .adv-card .adv-icon svg {
+        width: 36px !important;
+        height: 36px !important;
+      }
+      .adv-card .adv-title {
+        font-size: 0.72em !important;
+        margin-bottom: 2px !important;
+        flex: 1;
+      }
+      .adv-card .adv-desc {
+        font-size: 0.62em !important;
+        flex: 2;
+        margin-bottom: 0 !important;
+      }
+      
+      /* VS 對比改單欄 */
+      .vs-grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+      }
+      .vs-center {
+        height: auto !important;
+        padding: 4px !important;
+        font-size: 0.9em !important;
+      }
+      .vs-col {
+        padding: 10px !important;
+      }
+      .vs-col ul li {
+        padding: 4px 0 !important;
+      }
+      .vs-col ul {
+        font-size: 0.72em !important;
+      }
+      
+      /* 結論對比改單欄 */
+      .conclusion-grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+      }
+      .conclusion-card {
+        padding: 10px !important;
+        font-size: 0.68em !important;
+      }
+      
+      /* 文字雲小螢幕配置 */
+      #slide-wordcloud > div {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 150px 1fr !important;
+        height: 450px !important;
+      }
+      #slide-wordcloud input {
+        font-size: 11px !important;
+        padding: 6px !important;
+      }
+      #slide-wordcloud button {
+        font-size: 11px !important;
+        padding: 6px !important;
+        margin-top: 4px !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -132,6 +221,15 @@
         <h2 style="color:var(--accent2); margin-top:0.2em; font-size: 1.1em;">完全免費 AI 語音克隆，一鍵生成老師配音的教學影片</h2>
         <p class="subtitle">讓 AI Agent 自動安裝開源模型並在本地運行聲音克隆</p>
         <p class="author">三師爸 Sense Bar · 課程導覽簡報</p>
+        <div style="margin-top: 1.5em;">
+          <a href="https://www.youtube.com/watch?v=5jj4W5XU3nw" target="_blank"
+             style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.4em; color: var(--accent2);
+                    text-decoration: none; border: 1px solid rgba(79,195,247,0.4); padding: 8px 16px; border-radius: 20px;
+                    background: rgba(79,195,247,0.05); transition: all 0.3s ease; font-weight: 600;">
+            <i data-lucide="youtube" style="width: 18px; height: 18px; stroke: #ff4757; fill: #ff4757;"></i>
+            觀看原始 YouTube 教學影片
+          </a>
+        </div>
       </div>
     </section>
 
@@ -345,6 +443,14 @@
     progress: true,
     controls: true,
     slideNumber: 'c/t',
+    
+    // 響應式優化，提升小螢幕縮放比率
+    width: 1050,
+    height: 700,
+    margin: 0.05,
+    minScale: 0.35,
+    maxScale: 2.0,
+    
     plugins: []
   });
 

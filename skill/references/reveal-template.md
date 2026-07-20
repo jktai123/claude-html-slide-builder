@@ -15,14 +15,122 @@
   <!-- 若有文字雲，加這行 -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script> -->
   <style>
-    /* === 全域變數 === */
+    /* === 全域變數與 10 大主題調色盤 === */
     :root {
-      --accent:  #e8643a;
-      --accent2: #4fc3f7;
+      /* 預設：Midnight Executive */
+      --bg-dark: #0d1127;
+      --bg-light: #f4f7fc;
+      --text-dark: #ffffff;
+      --text-light: #1e2761;
+      --accent: #1e2761;
+      --accent2: #cadcfc;
+      --accent-alt: #4fc3f7;
       --success: #81c784;
       --warn:    #ffb74d;
     }
 
+    /* 1. Midnight Executive (午夜商務) */
+    .theme-midnight {
+      --bg-dark: #0d1127;
+      --bg-light: #f4f7fc;
+      --text-dark: #ffffff;
+      --text-light: #1e2761;
+      --accent: #1e2761;
+      --accent2: #cadcfc;
+      --accent-alt: #4fc3f7;
+    }
+    /* 2. Forest & Moss (森林與苔蘚) */
+    .theme-forest {
+      --bg-dark: #142215;
+      --bg-light: #f5f8f5;
+      --text-dark: #ffffff;
+      --text-light: #2c5f2d;
+      --accent: #2c5f2d;
+      --accent2: #97bc62;
+      --accent-alt: #81c784;
+    }
+    /* 3. Coral Energy (珊瑚活力) */
+    .theme-coral {
+      --bg-dark: #131936;
+      --bg-light: #fffbf5;
+      --text-dark: #ffffff;
+      --text-light: #2f3c7e;
+      --accent: #f96167;
+      --accent2: #f9e795;
+      --accent-alt: #2f3c7e;
+    }
+    /* 4. Warm Terracotta (溫暖陶土) */
+    .theme-terracotta {
+      --bg-dark: #2b1411;
+      --bg-light: #f9f9f5;
+      --text-dark: #ffffff;
+      --text-light: #3e221c;
+      --accent: #b85042;
+      --accent2: #a7beae;
+      --accent-alt: #e7e8d1;
+    }
+    /* 5. Ocean Gradient (海洋漸層) */
+    .theme-ocean {
+      --bg-dark: #0c1024;
+      --bg-light: #f0f5f8;
+      --text-dark: #ffffff;
+      --text-light: #21295c;
+      --accent: #065a82;
+      --accent2: #1c7293;
+      --accent-alt: #4fc3f7;
+    }
+    /* 6. Charcoal Minimal (木炭極簡) */
+    .theme-charcoal {
+      --bg-dark: #1a1a1a;
+      --bg-light: #f7f7f7;
+      --text-dark: #ffffff;
+      --text-light: #212121;
+      --accent: #36454f;
+      --accent2: #888888;
+      --accent-alt: #212121;
+    }
+    /* 7. Teal Trust (信賴青綠) */
+    .theme-teal {
+      --bg-dark: #03171a;
+      --bg-light: #f3fafb;
+      --text-dark: #ffffff;
+      --text-light: #028090;
+      --accent: #028090;
+      --accent2: #00a896;
+      --accent-alt: #02c39a;
+    }
+    /* 8. Berry & Cream (莓果奶油) */
+    .theme-berry {
+      --bg-dark: #2d101b;
+      --bg-light: #faf6f4;
+      --text-dark: #ffffff;
+      --text-light: #6d2e46;
+      --accent: #6d2e46;
+      --accent2: #a26769;
+      --accent-alt: #ece2d0;
+    }
+    /* 9. Sage Calm (平靜鼠尾草) */
+    .theme-sage {
+      --bg-dark: #1b2623;
+      --bg-light: #f4f7f6;
+      --text-dark: #ffffff;
+      --text-light: #3a4f48;
+      --accent: #84b59f;
+      --accent2: #69a297;
+      --accent-alt: #50808e;
+    }
+    /* 10. Cherry Bold (櫻桃亮紅) */
+    .theme-cherry {
+      --bg-dark: #1a0305;
+      --bg-light: #fefbfb;
+      --text-dark: #ffffff;
+      --text-light: #2f3c7e;
+      --accent: #990011;
+      --accent2: #2f3c7e;
+      --accent-alt: #ffb74d;
+    }
+
+    /* === Reveal.js 基礎複寫 === */
     .reveal {
       font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
     }
@@ -32,10 +140,99 @@
       letter-spacing: -0.02em;
     }
     .reveal h1 { font-size: 2.2em; }
-    .reveal h2 { font-size: 1.5em; color: var(--accent2); }
+    .reveal h2 { font-size: 1.5em; }
     .reveal .progress { color: var(--accent); }
     .reveal .fragment { opacity: 0.2; }
     .reveal .fragment.visible { opacity: 1; }
+
+    /* === 亮暗投影片 (Sandwich 結構) 狀態控制 === */
+    .reveal section.dark-slide {
+      --text-primary: var(--text-dark);
+      --text-muted: rgba(255, 255, 255, 0.7);
+      --bg-card: rgba(255, 255, 255, 0.07);
+      --border-card: rgba(255, 255, 255, 0.15);
+      color: var(--text-primary);
+    }
+    .reveal section.dark-slide h1,
+    .reveal section.dark-slide h3,
+    .reveal section.dark-slide p,
+    .reveal section.dark-slide li {
+      color: var(--text-primary);
+    }
+    .reveal section.dark-slide h2 {
+      color: var(--accent2);
+    }
+
+    .reveal section.light-slide {
+      --text-primary: var(--text-light);
+      --text-muted: rgba(0, 0, 0, 0.6);
+      --bg-card: rgba(0, 0, 0, 0.04);
+      --border-card: rgba(0, 0, 0, 0.08);
+      color: var(--text-primary);
+    }
+    .reveal section.light-slide h1,
+    .reveal section.light-slide h3,
+    .reveal section.light-slide p,
+    .reveal section.light-slide li {
+      color: var(--text-primary);
+    }
+    .reveal section.light-slide h2 {
+      color: var(--accent);
+    }
+
+    /* === 視覺 Motif 類別 === */
+    /* 左側彩色粗線裝飾 */
+    .motif-border-left {
+      border-left: 6px solid var(--accent);
+      padding-left: 18px;
+      text-align: left;
+    }
+    .reveal section.dark-slide .motif-border-left {
+      border-left-color: var(--accent2);
+    }
+    
+    /* 圓形彩底圖標 */
+    .motif-icon-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px auto;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+    .reveal section.dark-slide .motif-icon-circle {
+      background: var(--accent2);
+    }
+    .motif-icon-circle img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1)) !important;
+    }
+    .reveal section.dark-slide .motif-icon-circle img {
+      filter: brightness(0) !important; /* 暗色底下的圖標轉全黑，與圓底對比 */
+    }
+
+    /* 微光/平版卡片 */
+    .motif-flat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+    }
+    .reveal section.dark-slide .motif-flat-card:hover {
+      border-color: var(--accent2);
+      box-shadow: 0 0 15px rgba(79, 195, 247, 0.2);
+    }
+    .reveal section.light-slide .motif-flat-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
 
     /* === 封面 === */
     .title-slide { text-align: center; }
@@ -50,30 +247,37 @@
       margin-bottom: 0.8em;
       font-weight: 600;
     }
-    .title-slide .subtitle { font-size: 0.75em; color: #aaa; margin-top: 0.5em; }
-    .title-slide .author   { margin-top: 2em; font-size: 0.5em; color: #888; }
+    .theme-midnight .title-slide .tag, .theme-ocean .title-slide .tag {
+      background: var(--accent-alt); /* 特殊主題的 tag 用 accent-alt 增加對比 */
+    }
+    .title-slide .subtitle { font-size: 0.75em; color: var(--text-muted); margin-top: 0.5em; }
+    .title-slide .author   { margin-top: 2em; font-size: 0.5em; color: var(--text-muted); }
 
     /* === 統計數字卡 === */
     .stat-row { display: flex; gap: 20px; justify-content: center; margin-top: 1em; }
     .stat-card {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.15);
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
       border-radius: 12px;
       padding: 20px 26px;
       text-align: center;
       flex: 1;
     }
     .stat-card .num   { font-size: 1.8em; font-weight: 800; color: var(--accent); line-height: 1; }
-    .stat-card .label { font-size: 0.42em; color: #ccc; margin-top: 6px; }
+    .reveal section.dark-slide .stat-card .num { color: var(--accent2); }
+    .stat-card .label { font-size: 0.42em; color: var(--text-muted); margin-top: 6px; }
 
     /* === 優勢卡（並列特點）=== */
     .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 0.6em; }
     .adv-card {
-      background: rgba(255,255,255,0.05);
-      border-top: 4px solid var(--accent2);
+      background: var(--bg-card);
+      border-top: 4px solid var(--accent);
       border-radius: 8px;
       padding: 16px;
       text-align: center;
+    }
+    .reveal section.dark-slide .adv-card {
+      border-top-color: var(--accent2);
     }
     .adv-card .adv-icon { margin-bottom: 8px; }
     .adv-card .adv-icon img {
@@ -81,20 +285,35 @@
       display: block; margin: 0 auto;
       filter: drop-shadow(0 0 10px rgba(79,195,247,0.6));
     }
-    .adv-card .adv-title { font-size: 0.5em; font-weight: 700; color: var(--accent2); margin-bottom: 6px; }
-    .adv-card .adv-desc  { font-size: 0.4em; color: #bbb; line-height: 1.6; }
+    .reveal section.light-slide .adv-card .adv-icon img {
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
+    }
+    .adv-card .adv-title { font-size: 0.5em; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+    .reveal section.dark-slide .adv-card .adv-title { color: var(--accent2); }
+    .adv-card .adv-desc  { font-size: 0.4em; color: var(--text-muted); line-height: 1.6; }
+
+    /* === 雙欄排版 === */
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+      text-align: left;
+    }
+    .two-col-grid .col-text { font-size: 0.45em; line-height: 1.7; }
+    .two-col-grid .col-visual { text-align: center; }
 
     /* === VS 對比 === */
-    .vs-grid { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; align-items: start; margin-top: 0.6em; }
-    .vs-col { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 18px; }
-    .vs-col.left-col  { border-top: 3px solid var(--accent2); }
-    .vs-col.right-col { border-top: 3px solid var(--warn); }
+    .vs-grid { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; align-items: stretch; margin-top: 0.6em; }
+    .vs-col { background: var(--bg-card); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; }
+    .vs-col.left-col  { border-top: 4px solid var(--accent); }
+    .vs-col.right-col { border-top: 4px solid var(--accent-alt); }
     .vs-label { font-size: 0.7em; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.05em; }
-    .vs-label.left  { color: var(--accent2); }
-    .vs-label.right { color: var(--warn); }
-    .vs-center { display: flex; align-items: center; justify-content: center; font-size: 1.4em; font-weight: 900; color: #555; }
+    .vs-label.left  { color: var(--accent); }
+    .vs-label.right { color: var(--accent-alt); }
+    .vs-center { display: flex; align-items: center; justify-content: center; font-size: 1.4em; font-weight: 900; color: var(--text-muted); }
     .vs-col ul { font-size: 0.42em; list-style: none; padding: 0; margin: 0; }
-    .vs-col ul li { padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .vs-col ul li { padding: 5px 0; border-bottom: 1px solid var(--border-card); }
     .vs-col ul li:last-child { border-bottom: none; }
     .vs-col ul li::before { content: "✦ "; opacity: 0.5; }
 
@@ -102,52 +321,57 @@
     .timeline { position: relative; padding-left: 36px; margin-top: 0.8em; }
     .timeline::before {
       content: ''; position: absolute; left: 14px; top: 4px; bottom: 4px;
-      width: 2px; background: rgba(255,255,255,0.2);
+      width: 2px; background: var(--border-card);
     }
-    .timeline-item { position: relative; margin-bottom: 18px; font-size: 0.46em; }
+    .timeline-item { position: relative; margin-bottom: 18px; font-size: 0.46em; text-align: left; }
     .timeline-item::before {
       content: ''; position: absolute; left: -28px; top: 4px;
       width: 10px; height: 10px; border-radius: 50%;
-      background: var(--accent); border: 2px solid #1a1a2e;
+      background: var(--accent); border: 2px solid var(--bg-dark);
+    }
+    .reveal section.dark-slide .timeline-item::before {
+      background: var(--accent2);
     }
     .timeline-item .ti-date { color: var(--accent); font-weight: 700; font-size: 1.1em; margin-bottom: 2px; }
-    .timeline-item .ti-text { color: #ccc; }
+    .reveal section.dark-slide .timeline-item .ti-date { color: var(--accent2); }
+    .timeline-item .ti-text { color: var(--text-muted); }
 
     /* === 引用 === */
     .quote-box {
-      background: rgba(255,255,255,0.05);
+      background: var(--bg-card);
       border-left: 4px solid var(--accent);
       border-radius: 8px;
       padding: 20px 24px;
       margin: 0.8em 0;
       font-size: 0.55em;
-      color: #ddd;
+      color: var(--text-primary);
       font-style: italic;
       line-height: 1.7;
     }
-    .quote-author { font-size: 0.4em; color: #888; text-align: right; margin-top: 8px; font-style: normal; }
+    .reveal section.dark-slide .quote-box { border-left-color: var(--accent2); }
+    .quote-author { font-size: 0.4em; color: var(--text-muted); text-align: right; margin-top: 8px; font-style: normal; }
 
     /* === 結論卡 === */
     .conclusion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 0.8em; }
     .conclusion-card { border-radius: 10px; padding: 18px; font-size: 0.44em; }
     .conclusion-card.positive {
-      background: rgba(79,195,247,0.12);
-      border: 1px solid rgba(79,195,247,0.35);
+      background: rgba(129, 199, 132, 0.1);
+      border: 1px solid rgba(129, 199, 132, 0.3);
     }
     .conclusion-card.caution {
-      background: rgba(255,183,77,0.1);
-      border: 1px solid rgba(255,183,77,0.3);
+      background: rgba(255, 183, 77, 0.1);
+      border: 1px solid rgba(255, 183, 77, 0.3);
     }
     .conclusion-card .cc-title { font-size: 1.3em; font-weight: 700; margin-bottom: 8px; }
-    .conclusion-card.positive .cc-title { color: var(--accent2); }
+    .conclusion-card.positive .cc-title { color: var(--success); }
     .conclusion-card.caution  .cc-title { color: var(--warn); }
-    .conclusion-card ul { list-style: none; padding: 0; margin: 0; color: #ccc; line-height: 1.8; }
+    .conclusion-card ul { list-style: none; padding: 0; margin: 0; color: var(--text-muted); line-height: 1.8; }
     .conclusion-card ul li::before { content: "→ "; opacity: 0.6; }
 
     /* === 封底 === */
     .end-slide { text-align: center; }
     .end-slide .big { font-size: 3em; margin-bottom: 0.2em; }
-    .end-slide .tagline { font-size: 0.65em; color: #aaa; }
+    .end-slide .tagline { font-size: 0.65em; color: var(--text-muted); }
 
     /* === LIVE 動畫 === */
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }

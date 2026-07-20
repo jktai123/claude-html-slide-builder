@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聖經金句照片瀏覽器 | DailyVerses.net</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-row">
+                    <div class="logo">
+                        <i class="fa-solid fa-cross logo-icon"></i>
+                        <h1>聖經金句瀏覽</h1>
+                    </div>
+                    <button id="btn-random-topic" class="btn btn-secondary btn-random-header" title="隨機主題">
+                        <i class="fa-solid fa-shuffle"></i> <span class="btn-text">隨機主題</span>
+                    </button>
+                </div>
+                <p class="subtitle">DailyVerses.net 圖片庫</p>
+            </div>
+            
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="topic-search" placeholder="搜尋主題... (例如: 喜樂, 愛)">
+            </div>
+            
+            <div class="topics-list-container">
+                <ul id="topics-list">
+                    <!-- Topics will be dynamic injected here -->
+                </ul>
+            </div>
+            
+            <div class="sidebar-footer">
+                <span id="stats-summary">正在載入數據...</span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <div class="header-left">
+                    <h2 id="current-topic-title">請選擇一個主題</h2>
+                    <p id="current-topic-stats"></p>
+                </div>
+                <div class="header-right">
+                    <a id="btn-original-link" href="#" target="_blank" class="btn btn-link" style="display: none;">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> 原始網頁
+                    </a>
+                </div>
+            </header>
+
+            <!-- Gallery Area -->
+            <section class="gallery-wrapper">
+                <div id="welcome-view" class="welcome-view">
+                    <div class="welcome-card">
+                        <i class="fa-regular fa-images welcome-icon"></i>
+                        <h3>歡迎使用聖經金句照片瀏覽器</h3>
+                        <p>左側共收錄了 <span id="welcome-total-topics">-</span> 個主題，以及 <span id="welcome-total-images">-</span> 張高品質聖經金句圖片。</p>
+                        <p>請點擊左側主題開始瀏覽，或是點擊「隨機主題」按鈕。</p>
+                        <button id="btn-start-random" class="btn btn-primary">
+                            <i class="fa-solid fa-shuffle"></i> 隨機選一個
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="gallery-grid" class="gallery-grid" style="display: none;">
+                    <!-- Images will be injected here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Glassmorphism Lightbox -->
+    <div id="lightbox" class="lightbox" style="display: none;">
+        <div class="lightbox-backdrop"></div>
+        <div class="lightbox-header">
+            <span class="lightbox-counter"><span id="lightbox-current-index">0</span> / <span id="lightbox-total-count">0</span></span>
+            <div class="lightbox-actions">
+                <button id="btn-copy-url" title="複製圖片網址" class="lightbox-btn"><i class="fa-regular fa-copy"></i></button>
+                <a id="btn-download-img" href="#" target="_blank" download title="下載圖片" class="lightbox-btn"><i class="fa-solid fa-download"></i></a>
+                <button id="btn-close-lightbox" title="關閉 (Esc)" class="lightbox-btn close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        
+        <button id="btn-prev-img" class="lightbox-nav-btn prev"><i class="fa-solid fa-chevron-left"></i></button>
+        
+        <div class="lightbox-content">
+            <img id="lightbox-image" src="" alt="Bible Verse Image">
+            <div class="lightbox-loader"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+        </div>
+        
+        <button id="btn-next-img" class="lightbox-nav-btn next"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <!-- Load Data file -->
+    <script src="data.js"></script>
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>

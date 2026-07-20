@@ -1,0 +1,12 @@
+{
+  "Title": "CapCut Dreamina - 剪映旗下 / 整合型 AI 圖片影片生成與編輯套件",
+  "日期": "2026-07-17",
+  "URL": "https://dreamina.capcut.com/ai-tool/home",
+  "摘要": "Dreamina 是 CapCut (剪映) 旗下的 AI 創作套件。整合了文生圖、圖生影、AI 虛擬分身及口型對齊，並配備局部重繪、高清放大等編輯工具，能與 CapCut 剪輯軌道無縫對接，為短影音創作者提供高效工作流。",
+  "category": "科技",
+  "tags": ["Dreamina", "CapCut", "AI影片", "AI圖片", "科技"],
+  "importance": "高",
+  "content": "# CapCut Dreamina - 剪輯生態內建的 AI 創作神器\n\n## 1. 什麼是 Dreamina？\n- **定位**：由字節跳動推出、深度整合至 **CapCut (剪映)** 影片剪輯生態圈中的先進 AI 創意設計套件。它結合了強大的生成式 AI（圖像與影片生成）和實用的專業級編輯工具，幫助創作者（特別是行銷與短影音創作者）在單一工作流中快速完成素材生成與影片剪輯。\n\n## 2. 核心功能與 AI 特色\n- **AI 圖像生成與深度操縱**：\n  - **高品質生成**：支援文生圖與圖生圖，可自訂風格、色調與細節，一次提供四種變體供選擇。\n  - **局部重繪 (Inpainting)**：使用畫筆點選區域，即可精準修改或添加畫面物件。\n  - **畫面拓展 (Outpainting/Expand)**：自動外擴補充邊緣，補全不同比例的視覺構圖。\n  - **高清放大 (Upscale)**：利用 AI 進行無損解像度超分，將生成的圖片放大至 4K 級別。\n- **電影級 AI 影片生成**：支援文生影 (Text-to-Video) 及圖生影 (Image-to-Video)，結合 Seedance 等動作物理模型，使镜頭移動、物件軌跡極為自然，並維持跨鏡頭畫面特徵一致性。\n- **AI 虛擬主播與口型同步**：內建 AI 虛擬分身 (AI Avatar)，使用者鍵入文字便能生成會說話且嘴型與音訊高度對齊的擬真影音。\n- **與 CapCut 剪輯軌無縫對接**：最為人稱道的是其生態系融合。生成的 B-roll 素材、特效圖片、虛擬主播語音等，可以一鍵拖拉拖入 CapCut（特別是 PC 桌機版）的剪輯時間軸上，實現無縫的創作對接。",
+  "mindmap": "mindmap\n  root((Dreamina AI))\n    核心能力\n      文生圖 / 圖生圖\n      文生影 / 圖生影\n      AI 虛擬分身與口型\n    進階編輯\n      局部重繪 Inpainting\n      無損放大 Upscaling\n      畫面拓展 Outpainting\n    CapCut 整合\n      共享帳號與界面\n      一鍵拖入剪輯軌\n      雲端處理加速\n    適用對象\n      短影音創作者\n      行銷廣告企劃\n      影視概念設計",
+  "images": ["/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/output/dreamina_screenshot.png"]
+}

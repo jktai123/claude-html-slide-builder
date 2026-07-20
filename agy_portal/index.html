@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity 遙控門戶</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="logo-icon">🪐</span>
+                <h1>Antigravity <span>Portal</span></h1>
+            </div>
+            <p class="subtitle">從手機與 iPad 輕鬆管理你的日記與工作摘要</p>
+        </header>
+
+        <main>
+            <!-- 動作面板 -->
+            <section class="control-panel">
+                <div class="card glass-card shimmer-card">
+                    <h2>⚡ 快捷操作</h2>
+                    <div class="button-group">
+                        <button id="btn-summary" class="btn btn-primary">
+                            <span class="btn-icon">🔍</span> 抓取今日動作摘要
+                        </button>
+                        <button id="btn-sync" class="btn btn-secondary">
+                            <span class="btn-icon">🚀</span> 一鍵同步至 Notion日記
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 寫日記卡片 -->
+                <div class="card glass-card">
+                    <h2>📝 新增日記進度</h2>
+                    <div class="input-group">
+                        <textarea id="diary-input" placeholder="在手機輸入今日的新增進度...&#10;- 完成了某個模組&#10;- 修復了 Bug"></textarea>
+                        <button id="btn-write-diary" class="btn btn-accent">
+                            <span class="btn-icon">💾</span> 儲存並寫入 Notion日記
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 上傳媒體卡片 -->
+                <div class="card glass-card">
+                    <h2>📸 上傳圖片 / 影片 (可多選)</h2>
+                    <div class="input-group">
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="media-file" accept="image/*,video/*" style="display: none;" multiple>
+                            <div class="file-upload-box" id="file-drop-zone">
+                                <span class="upload-icon">📤</span>
+                                <p id="file-name-display">點擊此處或拖放多張照片/影片上傳</p>
+                            </div>
+                        </div>
+                        <button id="btn-upload-media" class="btn btn-primary">
+                            <span class="btn-icon">☁️</span> 上傳並插入 Notion日記
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 狀態/結果輸出面板 -->
+            <section class="output-panel">
+                <div class="card glass-card output-card">
+                    <div class="output-header">
+                        <h2>📊 執行結果與終端輸出</h2>
+                        <button id="btn-clear" class="btn-text">清除輸出</button>
+                    </div>
+                    <div id="loading" class="loading-spinner hidden">
+                        <div class="spinner"></div>
+                        <p id="loading-text">正在處理中，請稍候...</p>
+                    </div>
+                    <div id="output-content" class="console-box">
+                        <p class="placeholder-text">點選上方操作以獲取執行結果...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Google DeepMind pair-programming assistant • Antigravity 2.0</p>
+        </footer>
+    </div>
+
+    <script>
+        const btnSummary = document.getElementById('btn-summary');
+        const btnSync = document.getElementById('btn-sync');
+        const btnWriteDiary = document.getElementById('btn-write-diary');
+        const btnClear = document.getElementById('btn-clear');
+        const diaryInput = document.getElementById('diary-input');
+        const outputContent = document.getElementById('output-content');
+        const loading = document.getElementById('loading');
+        const loadingText = document.getElementById('loading-text');
+
+        // File upload elements
+        const fileInput = document.getElementById('media-file');
+        const fileDropZone = document.getElementById('file-drop-zone');
+        const fileNameDisplay = document.getElementById('file-name-display');
+        const btnUploadMedia = document.getElementById('btn-upload-media');
+        let selectedFiles = [];
+
+        function showLoading(show, text = "正在處理中，請稍候...") {
+            loadingText.textContent = text;
+            if (show) {
+                loading.classList.remove('hidden');
+                outputContent.classList.add('hidden');
+            } else {
+                loading.classList.add('hidden');
+                outputContent.classList.remove('hidden');
+            }
+        }
+
+        // Trigger file select
+        fileDropZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        function updateFileDisplay() {
+            if (selectedFiles.length === 1) {
+                fileNameDisplay.textContent = `已選取: ${selectedFiles[0].name} (${(selectedFiles[0].size / 1024 / 1024).toFixed(2)} MB)`;
+                fileDropZone.style.borderColor = "#ec4899";
+            } else if (selectedFiles.length > 1) {
+                const totalSize = selectedFiles.reduce((acc, f) => acc + f.size, 0);
+                fileNameDisplay.textContent = `已選取 ${selectedFiles.length} 個檔案 (${(totalSize / 1024 / 1024).toFixed(2)} MB)`;
+                fileDropZone.style.borderColor = "#ec4899";
+            } else {
+                fileNameDisplay.textContent = '點擊此處或拖放多張照片/影片上傳';
+                fileDropZone.style.borderColor = "rgba(255, 255, 255, 0.08)";
+            }
+        }
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                selectedFiles = Array.from(e.target.files);
+                updateFileDisplay();
+            }
+        });
+
+        // Drag and Drop
+        fileDropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileDropZone.style.borderColor = "#00f0ff";
+            fileDropZone.style.background = "rgba(0, 240, 255, 0.05)";
+        });
+
+        fileDropZone.addEventListener('dragleave', () => {
+            fileDropZone.style.borderColor = "rgba(255, 255, 255, 0.08)";
+            fileDropZone.style.background = "rgba(0, 0, 0, 0.3)";
+        });
+
+        fileDropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileDropZone.style.borderColor = "rgba(255, 255, 255, 0.08)";
+            fileDropZone.style.background = "rgba(0, 0, 0, 0.3)";
+            
+            if (e.dataTransfer.files.length > 0) {
+                selectedFiles = Array.from(e.dataTransfer.files);
+                updateFileDisplay();
+            }
+        });
+
+        // Convert ANSI escape codes to HTML colors
+        function ansiToHtml(text) {
+            let html = text
+                .replace(/&/g, '&amp;')
+                .replace(/&amp;nbsp;/g, '&nbsp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+
+            const ansiMap = {
+                '\033[1;36m': '<span style="color: #00f0ff; font-weight: bold;">',
+                '\033[1;33m': '<span style="color: #ffb86c; font-weight: bold;">',
+                '\033[32m': '<span style="color: #50fa7b;">',
+                '\033[34m': '<span style="color: #8be9fd;">',
+                '\033[90m': '<span style="color: #6272a4; font-style: italic;">',
+                '\033[0m': '</span>',
+                '\033[m': '</span>'
+            };
+
+            for (const [code, htmlTag] of Object.entries(ansiMap)) {
+                html = html.split(code).join(htmlTag);
+            }
+
+            html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g, '<a href="$2" target="_blank" class="notion-link">$1 🔗</a>');
+            html = html.replace(/\n/g, '<br>');
+
+            return html;
+        }
+
+        async function makeRequest(url, method = 'POST', body = null, isMultipart = false) {
+            showLoading(true, isMultipart ? "正在上傳媒體並同步至 Notion (多檔案上傳時間較長，請保持連線)..." : "正在處理中，請稍候...");
+            try {
+                const options = {
+                    method: method,
+                };
+                
+                if (isMultipart) {
+                    options.body = body;
+                } else {
+                    options.headers = body ? { 'Content-Type': 'application/json' } : {};
+                    options.body = body ? JSON.stringify(body) : null;
+                }
+
+                const response = await fetch(url, options);
+                const result = await response.json();
+                showLoading(false);
+                
+                if (result.success) {
+                    outputContent.innerHTML = `<div class="console-text">${ansiToHtml(result.output)}</div>`;
+                } else {
+                    outputContent.innerHTML = `<div class="error-box">❌ 執行失敗：<br>${result.error}</div>`;
+                }
+            } catch (error) {
+                showLoading(false);
+                outputContent.innerHTML = `<div class="error-box">❌ 連線伺服器失敗，請確認 Mac 端伺服器已啟動。<br>${error}</div>`;
+            }
+        }
+
+        btnSummary.addEventListener('click', () => {
+            makeRequest('/api/summary');
+        });
+
+        btnSync.addEventListener('click', () => {
+            makeRequest('/api/sync');
+        });
+
+        btnWriteDiary.addEventListener('click', () => {
+            const content = diaryInput.value.trim();
+            if (!content) {
+                alert('請輸入日記進度內容！');
+                return;
+            }
+            makeRequest('/api/write-diary', 'POST', { content: content });
+            diaryInput.value = '';
+        });
+
+        // Client-side image compression helper (HTML5 Canvas)
+        function compressImage(file, maxWidth = 1920, quality = 0.8) {
+            return new Promise((resolve) => {
+                if (!file.type.startsWith('image/')) {
+                    resolve(file); // movies or other files bypass compression
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        if (width > height) {
+                            if (width > maxWidth) {
+                                height = Math.round((height * maxWidth) / width);
+                                width = maxWidth;
+                            }
+                        } else {
+                            if (height > maxWidth) {
+                                width = Math.round((width * maxWidth) / height);
+                                height = maxWidth;
+                            }
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        canvas.toBlob((blob) => {
+                            // Convert back to File with original name but jpeg extension/type to ensure Notion parsing
+                            const cleanName = file.name.substring(0, file.name.lastIndexOf('.')) + '.jpg';
+                            const compressedFile = new File([blob], cleanName, {
+                                type: 'image/jpeg',
+                                lastModified: Date.now()
+                            });
+                            resolve(compressedFile);
+                        }, 'image/jpeg', quality);
+                    };
+                };
+            });
+        }
+
+        // Upload media action
+        btnUploadMedia.addEventListener('click', async () => {
+            if (selectedFiles.length === 0) {
+                alert('請先選取圖片或影片檔案！');
+                return;
+            }
+            
+            showLoading(true, "正在處理並壓縮圖片 (大檔案可能需要較多 CPU 運算)...");
+            
+            try {
+                // Compress all images in parallel
+                const processedFiles = await Promise.all(selectedFiles.map(file => compressImage(file)));
+                
+                const formData = new FormData();
+                processedFiles.forEach((file, index) => {
+                    formData.append(`file${index}`, file, file.name);
+                });
+                
+                makeRequest('/', 'POST', formData, true);
+            } catch (err) {
+                showLoading(false);
+                alert("壓縮圖片失敗：" + err);
+            }
+            
+            // reset file select
+            selectedFiles = [];
+            updateFileDisplay();
+        });
+
+        btnClear.addEventListener('click', () => {
+            outputContent.innerHTML = '<p class="placeholder-text">點選上方操作以獲取執行結果...</p>';
+        });
+    </script>
+</body>
+</html>

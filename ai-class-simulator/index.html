@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI 課堂實作與班級互動照片牆</title>
+  <title>AI 課堂實作與綜合導航平台</title>
   <!-- Google Fonts: Noto Sans TC, Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- FontAwesome for original compatibility if needed -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -22,9 +24,7 @@
   <header>
     <div class="container header-container">
       <div class="logo-area">
-        <span class="badge">中華民國AI教育協會</span>
-        <h1>AI 課堂實作模擬器</h1>
-        <p class="subtitle">新一代美圖秀秀 - 不一樣的我 | 講師：黃子恬 Althea 理事長</p>
+        <h1>AI 課堂實作與綜合導航平台</h1>
       </div>
       <div class="header-stats">
         <div class="stat-box">
@@ -37,12 +37,14 @@
 
   <main class="container">
     
-    <!-- Tab Navigation -->
+    <!-- Tab Navigation (Extended to 6 tabs) -->
     <div class="tabs-container">
       <button class="tab-btn active" data-tab="guide"><i data-lucide="book-open"></i> 學習導覽與公式</button>
       <button class="tab-btn" data-tab="prompt"><i data-lucide="sparkles"></i> AI 指令填空器</button>
       <button class="tab-btn" data-tab="camera"><i data-lucide="camera"></i> 風格相機模擬</button>
       <button class="tab-btn" data-tab="wall"><i data-lucide="image"></i> 班級互動照片牆</button>
+      <button class="tab-btn" data-tab="devotion"><i data-lucide="heart-pulse"></i> AI 靈修伴侶</button>
+      <button class="tab-btn" data-tab="search"><i data-lucide="search"></i> 多功能搜尋</button>
     </div>
 
     <!-- Tab 1: 學習導覽 -->
@@ -120,6 +122,47 @@
               <p>設定邊界。例如：「不需走太多路、列出3個地點...」</p>
             </div>
           </div>
+      </div>
+
+      <!-- ChatGPT / AI 實用指令大全 -->
+      <div class="news-divider" style="margin-top: 40px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; width: 100%;">
+        <span style="font-size: 1.15rem; font-weight: 700; color: var(--primary-light);">📚 ChatGPT / AI 實用指令大全</span>
+        <a href="https://www.explainthis.io/zh-hant/chatgpt" target="_blank" class="btn btn-secondary btn-sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; padding: 6px 12px; border-radius: 8px;">
+          <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> 前往 ExplainThis 官網
+        </a>
+      </div>
+
+      <div class="card card-fullwidth" style="margin-bottom: 30px;">
+        <!-- 分類膠囊切換器 (全部 + 18大類) -->
+        <div class="explain-tabs">
+          <button class="explain-tab-btn active" data-cat="all">全部 ✨</button>
+          <button class="explain-tab-btn" data-cat="interview">求職與面試 💼</button>
+          <button class="explain-tab-btn" data-cat="career">職涯發展 📈</button>
+          <button class="explain-tab-btn" data-cat="report">寫報告 📝</button>
+          <button class="explain-tab-btn" data-cat="data">資料整理 📊</button>
+          <button class="explain-tab-btn" data-cat="develop">程式開發 💻</button>
+          <button class="explain-tab-btn" data-cat="learning">知識學習 📚</button>
+          <button class="explain-tab-btn" data-cat="english">英語學習 🇬🇧</button>
+          <button class="explain-tab-btn" data-cat="productivity">工作生產力 ⚡</button>
+          <button class="explain-tab-btn" data-cat="write">寫作幫手 ✍️</button>
+          <button class="explain-tab-btn" data-cat="social">社群媒體 📱</button>
+          <button class="explain-tab-btn" data-cat="sales">銷售 🤝</button>
+          <button class="explain-tab-btn" data-cat="marketing">行銷與 SEO 📣</button>
+          <button class="explain-tab-btn" data-cat="product">產品管理 ⚙️</button>
+          <button class="explain-tab-btn" data-cat="hr">HR 與招募 👥</button>
+          <button class="explain-tab-btn" data-cat="investment">投資與交易 🪙</button>
+          <button class="explain-tab-btn" data-cat="life">日常生活 🏠</button>
+          <button class="explain-tab-btn" data-cat="fun">有趣好玩 🎉</button>
+          <button class="explain-tab-btn" data-cat="roleplay">角色扮演 🎭</button>
+        </div>
+
+        <div class="explain-cards-header" style="margin-bottom: 18px; color: var(--text-muted); font-size: 0.95rem;">
+          💡 提示：點擊卡片或複製按鈕可一鍵複製指令，指令中的 <span style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 4px; padding: 1px 6px; color: #38bdf8; font-weight: 700;">[括號文字]</span> 為建議替換的自訂變數！
+        </div>
+
+        <!-- 卡片展示容器 -->
+        <div class="explain-cards-grid" id="explain-cards-output">
+          <!-- 透過 JS 動態渲染 -->
         </div>
       </div>
     </section>
@@ -135,25 +178,79 @@
           </div>
           <div class="form-group">
             <label for="formula-target">轉變目標：</label>
-            <select id="formula-target" class="form-select">
-              <option value="更健康活力">更健康活力</option>
-              <option value="更快樂無憂">更快樂無憂</option>
-              <option value="更自由自在">更自由自在</option>
-              <option value="含著金湯匙出生的嬰兒時期">含著金湯匙出生的嬰兒時期</option>
-              <option value="環遊世界的百萬富翁">環遊世界的百萬富翁</option>
-            </select>
+            <div class="input-helper-group">
+              <input type="text" id="formula-target" class="form-input" value="更健康活力">
+              <select class="form-select-helper" data-target="formula-target">
+                <option value="" disabled selected>快速挑選...</option>
+                <option value="更健康活力">1. 更健康活力</option>
+                <option value="更快樂無憂">2. 更快樂無憂</option>
+                <option value="更自由自在">3. 更自由自在</option>
+                <option value="含著金湯匙出生的嬰兒時期">4. 含著金湯匙出生的嬰兒時期</option>
+                <option value="環遊世界的百萬富翁">5. 環遊世界的百萬富翁</option>
+                <option value="滿頭銀髮但神采奕奕的智者">6. 滿頭銀髮但神采奕奕的智者</option>
+                <option value="穿著登山裝的專業探險家">7. 穿著登山裝的專業探險家</option>
+                <option value="在森林木屋享受午後清閒的隱士">8. 在森林木屋享受午後清閒的隱士</option>
+                <option value="開著敞篷跑車兜風的年輕小夥子">9. 開著敞篷跑車兜風的年輕小夥子</option>
+                <option value="身手矯健的運動員">10. 身手矯健的運動員</option>
+              </select>
+            </div>
           </div>
           <div class="form-group">
             <label for="formula-scene">放在什麼【場景】：</label>
-            <input type="text" id="formula-scene" class="form-input" value="翠綠的溪頭森林步道中">
+            <div class="input-helper-group">
+              <input type="text" id="formula-scene" class="form-input" value="翠綠的溪頭森林步道中">
+              <select class="form-select-helper" data-target="formula-scene">
+                <option value="" disabled selected>快速挑選...</option>
+                <option value="翠綠的溪頭森林步道中">1. 翠綠的溪頭森林步道中</option>
+                <option value="充滿櫻花盛開的日式庭園">2. 充滿櫻花盛開的日式庭園</option>
+                <option value="陽光灑落的沙灘海岸">3. 陽光灑落的沙灘海岸</option>
+                <option value="鋪滿楓紅的秋天公園步道">4. 鋪滿楓紅的秋天公園步道</option>
+                <option value="熱鬧的傳統年貨大街">5. 熱鬧的傳統年貨大街</option>
+                <option value="寧靜祥和的阿里山茶園">6. 寧靜祥和的阿里山茶園</option>
+                <option value="雲霧繚繞的合歡山頂">7. 雲霧繚繞的合歡山頂</option>
+                <option value="懷舊溫馨的紅磚老街">8. 懷舊溫馨的紅磚老街</option>
+                <option value="繁星點點的露營營地">9. 繁星點點的露營營地</option>
+                <option value="金黃色稻浪翻滾的池上農田">10. 金黃色稻浪翻滾的池上農田</option>
+              </select>
+            </div>
           </div>
           <div class="form-group">
             <label for="formula-action">正在做什麼【動作】：</label>
-            <input type="text" id="formula-action" class="form-input" value="開心地健行，雙手比讚">
+            <div class="input-helper-group">
+              <input type="text" id="formula-action" class="form-input" value="開心地健行，雙手比讚">
+              <select class="form-select-helper" data-target="formula-action">
+                <option value="" disabled selected>快速挑選...</option>
+                <option value="開心地健行，雙手比讚">1. 開心地健行，雙手比讚</option>
+                <option value="悠閒地喝著熱茶聊天">2. 悠閒地喝著熱茶聊天</option>
+                <option value="牽著手漫步，臉上洋溢著笑容">3. 牽著手漫步，臉上洋溢著笑容</option>
+                <option value="拿著相機開心地拍照留念">4. 拿著相機開心地拍照留念</option>
+                <option value="與家人一起吃團圓飯，氣氛融洽">5. 與家人一起吃團圓飯，氣氛融洽</option>
+                <option value="專注地在畫布上寫生繪畫">6. 專注地在畫布上寫生繪畫</option>
+                <option value="開懷大笑，揮手向鏡頭打招呼">7. 開懷大笑，揮手向鏡頭打招呼</option>
+                <option value="坐在木椅上閉目養神，神情安詳">8. 坐在木椅上閉目養神，神情安詳</option>
+                <option value="一起整理小花園，澆水種花">9. 一起整理小花園，澆水種花</option>
+                <option value="手拿著春聯，喜氣洋洋地迎接新年">10. 手拿著春聯，喜氣洋洋地迎接新年</option>
+              </select>
+            </div>
           </div>
           <div class="form-group">
             <label for="formula-mood">整體氛圍【情緒/氛圍】：</label>
-            <input type="text" id="formula-mood" class="form-input" value="溫馨、陽光、有故事感">
+            <div class="input-helper-group">
+              <input type="text" id="formula-mood" class="form-input" value="溫馨、陽光、有故事感">
+              <select class="form-select-helper" data-target="formula-mood">
+                <option value="" disabled selected>快速挑選...</option>
+                <option value="溫馨、陽光、有故事感">1. 溫馨、陽光、有故事感</option>
+                <option value="復古、懷舊、充滿歲月情懷">2. 復古、懷舊、充滿歲月情懷</option>
+                <option value="寧靜、祥和、與世無爭">3. 寧靜、祥和、與世無爭</option>
+                <option value="歡樂、喜慶、朝氣蓬勃">4. 歡樂、喜慶、朝氣蓬勃</option>
+                <option value="唯美、浪漫、如夢似幻">5. 唯美、浪漫、如夢似幻</option>
+                <option value="簡約、現代、乾淨明亮">6. 簡約、現代、乾淨明亮</option>
+                <option value="孤獨、深邃、帶有一絲禪意">7. 孤獨、深邃、帶有一絲禪意</option>
+                <option value="活力、熱情、動感十足">8. 活力、熱情、動感十足</option>
+                <option value="溫暖、柔和、日系療癒">9. 溫暖、柔和、日系療癒</option>
+                <option value="奇幻、神祕、色彩斑斕">10. 奇幻、神祕、色彩斑斕</option>
+              </select>
+            </div>
           </div>
           <button class="btn btn-primary btn-block" id="btn-gen-formula">
             <i data-lucide="refresh-cw"></i> 生成變身指令
@@ -179,24 +276,104 @@
           <div class="form-group">
             <label for="style-art">選擇【畫風】：</label>
             <select id="style-art" class="form-select">
-              <option value="波普藝術 (Pop Art)">波普藝術 (Pop Art)</option>
-              <option value="新藝術風格 (Art Nouveau)">新藝術風格 (Art Nouveau)</option>
-              <option value="浮世繪 (Ukiyo-e)">浮世繪 (Ukiyo-e)</option>
-              <option value="後印象派油畫 (Post-Impressionism)">後印象派油畫 (Post-Impressionism)</option>
-              <option value="數位現代插畫 (Digital Illustration)">數位現代插畫 (Digital Illustration)</option>
+              <option value="可愛 Q 版卡通人物插畫 / 貼紙風 (Chibi/Sticker style)">1: 可愛 Q 版卡通人物插畫 / 貼紙風 (Chibi/Sticker style)</option>
+              <option value="可愛Q版LINE貼圖風格 (Line sticker style)">2: 可愛Q版LINE貼圖風格 (Line sticker style)</option>
+              <option value="3D 黏土/皮克斯風 (3D Clay/Pixar Style)">3: 3D 黏土/皮克斯風 (3D Clay/Pixar Style)</option>
+              <option value="療癒系毛絨娃娃 (Fluffy/Plushie Style)">4: 療癒系毛絨娃娃 (Fluffy/Plushie Style)</option>
+              <option value="半寫實 Q 版插畫 (1.5–2頭身，精緻質感)">5: 半寫實 Q 版插畫 (1.5–2頭身，精緻質感)</option>
+              <option value="棉花糖空氣感 (Marshmallow Airbrush)">6: 棉花糖空氣感 (Marshmallow Airbrush)</option>
+              <option value="Q彈果凍/軟糖風 (Gummy/Jelly Texture)">7: Q彈果凍/軟糖風 (Gummy/Jelly Texture)</option>
+              <option value="溫慢手繪/水彩/蠟筆風 (Hand-Drawn & Healing)">8: 溫暖手繪/水彩/蠟筆風 (Hand-Drawn & Healing)</option>
+              <option value="森林繪本風 (Picture Book Style)">9: 森林繪本風 (Picture Book Style)</option>
+              <option value="變裝寶寶風 (Baby Costume Style)">10: 變裝寶寶風 (Baby Costume Style)</option>
+              <option value="扁平設計風 (Flat Design/Kurzgesagt)">11: 扁平設計風 (Flat Design/Kurzgesagt)</option>
+              <option value="扁平化資訊圖表風 (Flat Infographic)">12: 扁平化資訊圖表風 (Flat Infographic)</option>
+              <option value="韓系極簡線條風 (Korean Minimalist)">13: 韓系極簡線條風 (Korean Minimalist)</option>
+              <option value="隨手塗鴉日記風 (Doodle/Journal Style)">14: 隨手塗鴉日記風 (Doodle/Journal Style)</option>
+              <option value="紙膠帶拼貼風 (Washi Tape/Scrapbook)">15: 紙膠帶拼貼風 (Washi Tape/Scrapbook)</option>
+              <option value="植栽花草共生風 (Botanical Buddy)">16: 植栽花草共生風 (Botanical Buddy)</option>
+              <option value="剛出爐麵包色系 (Warm Bread Tones)">17: 剛出爐麵包色系 (Warm Bread Tones)</option>
+              <option value="實體貼紙/白邊風 (Die-cut Sticker)">18: 實體貼紙/白邊風 (Die-cut Sticker)</option>
+              <option value="半寫實 Q 版插畫 (2.5–3頭身，自然比例)">19: 半寫實 Q 版插畫 (2.5–3頭身，自然比例)</option>
+              <option value="粉筆黑板畫 (Chalkboard Art)">20: 粉筆黑板畫 (Chalkboard Art)</option>
+              <option value="90 年代復古動漫風 (90s Retro Anime)">21: 90 年代復古動漫風 (90s Retro Anime)</option>
+              <option value="美式復古漫畫/普普藝術 (Pop Art)">22: 美式復古漫畫/普普藝術 (Pop Art)</option>
+              <option value="現代浮世繪 (Modern Ukiyo-e)">23: 現代浮世繪 (Modern Ukiyo-e)</option>
+              <option value="拼貼藝術風格 (Collage/Mixed Media)">24: 拼貼藝術風格 (Collage/Mixed Media)</option>
+              <option value="極簡幾何抽象 (Geometric Abstract)">25: 極簡幾何抽象 (Geometric Abstract)</option>
+              <option value="數位賽博龐克 (Cyberpunk/Neon)">26: 數位賽博龐克 (Cyberpunk/Neon)</option>
+              <option value="迷幻蒸汽波 (Vaporwave)">27: 迷幻蒸汽波 (Vaporwave)</option>
+              <option value="底片漏光感 (Film Light Leak Style)">28: 底片漏光感 (Film Light Leak Style)</option>
+              <option value="AI寫實人像插畫風 (AI Realistic Portrait)">29: AI寫實人像插畫風 (AI Realistic Portrait)</option>
+              <option value="角色IP品牌風 (Mascot Branding Style)">30: 角色IP品牌風 (Mascot Branding Style)</option>
+              <option value="微縮模型場景 (Miniature Diorama)">31: 微縮模型場景 (Miniature Diorama)</option>
+              <option value="童趣黏土動畫風 (Stop Motion Clay Style)">32: 童趣黏土動畫風 (Stop Motion Clay Style)</option>
+              <option value="日系柔光戀愛風 (Soft Anime Romance)">33: 日系柔光戀愛風 (Soft Anime Romance)</option>
+              <option value="歐美動畫劇場風 (Western Animation Style)">34: 歐美動畫劇場風 (Western Animation Style)</option>
+              <option value="遊戲角色建模風 (Game Character Render)">35: 遊戲角色建模風 (Game Character Render)</option>
+              <option value="手機濾鏡美顏風 (Social Filter Style)">36: 手機濾鏡美顏風 (Social Filter Style)</option>
+              <option value="插畫＋字體整合海報風 (Illustration Poster Style)">37: 插畫＋字體整合海報風 (Illustration Poster Style)</option>
+              <option value="黑白極簡漫畫風 (Monochrome Comic)">38: 黑白極簡漫畫風 (Monochrome Comic)</option>
+              <option value="塗鴉街頭藝術風 (Street Graffiti)">39: 塗鴉街頭藝術風 (Street Graffiti)</option>
+              <option value="高級雜誌時尚插畫風 (Fashion Editorial Illustration)">40: 高級雜誌時尚插畫風 (Fashion Editorial Illustration)</option>
             </select>
           </div>
           <div class="form-group">
             <label for="style-people">畫面中的【人物】：</label>
-            <input type="text" id="style-people" class="form-input" value="一位戴著墨鏡的開朗長者">
+            <div class="input-helper-group">
+              <input type="text" id="style-people" class="form-input" value="一位戴著墨鏡的開朗長者">
+              <select class="form-select-helper" data-target="style-people">
+                <option value="" disabled selected>快速挑選...</option>
+                <option value="一位戴著墨鏡的開朗長者">1. 一位戴著墨鏡的開朗長者</option>
+                <option value="一對牽手微笑的慈祥老夫婦">2. 一對牽手微笑的慈祥老夫婦</option>
+                <option value="一位神采奕奕、戴著草帽的農夫">3. 一位神采奕奕、戴著草帽的農夫</option>
+                <option value="一位氣質高雅、穿著旗袍的女士">4. 一位氣質高雅、穿著旗袍的女士</option>
+                <option value="一個胖嘟嘟、含著金湯匙的可愛嬰兒">5. 一個胖嘟嘟、含著金湯匙的可愛嬰兒</option>
+                <option value="一位活潑可愛、穿著雨衣的小女孩">6. 一位活潑可愛、穿著雨衣的小女孩</option>
+                <option value="一位戴著圓框眼鏡、正在看書的紳士">7. 一位戴著圓框眼鏡、正在看書的紳士</option>
+                <option value="一群開懷大笑的小學生與寵物狗">8. 一群開懷大笑的小學生與寵物狗</option>
+                <option value="一位身穿廚師服、捧著剛出爐麵包的職人">9. 一位身穿廚師服、捧著剛出爐麵包的職人</option>
+                <option value="一個身穿森林變裝斗篷的Ｑ版寶寶">10. 一個身穿森林變裝斗篷的Ｑ版寶寶</option>
+              </select>
+            </div>
           </div>
           <div class="form-group">
             <label for="style-item">帶著什麼【物品】：</label>
-            <input type="text" id="style-item" class="form-input" value="登山杖與相機">
+            <div class="input-helper-group">
+              <input type="text" id="style-item" class="form-input" value="登山杖與相機">
+              <select class="form-select-helper" data-target="style-item">
+                <option value="" disabled selected>快速挑選...</option>
+                <option value="登山杖與相機">1. 登山杖與相機</option>
+                <option value="復古大紅色雨傘與竹籃">2. 復古大紅色雨傘與竹籃</option>
+                <option value="精緻的手作陶瓷茶具組">3. 精緻的手作陶瓷茶具組</option>
+                <option value="一束剛摘下的向日葵花束">4. 一束剛摘下的向日葵花束</option>
+                <option value="一隻金光閃閃的抓週金湯匙">5. 一隻金光閃閃的抓週金湯匙</option>
+                <option value="一個冒著熱氣的美味剛出爐麵包">6. 一個冒著熱氣的美味剛出爐麵包</option>
+                <option value="一個裝滿彩色糖果的玻璃罐">7. 一個裝滿彩色糖果的玻璃罐</option>
+                <option value="一本厚厚的復古羊皮紙手札">8. 一本厚厚的復古羊皮紙手札</option>
+                <option value="一把裝飾精美的有機雕刻吉他">9. 一把裝飾精美的有機雕刻吉他</option>
+                <option value="一個散發微光的森林手提汽化燈">10. 一個散發微光的森林手提汽化燈</option>
+              </select>
+            </div>
           </div>
           <div class="form-group">
             <label for="style-location">在什麼【地點】：</label>
-            <input type="text" id="style-location" class="form-input" value="在復古的火車頭前">
+            <div class="input-helper-group">
+              <input type="text" id="style-location" class="form-input" value="在復古的火車頭前">
+              <select class="form-select-helper" data-target="style-location">
+                <option value="" disabled selected>快速挑選...</option>
+                <option value="在復古的火車頭前">1. 在復古的火車頭前</option>
+                <option value="在典雅的紅磚洋樓拱門下">2. 在典雅的紅磚洋樓拱門下</option>
+                <option value="在日式木造車站的月台上">3. 在日式木造車站的月台上</option>
+                <option value="在波光粼粼的碧綠湖畔旁">4. 在波光粼粼的碧綠湖畔旁</option>
+                <option value="在開滿繡球花的山坡小徑">5. 在開滿繡球花的山坡小徑</option>
+                <option value="在掛滿紅色燈籠的九份茶樓前">6. 在掛滿紅色燈籠的九份茶樓前</option>
+                <option value="在煙霧裊裊的溫泉老街溪畔">7. 在煙霧裊裊的溫泉老街溪畔</option>
+                <option value="在巨大的銀杏樹金色落葉地毯上">8. 在巨大的銀杏樹金色落葉地毯上</option>
+                <option value="在色彩繽紛的童話小木屋前">9. 在色彩繽紛的童話小木屋前</option>
+                <option value="在繁華都市的霓虹街角咖啡廳">10. 在繁華都市的霓虹街角咖啡廳</option>
+              </select>
+            </div>
           </div>
           <button class="btn btn-primary btn-block" id="btn-gen-style">
             <i data-lucide="refresh-cw"></i> 生成公版指令
@@ -211,6 +388,142 @@
               <i data-lucide="copy"></i> 複製指令
             </button>
           </div>
+        </div>
+      </div>
+
+      <!-- Form 3: 世界新聞指令產生器 (100% 寬度) -->
+      <div class="card card-fullwidth" style="margin-top: 30px;">
+        <div class="card-header">
+          <i data-lucide="newspaper" class="card-icon"></i>
+          <h2>3. 世界新聞指令產生器</h2>
+        </div>
+        
+        <div class="news-controls-container">
+          <div class="news-ctrl-group">
+            <label for="news-category">新聞類別：</label>
+            <select id="news-category" class="form-select">
+              <option value="">全方位（All）</option>
+              <option value="AI 技術">🤖 AI 技術</option>
+              <option value="地緣政治">🌍 地緣政治</option>
+              <option value="金融市場">📈 金融市場</option>
+              <option value="氣候環境">🌿 氣候環境</option>
+              <option value="科技產業">💻 科技產業</option>
+              <option value="衝突戰爭">⚔️ 衝突與戰爭</option>
+              <option value="健康醫療">🏥 健康醫療</option>
+              <option value="體育新聞">⚽ 體育新聞</option>
+              <option value="娛樂新聞">🎬 娛樂新聞</option>
+            </select>
+          </div>
+
+          <div class="news-ctrl-group">
+            <label for="news-timerange">時間範圍：</label>
+            <select id="news-timerange" class="form-select">
+              <option value="12小時">過去 12 小時</option>
+              <option value="24小時" selected>過去 24 小時</option>
+              <option value="48小時">過去 48 小時</option>
+              <option value="一週">過去一週</option>
+            </select>
+          </div>
+
+          <div class="news-ctrl-group">
+            <label for="news-source">新聞來源：</label>
+            <select id="news-source" class="form-select">
+              <option value="">所有來源</option>
+              <option value="site:bbc.com">BBC</option>
+              <option value="site:reuters.com">Reuters 路透社</option>
+              <option value="site:apnews.com">AP News 美聯社</option>
+              <option value="site:nytimes.com">NY Times</option>
+              <option value="site:theguardian.com">The Guardian</option>
+              <option value="site:cna.com.tw">中央社 (CNA)</option>
+              <option value="site:udn.com">聯合新聞網 (UDN)</option>
+              <option value="site:ltn.com.tw">自由時報 (Liberty Times)</option>
+              <option value="site:cnyes.com">鉅亨網 (cnyes)</option>
+            </select>
+          </div>
+
+          <div class="news-ctrl-group flex-grow">
+            <label for="news-keyword">關鍵字（選填）：</label>
+            <div class="input-helper-group">
+              <input type="text" id="news-keyword" class="form-input" placeholder="例：Nvidia / 台灣 / 聯準會">
+              <select class="form-select-helper" data-target="news-keyword">
+                <option value="" disabled selected>快速挑選...</option>
+                <option value="Nvidia">1. Nvidia (輝達)</option>
+                <option value="OpenAI">2. OpenAI (人工智慧)</option>
+                <option value="台積電TSMC">3. 台積電 (TSMC)</option>
+                <option value="台灣">4. 台灣 (Taiwan)</option>
+                <option value="聯準會Fed">5. 聯準會 (Fed)</option>
+                <option value="AI PC">6. AI PC (AI個人電腦)</option>
+                <option value="Apple Vision Pro">7. Apple Vision Pro (蘋果頭顯)</option>
+                <option value="氣候變遷">8. 氣候變遷 (Climate Change)</option>
+                <option value="生成式AI技術">9. 生成式AI技術 (Generative AI)</option>
+                <option value="美國大選">10. 美國大選 (US Election)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="news-ctrl-group">
+            <label for="news-exclude">排除（選填）：</label>
+            <input type="text" id="news-exclude" class="form-input" placeholder="例：sports" style="max-width: 120px;">
+          </div>
+
+          <button class="btn btn-primary" id="btn-gen-news" style="align-self: flex-end; height: 42px; margin-bottom: 2px;">
+            <i data-lucide="play"></i> 產生新聞指令
+          </button>
+        </div>
+
+        <div class="news-divider">
+          <span>⚡ 隨選產生的 6 種新聞指令</span>
+        </div>
+
+        <!-- 6張產生的新聞指令卡片 -->
+        <div class="news-cards-grid" id="news-cards-output">
+          <!-- 透過 JS 動態產生卡片 -->
+        </div>
+
+        <div class="news-divider" style="margin-top: 40px;">
+          <span>📋 常用新聞指令速查表 (點擊直接複製)</span>
+        </div>
+
+        <!-- 常用速查表 -->
+        <div class="news-table-wrap">
+          <table class="news-table" id="news-ref-table">
+            <thead>
+              <tr>
+                <th style="width: 20%; text-align: left;">需求類型</th>
+                <th style="width: 55%; text-align: left;">指令範例（點擊複製）</th>
+                <th style="width: 25%; text-align: left;">說明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- 透過 JS 動態產生資料 -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 進階技巧 -->
+        <div class="news-tips-box">
+          <div class="news-tips-header" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <i data-lucide="info" style="color: #fbbf24; width: 18px; height: 18px;"></i>
+            <h3 style="color: #fbbf24; font-size: 16px; font-weight: 600; margin: 0;">讓 Google / AI 新聞指令更精準的 4 個訣竅</h3>
+          </div>
+          <ul class="news-tips-list" style="list-style: none; padding-left: 0; margin: 0;">
+            <li style="position: relative; padding-left: 18px; margin-bottom: 6px; font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.75);">
+              <span style="position: absolute; left: 0; color: #fbbf24;">›</span>
+              使用 <strong>after:YYYY-MM-DD</strong> 時間運算子，確保只取特定日期之後的最新結果。
+            </li>
+            <li style="position: relative; padding-left: 18px; margin-bottom: 6px; font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.75);">
+              <span style="position: absolute; left: 0; color: #fbbf24;">›</span>
+              加上 <strong>site:</strong> 限定優質媒體（如 <code>site:reuters.com</code>）可大幅提升報導的專業性與真實度。
+            </li>
+            <li style="position: relative; padding-left: 18px; margin-bottom: 6px; font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.75);">
+              <span style="position: absolute; left: 0; color: #fbbf24;">›</span>
+              使用 <strong>-</strong> 減號排除無關的雜訊，例如 <code>-sports -entertainment</code> 去除體育和娛樂新聞。
+            </li>
+            <li style="position: relative; padding-left: 18px; font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.75);">
+              <span style="position: absolute; left: 0; color: #fbbf24;">›</span>
+              配合 <strong>Google Trends Global Real-time</strong> 觀察過去 24 小時內搜尋量 <em>Breakout</em> 的關鍵詞，快速鎖定當日爆點話題。
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -255,6 +568,10 @@
                 <span class="style-badge style-nouveau">新藝術</span>
                 <strong>新藝術風格 (畫框)</strong>
               </button>
+              <button class="style-select-btn" data-style="clay">
+                <span class="style-badge style-clay">3D黏土</span>
+                <strong>3D 黏土/皮克斯風</strong>
+              </button>
               <button class="style-select-btn" data-style="ukiyoe">
                 <span class="style-badge style-uki">浮世繪</span>
                 <strong>日式浮世繪</strong>
@@ -267,6 +584,53 @@
                 <span class="style-badge style-vin">復古</span>
                 <strong>懷舊老照片</strong>
               </button>
+            </div>
+            
+            <div class="style-select-more">
+              <label for="camera-style-select">或選擇其他 40 種 AI 畫風模擬：</label>
+              <select id="camera-style-select" class="form-select">
+                <option value="" disabled selected>--- 選擇其他畫風 ---</option>
+                <option value="chibi">1: 可愛 Q 版卡通人物插畫 / 貼紙風 (Chibi/Sticker style)</option>
+                <option value="line">2: 可愛Q版LINE貼圖風格 (Line sticker style)</option>
+                <option value="clay">3: 3D 黏土/皮克斯風 (3D Clay/Pixar Style)</option>
+                <option value="plushie">4: 療癒系毛絨娃娃 (Fluffy/Plushie Style)</option>
+                <option value="chibi2">5: 半寫實 Q 版插畫 (1.5–2頭身，精緻質感)</option>
+                <option value="marshmallow">6: 棉花糖空氣感 (Marshmallow Airbrush)</option>
+                <option value="gummy">7: Q彈果凍/軟糖風 (Gummy/Jelly Texture)</option>
+                <option value="watercolor">8: 溫暖手繪/水彩/蠟筆風 (Hand-Drawn & Healing)</option>
+                <option value="picturebook">9: 森林繪本風 (Picture Book Style)</option>
+                <option value="baby">10: 變裝寶寶風 (Baby Costume Style)</option>
+                <option value="flat">11: 扁平設計風 (Flat Design/Kurzgesagt)</option>
+                <option value="infographic">12: 扁平化資訊圖表風 (Flat Infographic)</option>
+                <option value="korean">13: 韓系極簡線條風 (Korean Minimalist)</option>
+                <option value="doodle">14: 隨手塗鴉日記風 (Doodle/Journal Style)</option>
+                <option value="washitape">15: 紙膠帶拼貼風 (Washi Tape/Scrapbook)</option>
+                <option value="botanical">16: 植栽花草共生風 (Botanical Buddy)</option>
+                <option value="bread">17: 剛出爐麵包色系 (Warm Bread Tones)</option>
+                <option value="dietsticker">18: 實體貼紙/白邊風 (Die-cut Sticker)</option>
+                <option value="chibi3">19: 半寫實 Q 版插畫 (2.5–3頭身，自然比例)</option>
+                <option value="chalkboard">20: 粉筆黑板畫 (Chalkboard Art)</option>
+                <option value="retroanime">21: 90 年代復古動漫風 (90s Retro Anime)</option>
+                <option value="popart">22: 美式復古漫畫/普普藝術 (Pop Art)</option>
+                <option value="ukiyoe">23: 現代浮世繪 (Modern Ukiyo-e)</option>
+                <option value="collage">24: 拼貼藝術風格 (Collage/Mixed Media)</option>
+                <option value="geometric">25: 極簡幾何抽象 (Geometric Abstract)</option>
+                <option value="cyberpunk">26: 數位賽博龐克 (Cyberpunk/Neon)</option>
+                <option value="vaporwave">27: 迷幻蒸汽波 (Vaporwave)</option>
+                <option value="lightleak">28: 底片漏光感 (Film Light Leak Style)</option>
+                <option value="portrait">29: AI寫實人像插畫風 (AI Realistic Portrait)</option>
+                <option value="mascot">30: 角色IP品牌風 (Mascot Branding Style)</option>
+                <option value="miniature">31: 微縮模型場景 (Miniature Diorama)</option>
+                <option value="stopmotionclay">32: 童趣黏土動畫風 (Stop Motion Clay Style)</option>
+                <option value="softanime">33: 日系柔光戀愛風 (Soft Anime Romance)</option>
+                <option value="western">34: 歐美動畫劇場風 (Western Animation Style)</option>
+                <option value="gamerender">35: 遊戲角色建模風 (Game Character Render)</option>
+                <option value="socialfilter">36: 手機濾鏡美顏風 (Social Filter Style)</option>
+                <option value="poster">37: 插畫＋字體整合海報風 (Illustration Poster Style)</option>
+                <option value="monochrome">38: 黑白極簡漫畫風 (Monochrome Comic)</option>
+                <option value="graffiti">39: 塗鴉街頭藝術風 (Street Graffiti)</option>
+                <option value="fashion">40: 高級雜誌時尚插畫風 (Fashion Editorial Illustration)</option>
+              </select>
             </div>
           </div>
 
@@ -374,11 +738,265 @@
       </div>
     </section>
 
+    <!-- Tab 5: AI 靈修伴侶 (New) -->
+    <section id="tab-devotion" class="tab-content">
+      <div class="card hero-card devotion-hero">
+        <div class="hero-content">
+          <h2>⛪ AI 靈修伴侶指令庫</h2>
+          <p>專為弟兄姊妹與長輩設計的靈修指令，當您感到軟弱、需要經文解讀或撰寫代禱關懷信時，AI 是您隨時的傾聽者與助手。</p>
+          
+          <!-- AI Platform Selection Row -->
+          <div class="ai-platform-selector">
+            <span class="platform-label">選擇你要對話的 AI：</span>
+            <div class="platform-buttons">
+              <button class="platform-btn active" data-platform="gemini">
+                <img src="https://www.gstatic.com/lamda/images/favicon_v1_150160d13988654bc0e0.svg" alt="Gemini"> Gemini
+              </button>
+              <button class="platform-btn" data-platform="chatgpt">
+                <i class="fa-solid fa-bolt text-emerald-500"></i> ChatGPT
+              </button>
+              <button class="platform-btn" data-platform="claude">
+                <i class="fa-solid fa-feather text-amber-500"></i> Claude
+              </button>
+              <button class="platform-btn" data-platform="perplexity">
+                <i class="fa-solid fa-magnifying-glass text-sky-500"></i> Perplexity
+              </button>
+              <button class="platform-btn" data-platform="grok">
+                <i class="fa-solid fa-x text-white"></i> Grok
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Devotion Category Navigation -->
+      <div class="devotion-nav">
+        <button class="devotion-nav-btn active" data-cat="comfort"><i data-lucide="heart"></i> 尋求安慰</button>
+        <button class="devotion-nav-btn" data-cat="scripture"><i data-lucide="book-open"></i> 經文解讀</button>
+        <button class="devotion-nav-btn" data-cat="intercession"><i data-lucide="mail"></i> 代禱與關懷範本</button>
+        <button class="devotion-nav-btn" data-cat="prayerq"><i data-lucide="help-circle"></i> 禱告常見提問</button>
+        <button class="devotion-nav-btn" data-cat="gems"><i data-lucide="gem"></i> Gems 高級指令</button>
+        <button class="devotion-nav-btn" data-cat="setup"><i data-lucide="settings"></i> 設定教學</button>
+      </div>
+
+      <!-- Intercession Dialect filter (hidden by default, shown only when intercession category active) -->
+      <div class="intercession-filter-bar" id="intercession-filter-bar" style="display: none;">
+        <span class="filter-label">選擇口吻：</span>
+        <button class="filter-btn active" data-filter="all">全部</button>
+        <button class="filter-btn" data-filter="tw">台語口吻</button>
+        <button class="filter-btn" data-filter="cn">國語口吻</button>
+      </div>
+
+      <!-- Prompts Grid Container -->
+      <div class="devotion-prompts-grid" id="devotion-prompts-grid">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </section>
+
+    <!-- Tab 6: 多功能搜尋與工具箱 (New) -->
+    <section id="tab-search" class="tab-content">
+      
+      <!-- Central Search Input Box -->
+      <div class="card search-input-card">
+        <div class="card-header">
+          <i data-lucide="search" class="card-icon-main"></i>
+          <h2>多功能智慧搜尋</h2>
+        </div>
+        <p class="search-tip">在下方輸入框鍵入文字，並點擊任意平台按鈕即可搜尋。留空直接訪問該官網。</p>
+        <div class="search-bar-wrapper">
+          <input type="text" id="search-input" class="search-input-field" placeholder="請輸入搜索內容，如：『溪頭一日健行』或『AI生成圖片』..." autocomplete="off">
+          <button class="search-clear-btn" id="search-clear-btn" style="display: none;"><i data-lucide="x"></i></button>
+        </div>
+        
+        <!-- 30 個常用智慧提示詞面板 -->
+        <div class="quick-prompts-wrapper" style="margin-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 15px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+            <span style="font-size: 0.95rem; font-weight: 600; color: var(--primary-light); display: inline-flex; align-items: center; gap: 6px;">
+              <i data-lucide="sparkles" style="width: 14px; height: 14px; color: #fbbf24;"></i> 常用精選提示詞（點擊填入並進行修改）：
+            </span>
+            <select id="quick-prompt-category" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); padding: 4px 10px; border-radius: 6px; color: var(--text-main); font-size: 0.85rem; font-weight: 600; cursor: pointer; outline: none;">
+              <option value="all">顯示全部 ✨</option>
+              <option value="life">生活旅遊 🏠</option>
+              <option value="work">工作生產力 ⚡</option>
+              <option value="learn">寫作學習 📝</option>
+              <option value="fun">趣味創意 🎉</option>
+            </select>
+          </div>
+          <div class="quick-prompts-list" id="quick-prompts-list">
+            <!-- 由 JS 動態渲染 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Search History list -->
+      <div class="card search-history-card" id="history-section-wrapper" style="display: none;">
+        <div class="history-header">
+          <h3><i data-lucide="history"></i> 搜尋歷史記錄</h3>
+          <button class="btn btn-secondary btn-sm" id="btn-clear-history"><i data-lucide="trash-2"></i> 清空歷史</button>
+        </div>
+        <div class="history-list" id="search-history-list">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Platforms Grid categorized -->
+      <div class="search-sections-container">
+        
+        <!-- Category: AI Tools -->
+        <div class="card search-section-card">
+          <div class="search-section-title stroke-ai"><i data-lucide="cpu"></i> AI 智慧對話工具</div>
+          <div class="search-buttons-flex">
+            <button class="search-btn btn-ai" data-engine="perplexity">Perplexity</button>
+            <button class="search-btn btn-ai" data-engine="colpilot">Copilot</button>
+            <button class="search-btn btn-ai" data-engine="chatgpt">ChatGPT</button>
+            <button class="search-btn btn-ai" data-engine="bard">Gemini</button>
+            <button class="search-btn btn-ai" data-engine="claude">Claude</button>
+            <button class="search-btn btn-ai" data-engine="grok">Grok</button>
+            <button class="search-btn btn-ai" data-engine="deepseek">DeepSeek</button>
+            <button class="search-btn btn-ai" data-engine="doubao">豆包 Doubao</button>
+            <button class="search-btn btn-ai" data-engine="felo_ai">Felo AI</button>
+            <button class="search-btn btn-ai" data-engine="studio_global">Studio Global</button>
+            <button class="search-btn btn-ai" data-engine="poe">Poe</button>
+            <button class="search-btn btn-ai" data-engine="huggingface">Hugging Face</button>
+            <button class="search-btn btn-ai" data-engine="notegpt">NoteGPT</button>
+            <button class="search-btn btn-ai" data-engine="google_ai_studio">Google AI Studio</button>
+            <button class="search-btn btn-ai" data-engine="max_ai">Max AI</button>
+            <button class="search-btn btn-ai" data-engine="ChatGLM">智譜清言</button>
+            <button class="search-btn btn-ai" data-engine="yiyan">文心一言</button>
+            <button class="search-btn btn-ai" data-engine="kimi">Kimi AI</button>
+            <button class="search-btn btn-ai" data-engine="NBklm">NotebookLM</button>
+            <button class="search-btn btn-ai" data-engine="lovable">Lovable AI</button>
+          </div>
+        </div>
+
+        <!-- Category: Search Engines -->
+        <div class="card search-section-card">
+          <div class="search-section-title stroke-engine"><i data-lucide="globe"></i> 傳統與語言搜尋</div>
+          <div class="search-buttons-flex">
+            <button class="search-btn btn-engine" data-engine="google">Google 搜尋</button>
+            <button class="search-btn btn-engine" data-engine="bing">Bing 搜尋</button>
+            <button class="search-btn btn-engine" data-engine="duckduckgo">DuckDuckGo</button>
+            <button class="search-btn btn-engine" data-engine="yahoo">Yahoo 奇摩</button>
+            <button class="search-btn btn-engine" data-engine="baidu">百度搜尋</button>
+            <button class="search-btn btn-engine" data-engine="萌典">萌典 (中文)</button>
+            <button class="search-btn btn-engine" data-engine="找台語">找台語</button>
+            <button class="search-btn btn-engine" data-engine="itaigi">iTaigi 愛台語</button>
+            <button class="search-btn btn-engine" data-engine="台語辭典">教育部台語辭典</button>
+            <button class="search-btn btn-engine" data-engine="客語辭典">教育部客語辭典</button>
+          </div>
+        </div>
+
+        <!-- Category: News -->
+        <div class="card search-section-card">
+          <div class="search-section-title stroke-news"><i data-lucide="newspaper"></i> 即時新聞媒體</div>
+          <div class="search-buttons-flex">
+            <button class="search-btn btn-news" data-engine="udn">聯合新聞網</button>
+            <button class="search-btn btn-news" data-engine="chinatimes">中時新聞網</button>
+            <button class="search-btn btn-news" data-engine="ltn">自由時報</button>
+            <button class="search-btn btn-news" data-engine="ettoday">ETtoday</button>
+            <button class="search-btn btn-news" data-engine="yahoo_news">Yahoo 新聞</button>
+            <button class="search-btn btn-news" data-engine="cna">中央通訊社</button>
+            <button class="search-btn btn-news" data-engine="google_news">Google 新聞</button>
+          </div>
+        </div>
+
+        <!-- Category: Free Images -->
+        <div class="card search-section-card">
+          <div class="search-section-title stroke-images"><i data-lucide="image"></i> 免費無版權圖檔</div>
+          <div class="search-buttons-flex">
+            <button class="search-btn btn-images" data-engine="freepik">Freepik</button>
+            <button class="search-btn btn-images" data-engine="Pexels">Pexels</button>
+            <button class="search-btn btn-images" data-engine="Pixabay">Pixabay</button>
+            <button class="search-btn btn-images" data-engine="Unsplash">Unsplash</button>
+            <button class="search-btn btn-images" data-engine="FreeImages">FreeImages</button>
+            <button class="search-btn btn-images" data-engine="cc0_fengjing">CC0 風景圖片</button>
+            <button class="search-btn btn-images" data-engine="NASA_APOD">NASA 天文圖</button>
+            <button class="search-btn btn-images" data-engine="wiki_daily">維基每日圖片</button>
+            <button class="search-btn btn-images" data-engine="photo_ac">Photo AC</button>
+          </div>
+        </div>
+
+        <!-- Category: Shopping -->
+        <div class="card search-section-card">
+          <div class="search-section-title stroke-shopping"><i data-lucide="shopping-cart"></i> 購物與商務比價</div>
+          <div class="search-buttons-flex">
+            <button class="search-btn btn-shopping" data-engine="momo">momo 購物網</button>
+            <button class="search-btn btn-shopping" data-engine="shopee">蝦皮購物</button>
+            <button class="search-btn btn-shopping" data-engine="pchome24">PChome 24h</button>
+            <button class="search-btn btn-shopping" data-engine="yahoo_shop">Yahoo 購物</button>
+            <button class="search-btn btn-shopping" data-engine="ruten">露天拍賣</button>
+            <button class="search-btn btn-shopping" data-engine="books">博客來</button>
+            <button class="search-btn btn-shopping" data-engine="etmall">東森購物</button>
+            <button class="search-btn btn-shopping" data-engine="rakuten">台灣樂天市場</button>
+            <button class="search-btn btn-shopping" data-engine="coupang">Coupang 酷澎</button>
+            <button class="search-btn btn-shopping" data-engine="fridays">friDay 購物</button>
+            <button class="search-btn btn-shopping" data-engine="鮮拾">鮮拾</button>
+            <button class="search-btn btn-shopping" data-engine="信源電器">信源電器</button>
+            <button class="search-btn btn-shopping" data-engine="findprice">FindPrice 比價</button>
+            <button class="search-btn btn-shopping" data-engine="priceTW">BigGo 比價</button>
+            <button class="search-btn btn-shopping" data-engine="ezprice">飛比價格</button>
+            <button class="search-btn btn-shopping" data-engine="sogi">Sogi 手機王</button>
+            <button class="search-btn btn-shopping" data-engine="eprice">ePrice 比價</button>
+            <button class="search-btn btn-shopping" data-engine="findbook">Findbook 找書</button>
+            <button class="search-btn btn-shopping" data-engine="funtime">FunTime 旅遊比價</button>
+            <button class="search-btn btn-shopping" data-engine="taiwango">TaiwanGo 輕鬆比</button>
+            <button class="search-btn btn-shopping" data-engine="backpackers">背包客棧 論壇</button>
+            <button class="search-btn btn-shopping" data-engine="agoda">Agoda 訂房</button>
+            <button class="search-btn btn-shopping" data-engine="booking">Booking.com</button>
+            <button class="search-btn btn-shopping" data-engine="trip">Trip.com</button>
+          </div>
+        </div>
+
+        <!-- Category: AI Music & Generators -->
+        <div class="card search-section-card">
+          <div class="search-section-title stroke-music"><i data-lucide="music"></i> AI 音樂與資料整理</div>
+          <div class="search-buttons-flex">
+            <button class="search-btn btn-music" data-engine="Suno">Suno (AI 音樂)</button>
+            <button class="search-btn btn-music" data-engine="Genape">歌詞 Genape</button>
+            <button class="search-btn btn-music" data-engine="Aiva">Aiva</button>
+            <button class="search-btn btn-music" data-engine="Veedio">Veed.io</button>
+            <button class="search-btn btn-music" data-engine="Napkin">Napkin AI</button>
+          </div>
+        </div>
+
+        <!-- Category: AI Image Gen -->
+        <div class="card search-section-card">
+          <div class="search-section-title stroke-artgen"><i data-lucide="palette"></i> AI 生成圖與畫畫</div>
+          <div class="search-buttons-flex">
+            <button class="search-btn btn-artgen" data-engine="Midjourney">Midjourney</button>
+            <button class="search-btn btn-artgen" data-engine="BingArt">Bing Create (DALL-E)</button>
+            <button class="search-btn btn-artgen" data-engine="ideogram">Ideogram</button>
+            <button class="search-btn btn-artgen" data-engine="Recraft">Recraft</button>
+            <button class="search-btn btn-artgen" data-engine="klingai">Kling AI 快手可靈</button>
+            <button class="search-btn btn-artgen" data-engine="dreamina">Dreamina 即夢</button>
+            <button class="search-btn btn-artgen" data-engine="Leonardo">Leonardo AI</button>
+            <button class="search-btn btn-artgen" data-engine="Raphael">Raphael</button>
+            <button class="search-btn btn-artgen" data-engine="Playground">Playground</button>
+            <button class="search-btn btn-artgen" data-engine="Writesonic">Writesonic</button>
+            <button class="search-btn btn-artgen" data-engine="Simplified">Simplified</button>
+            <button class="search-btn btn-artgen" data-engine="LovoAI">Lovo.ai</button>
+            <button class="search-btn btn-artgen" data-engine="Artguru">Artguru</button>
+            <button class="search-btn btn-artgen" data-engine="NightCafe_Creator">NightCafe</button>
+            <button class="search-btn btn-artgen" data-engine="Magic_Studio">Magic Studio</button>
+            <button class="search-btn btn-artgen" data-engine="Craiyon">Craiyon</button>
+            <button class="search-btn btn-artgen" data-engine="Hotpot_AI">Hotpot AI</button>
+            <button class="search-btn btn-artgen" data-engine="DeepAI">DeepAI</button>
+            <button class="search-btn btn-artgen" data-engine="Fotor">Fotor</button>
+            <button class="search-btn btn-artgen" data-engine="OpenArt">OpenArt</button>
+            <button class="search-btn btn-artgen" data-engine="Pixverse">Pixverse</button>
+            <button class="search-btn btn-artgen" data-engine="clipdrop">Clipdrop</button>
+            <button class="search-btn btn-artgen" data-engine="photo_to_anime">Photo to Anime</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
   </main>
 
   <footer>
     <div class="container footer-container">
-      <p>&copy; 2026 中華民國AI教育協會. All Rights Reserved. 讓科技溫暖生活，用 AI 創造美好。</p>
+      <p>&copy; 2026 AI 課堂實作模擬器. All Rights Reserved. 讓科技溫暖生活，用 AI 創造美好。</p>
     </div>
   </footer>
 
@@ -408,6 +1026,9 @@
       </div>
     </div>
   </div>
+
+  <!-- Devotion toast popup -->
+  <div id="toast" class="copy-toast">指令已複製！</div>
 
   <script src="app.js"></script>
 </body>

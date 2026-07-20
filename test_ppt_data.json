@@ -1,0 +1,103 @@
+{
+  "metadata": {
+    "title": "Canva Premium PPTX Test",
+    "author": "Antigravity",
+    "subject": "Testing New Design Constraints",
+    "keywords": "Test, Canva, key-color yellow"
+  },
+  "slides": [
+    {
+      "layout": "TitleSlide",
+      "title": "極致科技：Canva 質感簡報系統",
+      "content": [
+        "黃黑配色設計與高相容性 Keynote 匯出範本",
+        "製作人：Antigravity AI 助理"
+      ]
+    },
+    {
+      "layout": "SectionHeader",
+      "title": "第一部分：全新幾何卡片排版",
+      "content": [
+        "告別枯燥的 Bullet List，打造高品質演示文稿"
+      ]
+    },
+    {
+      "layout": "TitleAndContent",
+      "title": "標準卡片與幾何視覺",
+      "content": [
+        "採用 16:9 寬螢幕黃金版面比例",
+        "主色調金黃色與暗黑背景的高對比度呈現",
+        "左側文字內容自動適應，防止溢出或重疊",
+        "[圖片：幾何星空示意圖]"
+      ]
+    },
+    {
+      "layout": "BulletList",
+      "title": "橫向跑馬燈卡片列表",
+      "content": [
+        "高效的卡片區塊設計，第一時間抓住讀者眼球",
+        "黃色序號小標記增加層次感",
+        "統一字型與極簡線條，確保 Keynote 無損打開"
+      ]
+    },
+    {
+      "layout": "TwoColumnText",
+      "title": "雙欄卡片排版對比",
+      "content": [
+        "【左】",
+        "方案 A (雲端無伺服器)",
+        "部署極其快速",
+        "按需計費，成本低",
+        "【右】",
+        "方案 B (傳統實體機)",
+        "需要專人運維",
+        "初期硬件成本高"
+      ]
+    },
+    {
+      "layout": "FlowCards",
+      "title": "自動化部署業務流程",
+      "content": [
+        "需求分析與結構規劃",
+        "Canva 質感色盤渲染",
+        "畫布安全性自我查核",
+        "匯出為 Keynote 相容 PPTX"
+      ]
+    },
+    {
+      "layout": "ComparisonTable",
+      "title": "核心方案多維度評估",
+      "content": [
+        "指標 | 雲原生架構 | 混合雲架構 | 傳統虛擬化",
+        "部署難度 | 簡單 | 中等 | 複雜",
+        "安全合規 | 極高 | 中等 | 高",
+        "資源利用率 | 95% | 75% | 40%"
+      ]
+    },
+    {
+      "layout": "GeometryGrid",
+      "title": "系統四大核心價值",
+      "content": [
+        "高效處理 :: 採用並行異步執行架構，大幅減少生成時間",
+        "極致安全 :: 全程本地或加密通道傳輸，不洩露敏感數據",
+        "彈性擴展 :: 模組化插件設計，輕鬆對接第三方服務",
+        "完美排版 :: 智能防重疊文字縮放，確保視覺精確"
+      ]
+    },
+    {
+      "layout": "ContentWithCaption",
+      "title": "帶說明的視覺卡片",
+      "content": [
+        "右側為系統底層微服務通信架構解析說明",
+        "涵蓋 API Gateway、Auth Service 以及 Generator-Core",
+        "各組件之間通過 gRPC 進行高吞吐量數據同步",
+        "[圖片：gRPC 服務通信圖]"
+      ]
+    },
+    {
+      "layout": "BlankSlide",
+      "title": "感謝聆聽",
+      "content": []
+    }
+  ]
+}

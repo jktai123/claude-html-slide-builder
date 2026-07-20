@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>成語十字接龍 - 1000關挑戰</title>
+    <!-- 引入 Google Fonts 中文字型 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入 Canvas Confetti 撒花特效 -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div class="game-container">
+        <!-- 頂部資訊欄 -->
+        <header class="game-header">
+            <button id="btn-levels-menu" class="icon-btn-text" title="關卡列表">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <span>關卡</span>
+            </button>
+            
+            <div class="level-badge">
+                <span id="current-level-text">第 1 關</span>
+            </div>
+            
+            <div class="coin-badge" id="coin-badge">
+                <div class="coin-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="gold" stroke="#b8860b" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><rect x="9.5" y="9.5" width="5" height="5" fill="#fcfcfc" stroke="#b8860b" stroke-width="1.5"></rect></svg>
+                </div>
+                <span id="coin-count">100</span>
+                <button class="add-coin-btn" id="btn-add-coin" title="領取免費金幣">+</button>
+            </div>
+        </header>
+
+        <!-- 遊戲主棋盤 -->
+        <main class="board-wrapper">
+            <div class="grid-board" id="grid-board">
+                <!-- 由 JavaScript 動態生成 9x9 的格子 -->
+            </div>
+        </main>
+
+        <!-- 底部互動與控制區 -->
+        <footer class="control-panel">
+            <!-- 候選字區 -->
+            <div class="candidate-container">
+                <div class="candidate-row" id="candidate-row-1">
+                    <!-- 候選字 1-6 -->
+                </div>
+                <div class="candidate-row" id="candidate-row-2">
+                    <!-- 候選字 7-12 -->
+                </div>
+            </div>
+
+            <!-- 功能按鈕區 -->
+            <div class="action-buttons">
+                <!-- 設定按鈕 -->
+                <button class="action-btn circle-btn" id="btn-settings" title="設定">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+                
+                <!-- 提示按鈕 -->
+                <button class="action-btn text-btn" id="btn-hint" title="提示 (消耗 30 金幣)">
+                    <div class="btn-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    </div>
+                    <span class="btn-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="gold" style="vertical-align: middle; margin-right: 1px;"><circle cx="12" cy="12" r="10"></circle></svg> 30</span>
+                </button>
+
+                <!-- 廣告/免費提示按鈕 -->
+                <button class="action-btn circle-btn" id="btn-ad-hint" title="觀看廣告免費提示">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                    <span class="badge-ad">AD</span>
+                </button>
+            </div>
+        </footer>
+
+        <!-- 彈窗群 -->
+        
+        <!-- 1. 成語釋義彈窗 -->
+        <div class="modal-overlay" id="modal-explanation">
+            <div class="modal-content paper-style">
+                <button class="modal-close" id="btn-close-explanation">&times;</button>
+                <h3 class="modal-title font-ancient" id="expl-word">成語名稱</h3>
+                <div class="expl-section">
+                    <span class="expl-label">【拼音】</span>
+                    <span id="expl-pinyin" class="expl-text">yī xīn yī yì</span>
+                </div>
+                <div class="expl-section">
+                    <span class="expl-label">【注音】</span>
+                    <span id="expl-zhuyin" class="expl-text">ㄧ ㄒㄧㄣ ㄧ ㄧˋ</span>
+                </div>
+                <div class="expl-section">
+                    <span class="expl-label">【釋義】</span>
+                    <p id="expl-definition" class="expl-text-block">成語釋義內容...</p>
+                </div>
+                <div class="expl-section" id="expl-derivation-container">
+                    <span class="expl-label">【出處】</span>
+                    <p id="expl-derivation" class="expl-text-block">成語出處內容...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 設定彈窗 -->
+        <div class="modal-overlay" id="modal-settings">
+            <div class="modal-content paper-style">
+                <button class="modal-close" id="btn-close-settings">&times;</button>
+                <h3 class="modal-title font-ancient">遊戲設定</h3>
+                <div class="setting-item">
+                    <span>遊戲音效</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-sound" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="setting-item-btn">
+                    <button class="btn btn-secondary" id="btn-reset-game">重置所有進度</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 關卡名單彈窗 -->
+        <div class="modal-overlay" id="modal-levels-menu">
+            <div class="modal-content paper-style full-height">
+                <button class="modal-close" id="btn-close-levels">&times;</button>
+                <h3 class="modal-title font-ancient">挑戰關卡 (1-1000)</h3>
+                <div class="levels-grid" id="levels-menu-grid">
+                    <!-- 由 JavaScript 動態生成 100 個關卡按鈕 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 通關結算彈窗 -->
+        <div class="modal-overlay" id="modal-win">
+            <div class="modal-content paper-style animate-pop">
+                <h2 class="modal-title font-ancient highlight">恭喜通關！</h2>
+                <p class="win-msg">你成功解開了本關的所有成語接龍！</p>
+                <div class="win-rewards">
+                    <div class="reward-item">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="gold" stroke="#b8860b" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><rect x="9.5" y="9.5" width="5" height="5" fill="#fcfcfc" stroke="#b8860b" stroke-width="1.5"></rect></svg>
+                        <span>金幣 +50</span>
+                    </div>
+                </div>
+                <div class="win-actions">
+                    <button class="btn btn-primary" id="btn-next-level">進入下一關</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. 全關卡破關彈窗 -->
+        <div class="modal-overlay" id="modal-complete-all">
+            <div class="modal-content paper-style text-center">
+                <h2 class="modal-title font-ancient highlight">功德圓滿！</h2>
+                <div class="scroll-decoration">
+                    <p class="complete-msg">恭喜你！成功挑戰了全部 100 關成語十字接龍！</p>
+                    <p class="complete-sub">你已成為名副其實的「成語大師」！</p>
+                </div>
+                <button class="btn btn-primary" id="btn-restart-all">重溫精彩關卡</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 載入關卡資料與遊戲邏輯 -->
+    <script src="levels.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

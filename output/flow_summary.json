@@ -1,0 +1,12 @@
+{
+  "Title": "Google Flow - Google Labs / 整合型 AI 影音創作與流程工作室",
+  "日期": "2026-07-17",
+  "URL": "https://labs.google/fx/tools/flow",
+  "摘要": "Google Flow 是由 Google Labs 與 DeepMind 開發的實驗性 AI 影音創作平台。整合了 Veo 影片模型與 Imagen 3 影像模型，支援鏡頭運動、角色一致性微調，並具備可透過自然語言串接的無程式碼 Flow Tools 流程建置器。",
+  "category": "科技",
+  "tags": ["GoogleLabs", "Veo", "Imagen3", "影音生成", "科技"],
+  "importance": "高",
+  "content": "# Google Flow - AI 影音與工作流平台介紹\n\n## 1. 什麼是 Google Flow (Flow AI)？\n- **定位**：由 Google Labs 和 Google DeepMind 聯合開發的實驗性 AI 創意工作室。它將先前獨立的 `VideoFX` 和 `Whisk` 等實驗性工具整合進一個統合的工作空間中，方便用戶在同一個環境中進行影片、圖像的生成、編輯、微調以及客製化 AI 流程建置。\n\n## 2. 核心功能與 AI 特色\n- **電影級影片與圖像生成**：\n  - **影片生成 (Veo)**：搭載 Google 最新 Veo 模型系列（如 Veo 2 / Veo 3.1），能透過自然語言提示詞生成極具電影質感的短片，且支援**「原生音效同步生成」**，讓畫面與音軌完美合拍。\n  - **圖像生成 (Imagen 3)**：搭載 Imagen 3 高清圖像模型，可產生細緻的靜態圖片作為分鏡或視覺素材。\n- **視覺化無程式碼流程 (Flow Tools)**：使用者不需要撰寫代碼或處理 API Key，即可直接用純英語對話方式將不同的 Prompt、AI 模型與工具「串接」在一起，輕鬆建立並自動化多步驟的創意流程。\n- **專業影片編輯與微調控制**：\n  - **相機運動控制 (Motion Control)**：可自訂運鏡方式（如推近、拉遠、搖擺、平移等），讓生成的影片動態更有故事感。\n  - **角色與風格一致性 (Consistency Tools)**：對於需要多鏡頭敘事的使用者，提供特徵與風格的一致性算法，確保生成的角色在不同場景中不會走樣。\n  - **首尾幀控制 (Frame Control)**：支援指定開頭或結尾幀，精確引導影片過渡與場景切換。\n- **故事板與分解工作室**：內建腳本撰寫、角色規劃 Storyboard Studio 以及逐幀分析影片結構的 Video Breakdown 功能，提供一站式創作流程。",
+  "mindmap": "mindmap\n  root((Google Flow))\n    核心定位\n      Labs_DeepMind 研發\n      整合型 AI 影音工作室\n      取代 VideoFX_Whisk\n    生成能力\n      Veo 電影級影片生成\n      Imagen 3 高清影像\n      原生音訊同步生成\n    控制與微調\n      運鏡控制 Motion\n      角色風格一致性 Consistency\n      首尾幀控制 Frame\n    工作流建置\n      Flow Tools 流程 builder\n      純英語無程式碼串接",
+  "images": ["/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/output/flow_screenshot.png"]
+}

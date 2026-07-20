@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>成語動物森林 - 兒童互動成語遊戲</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- 引入 Google Fonts 適合兒童的活潑字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Noto+Sans+TC:wght@400;700;900&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="game-container">
+    
+    <!-- 1. 遊戲首頁 -->
+    <section id="start-screen" class="screen active">
+      <div class="forest-bg-decor"></div>
+      <div class="logo-container">
+        <h1 class="game-title">
+          <span class="title-word color-green">成</span>
+          <span class="title-word color-orange">語</span>
+          <span class="title-word color-blue">動</span>
+          <span class="title-word color-yellow">物</span>
+          <span class="title-word color-pink">森</span>
+          <span class="title-word color-green2">林</span>
+        </h1>
+        <p class="subtitle">適合小學一至三年級的趣味成語冒險！</p>
+      </div>
+      <div class="mascot-container">
+        <img src="assets/idiom_frog.webp" alt="可愛青蛙" class="start-mascot">
+      </div>
+      <button id="btn-start" class="btn btn-primary pulse">
+        <span>開始冒險 🚀</span>
+      </button>
+    </section>
+
+    <!-- 2. 遊戲主畫面 -->
+    <section id="play-screen" class="screen">
+      <!-- 頂部資訊列 -->
+      <header class="game-header">
+        <button id="btn-home" class="btn-icon">🏠 首頁</button>
+        <div class="level-indicator">第 <span id="current-level-num">1</span> / 5 關</div>
+        <div class="stars-container">
+          <span class="star-icon">⭐</span>
+          <span id="score">0</span>
+        </div>
+      </header>
+
+      <!-- 關卡內容區 -->
+      <main class="game-main">
+        <!-- 成語插圖 -->
+        <div class="illustration-card">
+          <img id="idiom-image" src="" alt="成語插圖">
+        </div>
+
+        <!-- 答案空格區 (4格) -->
+        <div class="answer-slots" id="answer-slots">
+          <!-- 由 JS 動態生成 4 個空格 -->
+        </div>
+
+        <!-- 字卡備選區 (8張字卡) -->
+        <div class="letter-pool" id="letter-pool">
+          <!-- 由 JS 動態生成 8 個備選字卡 -->
+        </div>
+      </main>
+
+      <!-- 底部控制列 -->
+      <footer class="game-footer">
+        <button id="btn-reset" class="btn btn-secondary">重新排</button>
+      </footer>
+    </section>
+
+    <!-- 3. 成語知識卡彈窗 (答對時) -->
+    <div id="modal-success" class="modal">
+      <div class="modal-content bounce-in">
+        <div class="success-header">
+          <span class="success-badge">🎉 答對了！</span>
+        </div>
+        
+        <!-- 成語字詞大展示 (附帶注音) -->
+        <div class="idiom-display" id="modal-idiom-display">
+          <!-- 由 JS 產生帶有注音的四個大字 -->
+        </div>
+
+        <div class="idiom-details">
+          <div class="detail-section">
+            <h3 class="detail-title">💡 簡單的意思：</h3>
+            <p id="modal-explanation" class="detail-text"></p>
+          </div>
+          <div class="detail-section">
+            <h3 class="detail-title">✍️ 生活造句：</h3>
+            <p id="modal-sentence" class="detail-text"></p>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button id="btn-voice" class="btn btn-audio">
+            <span>🔊 聽語音</span>
+          </button>
+          <button id="btn-next" class="btn btn-primary">
+            <span>下一關 ➔</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 遊戲過關結算畫面 -->
+    <section id="end-screen" class="screen">
+      <div class="end-content zoom-in">
+        <div class="badge-container">
+          <div class="badge-ring">
+            <span class="badge-emoji">🏆</span>
+          </div>
+        </div>
+        <h2 class="end-title">太棒了！通關成功！</h2>
+        <p class="end-subtitle">你已經成為「成語小達人」囉！</p>
+        <div class="end-stats">
+          <p>共收集到 <span class="final-stars">⭐⭐⭐⭐⭐</span></p>
+        </div>
+        <button id="btn-restart" class="btn btn-primary">
+          <span>再玩一次 🔄</span>
+        </button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 紙花效果 Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <script src="game.js"></script>
+</body>
+</html>

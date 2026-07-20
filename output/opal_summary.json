@@ -1,0 +1,12 @@
+{
+  "Title": "Google Labs Opal - 自然語言 AI 微型應用程式產生器",
+  "日期": "2026-07-17",
+  "URL": "https://opal.google/landing/",
+  "摘要": "Google Labs Opal 是一個無程式碼 AI 平台，讓使用者使用自然語言建立、編輯和分享 AI 微型應用程式。支援可自動決策的 Agentic 工作流、視覺化流程圖與多種 Google AI 模組整合，用於快速驗證 AI 創意。",
+  "category": "科技",
+  "tags": ["GoogleLabs", "NoCode", "AIAgent", "微型應用", "科技"],
+  "importance": "高",
+  "content": "# Google Labs Opal - AI Mini-Apps 產生器介紹\n\n## 1. 什麼是 Google Labs Opal？\n- **定位**：Google Labs 推出的實驗性無程式碼（No-code）AI 平台，旨在讓任何人在不需要寫程式的情況下，光是用日常的「自然語言」就能夠打造出可運作、可分享的 AI 微型應用程式（AI mini-apps）。\n- **核心體驗**：在輸入框中鍵入如 `An app that searches for social trends online`（能線上搜尋社群趨勢的應用程式），系統便會自動將其轉化為對應的 App 架構。\n\n## 2. 核心技術特色\n- **代理人步驟 (Agent Steps)**：這是 Opal 的重大演進。不同於以往只能依循硬性死板順序的 AI 工作流，Opal 裡的 Agent 能自行理解你的終極目標，並「主動判斷」最適合呼叫哪項工具（例如調用 Google Web Search 來做研究、或叫 Veo 進行圖像/影音生成）來解決複雜的任務。\n- **視覺化工作流編輯器**：提供直覺的視覺化界面，使用者可以像樂高積木一樣，把不同的 Prompt、AI 模型與工具鏈接在一起，十分適合開發者與非開發者進行 AI 概念驗證（POC）與點子原型設計。\n- **分享與協作**：完成後的微型 App 不僅能自己在工作流程中使用，還能一鍵分享給他人，或與 Google 既有的 workspace 辦公生態系進行深度整合。\n\n## 3. 常見應用場景\n- 快速自動化寫作與摘要工作流。\n- 打造專屬的日常資訊搜集、整理與研究助理。\n- 快速原型化多步驟 AI 互動小工具。",
+  "mindmap": "mindmap\n  root((Google Opal))\n    核心特色\n      自然語言建置\n      無程式碼 NoCode\n      Agentic 工作流\n    主要功能\n      AI App 建立與編輯\n      App 分享與協作\n      視覺化流程編輯\n    技術整合\n      Google Labs 實驗\n      整合多款 AI 模型\n      自動調用工具 (Search/Veo)",
+  "images": ["/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/output/opal_screenshot.png"]
+}

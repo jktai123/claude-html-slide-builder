@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 920" width="100%" height="100%">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+    </pattern>
+    <linearGradient id="cyan-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(8, 51, 68, 0.6)"/>
+      <stop offset="100%" stop-color="rgba(6, 78, 59, 0.2)"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#0f172a"/>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+
+  <!-- Timeline Vertical Axis -->
+  <line x1="150" y1="80" x2="150" y2="850" stroke="#334155" stroke-width="4"/>
+  <line x1="150" y1="80" x2="150" y2="850" stroke="#475569" stroke-width="2" stroke-dasharray="8,6"/>
+
+  <!-- Header Title -->
+  <g transform="translate(40, 45)">
+    <text x="0" y="0" fill="white" font-size="18" font-weight="700" font-family="'JetBrains Mono', 'Noto Sans SC', 'PingFang SC', sans-serif">基隆河畔跨區健行：松山 ➔ 南港 LaLaport (8人團體推薦行程)</text>
+    <text x="0" y="20" fill="#94a3b8" font-size="11" font-family="'JetBrains Mono', 'Noto Sans SC', 'PingFang SC', sans-serif">全程約 7.5~8 公里 | 步行時間預估 2.5 小時 | 週五上午 10:00 出發優化版</text>
+  </g>
+
+  <!-- Step 1 -->
+  <g transform="translate(0, 90)">
+    <!-- Time Label -->
+    <text x="120" y="40" fill="#60a5fa" font-size="15" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', sans-serif">10:00</text>
+    <!-- Axis Dot -->
+    <circle cx="150" cy="35" r="8" fill="#0f172a" stroke="#60a5fa" stroke-width="2.5"/>
+    <circle cx="150" cy="35" r="4" fill="#60a5fa"/>
+    <!-- Card Content -->
+    <rect x="190" y="0" width="570" height="70" rx="8" fill="#1e293b" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="210" y="28" fill="white" font-size="13" font-weight="600" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">捷運松山站 5 號出口 (起點集合)</text>
+    <text x="210" y="48" fill="#94a3b8" font-size="10" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">大廳集合清點人數、上廁所。請在出口旁超商備妥飲用水（每人至少 600ml）。</text>
+  </g>
+
+  <!-- Step 2 -->
+  <g transform="translate(0, 190)">
+    <!-- Time Label -->
+    <text x="120" y="40" fill="#22d3ee" font-size="15" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', sans-serif">10:15</text>
+    <!-- Axis Dot -->
+    <circle cx="150" cy="35" r="8" fill="#0f172a" stroke="#22d3ee" stroke-width="2.5"/>
+    <circle cx="150" cy="35" r="4" fill="#22d3ee"/>
+    <!-- Card Content -->
+    <rect x="190" y="0" width="570" height="70" rx="8" fill="#1e293b" stroke="#22d3ee" stroke-width="1"/>
+    <text x="210" y="28" fill="white" font-size="13" font-weight="600" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">饒河疏散門 ➔ 跨越彩虹橋</text>
+    <text x="210" y="48" fill="#94a3b8" font-size="10" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">由基 4 號水門進入河濱，步行走彩虹橋牽引道跨越基隆河，抵達內湖端「成美右岸河濱公園」。</text>
+  </g>
+
+  <!-- Step 3 -->
+  <g transform="translate(0, 290)">
+    <!-- Time Label -->
+    <text x="120" y="40" fill="#34d399" font-size="15" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', sans-serif">10:35</text>
+    <!-- Axis Dot -->
+    <circle cx="150" cy="35" r="8" fill="#0f172a" stroke="#34d399" stroke-width="2"/>
+    <circle cx="150" cy="35" r="4" fill="#34d399"/>
+    <!-- Card Content -->
+    <rect x="190" y="0" width="570" height="70" rx="8" fill="#1e293b" stroke="#34d399" stroke-width="1"/>
+    <text x="210" y="28" fill="white" font-size="13" font-weight="600" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">成美橋下 (水分補充站 / 第一休息點)</text>
+    <text x="210" y="48" fill="#94a3b8" font-size="10" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">已步行約 1.5 公里。橋墩下有大片陰影與寬敞廣場，設有流動景觀公廁。喝水休息 5 分鐘。</text>
+  </g>
+
+  <!-- Step 4 -->
+  <g transform="translate(0, 390)">
+    <!-- Time Label -->
+    <text x="120" y="40" fill="#34d399" font-size="15" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', sans-serif">11:10</text>
+    <!-- Axis Dot -->
+    <circle cx="150" cy="35" r="8" fill="#0f172a" stroke="#34d399" stroke-width="2"/>
+    <circle cx="150" cy="35" r="4" fill="#34d399"/>
+    <!-- Card Content -->
+    <rect x="190" y="0" width="570" height="70" rx="8" fill="#1e293b" stroke="#34d399" stroke-width="1"/>
+    <text x="210" y="28" fill="white" font-size="13" font-weight="600" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">成功橋下 (補給大休息 / 第二休息點)</text>
+    <text x="210" y="48" fill="#94a3b8" font-size="10" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">已步行約 3.5 公里。微風涼爽的橋下休息區，同樣設有流動公廁。在此大休息 10 分鐘補充鹽分。</text>
+  </g>
+
+  <!-- Step 5 -->
+  <g transform="translate(0, 490)">
+    <!-- Time Label -->
+    <text x="120" y="40" fill="#a78bfa" font-size="15" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', sans-serif">11:35</text>
+    <!-- Axis Dot -->
+    <circle cx="150" cy="35" r="8" fill="#0f172a" stroke="#a78bfa" stroke-width="2.5"/>
+    <circle cx="150" cy="35" r="4" fill="#a78bfa"/>
+    <!-- Card Content -->
+    <rect x="190" y="0" width="570" height="70" rx="8" fill="#1e293b" stroke="#a78bfa" stroke-width="1.5"/>
+    <text x="210" y="28" fill="white" font-size="13" font-weight="600" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">內湖復育園區 (景點拍照 / 第三休息點)</text>
+    <text x="210" y="48" fill="#94a3b8" font-size="10" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">已步行約 4.8 公里。順緩坡步道上去。登高遠眺 101 大樓拍團體大合照。此處有標準公廁。</text>
+  </g>
+
+  <!-- Step 6 -->
+  <g transform="translate(0, 590)">
+    <!-- Time Label -->
+    <text x="120" y="40" fill="#22d3ee" font-size="15" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', sans-serif">12:05</text>
+    <!-- Axis Dot -->
+    <circle cx="150" cy="35" r="8" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+    <circle cx="150" cy="35" r="4" fill="#22d3ee"/>
+    <!-- Card Content -->
+    <rect x="190" y="0" width="570" height="70" rx="8" fill="#1e293b" stroke="#22d3ee" stroke-width="1"/>
+    <text x="210" y="28" fill="white" font-size="13" font-weight="600" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">跨越南湖大橋 (回到左岸)</text>
+    <text x="210" y="48" fill="#94a3b8" font-size="10" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">已步行約 6.5 公里。沿南湖大橋自行車牽引道上橋跨河。請靠右單排通行，避讓往來單車。</text>
+  </g>
+
+  <!-- Step 7 -->
+  <g transform="translate(0, 690)">
+    <!-- Time Label -->
+    <text x="120" y="40" fill="#22d3ee" font-size="15" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', sans-serif">12:20</text>
+    <!-- Axis Dot -->
+    <circle cx="150" cy="35" r="8" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+    <circle cx="150" cy="35" r="4" fill="#22d3ee"/>
+    <!-- Card Content -->
+    <rect x="190" y="0" width="570" height="70" rx="8" fill="#1e293b" stroke="#22d3ee" stroke-width="1"/>
+    <text x="210" y="28" fill="white" font-size="13" font-weight="600" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">經貿疏散門 ➔ 進入市區道路</text>
+    <text x="210" y="48" fill="#94a3b8" font-size="10" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">由南港端經貿疏散門走出河濱。沿著經貿二路平面人行道步行約 5 分鐘即可看到 LaLaport。</text>
+  </g>
+
+  <!-- Step 8 -->
+  <g transform="translate(0, 790)">
+    <!-- Time Label -->
+    <text x="120" y="40" fill="#fbbf24" font-size="15" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', sans-serif">12:30</text>
+    <!-- Axis Dot -->
+    <circle cx="150" cy="35" r="8" fill="#0f172a" stroke="#fbbf24" stroke-width="2.5"/>
+    <circle cx="150" cy="35" r="4" fill="#fbbf24"/>
+    <!-- Card Content -->
+    <rect x="190" y="0" width="570" height="70" rx="8" fill="#1e293b" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="210" y="28" fill="white" font-size="13" font-weight="600" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">南港 LaLaport (終點午餐)</text>
+    <text x="210" y="48" fill="#94a3b8" font-size="10" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">順利抵達！總程約 7.5 公里。吹冷氣休息，享用豐富的 8 人聚餐與吹冷氣行程！</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(190, 875)" font-size="9" fill="#94a3b8" font-family="'JetBrains Mono', 'PingFang SC', sans-serif">
+    <circle cx="10" cy="5" r="5" fill="#60a5fa"/>
+    <text x="20" y="8">起點</text>
+    
+    <circle cx="80" cy="5" r="5" fill="#22d3ee"/>
+    <text x="90" y="8">行進中</text>
+    
+    <circle cx="150" cy="5" r="5" fill="#34d399"/>
+    <text x="160" y="8">休息點(有廁所)</text>
+    
+    <circle cx="270" cy="5" r="5" fill="#a78bfa"/>
+    <text x="280" y="8">拍照點(有廁所)</text>
+    
+    <circle cx="390" cy="5" r="5" fill="#fbbf24"/>
+    <text x="400" y="8">終點</text>
+  </g>
+</svg>

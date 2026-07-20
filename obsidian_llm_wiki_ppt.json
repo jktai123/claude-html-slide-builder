@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "title": "LLM Wiki 與 Obsidian 實戰指南",
+    "author": "Antigravity",
+    "subject": "AI 協同個人知識庫的建構方法",
+    "keywords": "Obsidian, LLM Wiki, AI Agent"
+  },
+  "slides": [
+    {
+      "layout": "TitleSlide",
+      "title": "LLM Wiki 與 Obsidian 實戰指南",
+      "content": [
+        "從零打造 AI 協同的個人與企業知識網絡",
+        "導讀整理：Antigravity AI 助理"
+      ]
+    },
+    {
+      "layout": "SectionHeader",
+      "title": "一、Obsidian 基礎與 Markdown 排版",
+      "content": [
+        "如何使用這款強大的雙向連結筆記軟體"
+      ]
+    },
+    {
+      "layout": "GeometryGrid",
+      "title": "Obsidian 常用 Markdown 語法",
+      "content": [
+        "標題層級 :: 使用不同數量的 # 字號建立大、中、小標題，結構分明",
+        "樣式字元 :: 文字兩側單星號 *斜體*，雙星號 **粗體**，凸顯重點",
+        "區塊引言 :: 在句子開頭加上大於符號 > 建立漂亮的引用與注釋框",
+        "清單與線 :: 開頭減號 - 建立項目清單，連續三個減號 --- 建立分隔線"
+      ]
+    },
+    {
+      "layout": "TitleAndContent",
+      "title": "筆記屬性面板 (Frontmatter)",
+      "content": [
+        "在筆記最上方輸入三個橫線 --- 啟動屬性面板",
+        "可用於記錄人物、事件的元數據 (如出生年、逝世年等表格)",
+        "摺疊屬性面板可以讓筆記編輯畫面更加清爽",
+        "[圖表：屬性面板 YAML 元數據結構]"
+      ]
+    },
+    {
+      "layout": "SectionHeader",
+      "title": "二、雙向連結與知識網絡建構",
+      "content": [
+        "Obsidian 最核心的「第二大腦」雙向關係鏈"
+      ]
+    },
+    {
+      "layout": "GeometryGrid",
+      "title": "雙向連結的三種實踐方式",
+      "content": [
+        "手動插入連結 :: 在內文連續輸入兩個左方括號 `[[` 選擇欲連結的頁面",
+        "反白文字升級 :: 反白已有文字後直接輸入 `[[` 自動轉為對應雙向連結",
+        "建立未來頁面 :: 可以直接連結尚未建立的頁面，點擊時會自動產生筆記"
+      ]
+    },
+    {
+      "layout": "TwoColumnText",
+      "title": "反向連結與未連結提及",
+      "content": [
+        "【左】 反向連結 (Backlinks)",
+        "自動顯示有哪些頁面連入當前筆記",
+        "方便在不同主題間穿梭導覽",
+        "無需手動設定即可追蹤參考來源",
+        "【右】 未連結但提及",
+        "自動偵測文本中出現但未超連結的關鍵字",
+        "提供一鍵升級功能，快速將文字轉為連結",
+        "大幅省去人工比對與設定的力氣"
+      ]
+    },
+    {
+      "layout": "SectionHeader",
+      "title": "三、引進 LLM Wiki 新思維",
+      "content": [
+        "Andrej Karpathy 提出的 AI 協同知識庫概念"
+      ]
+    },
+    {
+      "layout": "ComparisonTable",
+      "title": "手動知識庫 vs LLM Wiki 知識庫",
+      "content": [
+        "比較項目 | 手動維護知識庫 | LLM Wiki (AI 協同)",
+        "用戶角色 | 撰寫、排版、手動拉連結 | 只需提供原始素材 (如 PDF/文章)",
+        "AI 職責 | 無或僅輔助寫作 | 閱讀、寫入知識庫、拉雙向連結",
+        "目錄與日誌 | 手動更新 | AI 自動更新目錄與日誌",
+        "維護成本 | 隨時間成倍增加 | 極低，由 AI 自動排程維護"
+      ]
+    },
+    {
+      "layout": "FlowCards",
+      "title": "LLM Wiki 四大資料結構",
+      "content": [
+        "史料 (Sources): 存放原始 PDF、網頁抓取文章等素材",
+        "知識庫 (Vault): 由 AI 助理完全維護的人物與事件筆記",
+        "目錄與日誌: 目錄提供頁面簡介，日誌記錄每次匯入資訊",
+        "指導手冊 (CLAUDE/AGENTS): 告訴 AI 每個資料夾的用途與流程"
+      ]
+    },
+    {
+      "layout": "SectionHeader",
+      "title": "四、AI 助理的工作流與自動化",
+      "content": [
+        "藉由 Codex/Claude Code 實現知識庫維護與問答"
+      ]
+    },
+    {
+      "layout": "FlowCards",
+      "title": "AI 助理自動化工作流步驟",
+      "content": [
+        "自動監測: 每天定時檢查「史料」資料夾中是否有新文件",
+        "整合寫入: 自動在「知識庫」寫入筆記、套用範本、拉雙向連結",
+        "記錄目錄: 自動更新「日誌」與「目錄」，方便日後溯源",
+        "定期維護: 每週自動檢查失效連結與重疊內容，清理冗餘"
+      ]
+    },
+    {
+      "layout": "GeometryGrid",
+      "title": "AI 助理的高階增值功能",
+      "content": [
+        "智能知識問答 :: 根據目錄定位相關頁面，回答問題並精準標示引用來源",
+        "網頁文章擷取 :: 搭配 Web Clipper 插件一鍵將網路史料存入指定資料夾",
+        "互動圖表生成 :: 請 AI 將筆記內容直接轉換為互動式 HTML 歷史時間軸"
+      ]
+    },
+    {
+      "layout": "BlankSlide",
+      "title": "謝謝聆聽",
+      "content": []
+    }
+  ]
+}

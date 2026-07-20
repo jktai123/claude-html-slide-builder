@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "skills": {
+    "File Organizer": {
+      "source": "claude-office-skills/skills",
+      "sourceType": "github",
+      "skillPath": "file-organizer/SKILL.md",
+      "computedHash": "c0ee059875e0bb07780229a5ba96acfdf151031a05e203168f5ee4a07fff4f8e"
+    },
+    "cc-draw": {
+      "source": "mathruffian-dot/claude-code-lazy-packs",
+      "sourceType": "github",
+      "skillPath": "skills/09-draw/SKILL.md",
+      "computedHash": "9d65ea4e3157aec6c42b399e415afa286ab2832768a958411bdd229484846505"
+    },
+    "cc-env-setup": {
+      "source": "mathruffian-dot/claude-code-lazy-packs",
+      "sourceType": "github",
+      "skillPath": "skills/00-env-setup/SKILL.md",
+      "computedHash": "eb0916336290a38d18bf61cef0f07549da8d00113ba5b65825f9d07f2be2324e"
+    },
+    "cc-firebase": {
+      "source": "mathruffian-dot/claude-code-lazy-packs",
+      "sourceType": "github",
+      "skillPath": "skills/05-firebase/SKILL.md",
+      "computedHash": "ed54fe06cee69d244d5eafa105697244792f650e0d8b9e8a889c571ab83a49e2"
+    },
+    "cc-gemini": {
+      "source": "mathruffian-dot/claude-code-lazy-packs",
+      "sourceType": "github",
+      "skillPath": "skills/07-gemini/SKILL.md",
+      "computedHash": "5bd658adec8122cf84ab1f590580d8f73d269ee76ae6ef601eec86f0044383af"
+    },
+    "cc-github": {
+      "source": "mathruffian-dot/claude-code-lazy-packs",
+      "sourceType": "github",
+      "skillPath": "skills/02-github/SKILL.md",
+      "computedHash": "293d3e3e1fbdf6826ce80a0fb3ce4190959cdb4b80d106f87699e7dad3781ebb"
+    },
+    "cc-install-all": {
+      "source": "mathruffian-dot/claude-code-lazy-packs",
+      "sourceType": "github",
+      "skillPath": "skills/00-install-all/SKILL.md",
+      "computedHash": "ecedf5a46812a9fee2bc508cb46a8990bbac67e58e9d3537934b969b43afa115"
+    },
+    "cc-notebooklm": {
+      "source": "mathruffian-dot/claude-code-lazy-packs",
+      "sourceType": "github",
+      "skillPath": "skills/01-notebooklm/SKILL.md",
+      "computedHash": "016b96f31564238ece59a31d8f04dee134d891c03fbe6b16a5995e36ccb58f74"
+    },
+    "cc-obsidian": {
+      "source": "mathruffian-dot/claude-code-lazy-packs",
+      "sourceType": "github",
+      "skillPath": "skills/03-obsidian/SKILL.md",
+      "computedHash": "13c357607de5cd778fb643735032d5a0fc59e8d7143d22ee5a8b15674997daf4"
+    },
+    "cc-ollama": {
+      "source": "mathruffian-dot/claude-code-lazy-packs",
+      "sourceType": "github",
+      "skillPath": "skills/06-ollama/SKILL.md",
+      "computedHash": "e575bd654343b4bf1faef9237a01114fdeca1b3bf326999f62c6a76a906fae0f"
+    },
+    "cc-second-brain": {
+      "source": "mathruffian-dot/claude-code-lazy-packs",
+      "sourceType": "github",
+      "skillPath": "skills/04-second-brain/SKILL.md",
+      "computedHash": "59c3e97dd6d209354041404b00ab369e30351685372f4ba3c18f842b8bcc9265"
+    },
+    "cc-supabase": {
+      "source": "mathruffian-dot/claude-code-lazy-packs",
+      "sourceType": "github",
+      "skillPath": "skills/04-supabase/SKILL.md",
+      "computedHash": "4674a1f5e3f46245a20b9c999e0b82c4d70af64f1d4cbbee7119f49e1885de60"
+    },
+    "cc-workspace": {
+      "source": "mathruffian-dot/claude-code-lazy-packs",
+      "sourceType": "github",
+      "skillPath": "skills/08-workspace/SKILL.md",
+      "computedHash": "701ac9eee6fdfad7515a986a572c7dcc99a1bcfa24385b9b432d430396cee55b"
+    },
+    "claude-code-lazy-packs": {
+      "source": "mathruffian-dot/claude-code-lazy-packs",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "dcdb6e475cffd392712df5e5d9c24159a3f842b96523cb3a3869c1b8108616d8"
+    },
+    "notion-cli": {
+      "source": "makenotion/skills",
+      "sourceType": "github",
+      "skillPath": "skills/notion-cli/SKILL.md",
+      "computedHash": "9624b2f0f37d738d3be67e7c7cc8b8359063defea92b32e96b01692aee60adb4"
+    }
+  }
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>瑪利歐鋼琴彈奏學習遊戲 - 極光霓虹版</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <div class="game-container">
+    
+    <!-- 1. 遊戲開始前覆蓋層 (解鎖 AudioContext) -->
+    <div id="start-overlay" class="start-overlay">
+      <div class="start-card">
+        <div class="retro-logo">
+          SUPER MARIO<br>PIANO TUTOR
+        </div>
+        <p style="margin-bottom: 25px; color: #8b9bb4; font-size: 14px; line-height: 1.6;">
+          歡迎來到瑪利歐鋼琴彈奏學習遊戲！<br>
+          使用電腦鍵盤鍵 <span style="color: var(--neon-blue); font-weight: bold;">A 到 \</span> 代表白鍵，
+          <span style="color: var(--neon-pink); font-weight: bold;">W 到 P</span> 代表黑鍵，或者直接點擊/觸控螢幕琴鍵。
+        </p>
+        <button id="play-overlay-btn" class="start-btn">START GAME</button>
+      </div>
+    </div>
+
+    <!-- 2. 結算/挑戰成功彈窗 -->
+    <div id="modal-overlay" class="modal-overlay">
+      <div class="modal-content">
+        <div id="modal-title" class="modal-title">挑戰成功</div>
+        <div id="modal-score" class="modal-score">0</div>
+        
+        <div class="modal-stats">
+          <div class="stat-box">
+            <span id="stat-maxcombo" class="stat-num">0</span>
+            <span class="stat-label">最大連擊</span>
+          </div>
+          <div class="stat-box">
+            <span id="stat-accuracy" class="stat-num">0%</span>
+            <span class="stat-label">精確度</span>
+          </div>
+        </div>
+
+        <button id="modal-restart-btn" class="start-btn" style="padding: 10px 20px; font-size: 10px;">PLAY AGAIN</button>
+      </div>
+    </div>
+
+    <!-- 3. 主遊戲介面 (Header 區段) -->
+    <header style="flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 8px; padding-bottom: 8px;">
+      
+      <!-- 第一行：標題 + 狀態面板 (分數/連擊) -->
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div class="title-area" style="flex-direction: row; align-items: center; gap: 10px; white-space: nowrap;">
+          <h1 style="font-size: 20px; white-space: nowrap;">瑪利歐音樂鋼琴教室</h1>
+          <span class="mario-badge" style="animation: pulse 1.5s infinite alternate;">STAGE 1-1</span>
+          <div class="subtitle" id="song-desc" style="margin-top: 0; font-size: 11px; color: #8b9bb4; max-width: 350px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">載入中...</div>
+        </div>
+
+        <!-- 狀態欄 (移到右上方) -->
+        <div class="glass-panel status-panel" style="padding: 4px 12px; border-radius: 8px; gap: 12px; margin-bottom: 0;">
+          <div class="status-item" style="flex-direction: row; gap: 4px;">
+            <span class="status-label" style="font-size: 8px; margin-top: 2px; text-transform: uppercase;">Score:</span>
+            <span id="score-val" class="status-val" style="font-size: 11px;">0</span>
+          </div>
+          <div class="status-item" style="flex-direction: row; gap: 4px;">
+            <span class="status-label" style="font-size: 8px; margin-top: 2px; text-transform: uppercase;">Combo:</span>
+            <span id="combo-val" class="status-val combo" style="font-size: 11px;">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 第二行：所有控制項 -->
+      <div class="controls-bar" style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 10px; flex-wrap: wrap;">
+        <!-- 音色與歌曲選擇 -->
+        <div class="glass-panel" style="padding: 4px 8px; border-radius: 8px; gap: 8px;">
+          <select id="mode-select" style="padding: 4px 8px; font-size: 11px;">
+            <option value="practice">練習模式 (跟彈)</option>
+            <option value="challenge">挑戰模式 (節奏)</option>
+          </select>
+          <select id="song-select" style="padding: 4px 8px; font-size: 11px;">
+            <!-- 由 JS 動態載入 -->
+          </select>
+        </div>
+
+        <!-- 音量與速度控制 -->
+        <div class="glass-panel" style="padding: 4px 8px; border-radius: 8px; gap: 8px; font-size: 11px;">
+          <label style="display: flex; align-items: center; gap: 4px;" title="音量大小">
+            🔊 <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.7" style="width: 55px; height: 3px; accent-color: var(--neon-blue); cursor: pointer;">
+          </label>
+          <label style="display: flex; align-items: center; gap: 4px;" title="音符下落速度">
+            ⚡ <input type="range" id="speed-slider" min="100" max="500" step="20" value="250" style="width: 55px; height: 3px; accent-color: var(--neon-pink); cursor: pointer;">
+          </label>
+        </div>
+
+        <!-- 功能按鈕 -->
+        <div class="glass-panel" style="padding: 4px 8px; border-radius: 8px; gap: 6px;">
+          <button id="restart-btn" class="primary" style="padding: 4px 8px; font-size: 11px;">重新開始</button>
+          <button id="mic-toggle-btn" class="mic-btn-style" style="padding: 4px 8px; font-size: 11px; background: rgba(255, 0, 127, 0.08); border-color: rgba(255, 0, 127, 0.3); color: #ff007f;">🎙️ 實體配對</button>
+          <button id="mute-btn" class="mute-btn" style="width: 24px; height: 24px; font-size: 11px; padding: 0;">🔊</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 5. 遊戲畫面與鋼琴 -->
+    <div class="game-workspace">
+      <!-- 判定評等顯示 -->
+      <div id="judgment-display">PERFECT</div>
+      
+      <!-- 瀑布流畫布 -->
+      <canvas id="piano-roll"></canvas>
+      
+      <!-- 判定發光線 -->
+      <div class="hit-line-glow"></div>
+      
+      <!-- 鋼琴實體鍵盤 -->
+      <div id="piano-keyboard" class="piano-keyboard">
+        <!-- 由 JS 動態生成琴鍵 -->
+      </div>
+    </div>
+
+    <!-- 6. 說明資訊 -->
+    <div class="legend-panel">
+      <div class="key-shortcuts-hint">
+        鍵盤白鍵對應: <span class="shortcut-badge">A</span> <span class="shortcut-badge">S</span> <span class="shortcut-badge">D</span> <span class="shortcut-badge">F</span> <span class="shortcut-badge">G</span> <span class="shortcut-badge">H</span> <span class="shortcut-badge">J</span> <span class="shortcut-badge">K</span> <span class="shortcut-badge">L</span> <span class="shortcut-badge">;</span> <span class="shortcut-badge">'</span> <span class="shortcut-badge">\</span>
+      </div>
+      <div>
+        音色切換: 
+        <button id="synth-piano" class="primary" style="padding: 3px 8px; font-size: 11px; margin-left: 5px;">古典鋼琴</button>
+        <button id="synth-retro" style="padding: 3px 8px; font-size: 11px; margin-left: 5px;">8-Bit 復古</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="./game.js"></script>
+  <script type="module">
+    import { audio } from "./audio.js";
+    
+    // 綁定音色選擇按鈕點擊事件 (古典鋼琴 vs 8-Bit)
+    const btnPiano = document.getElementById("synth-piano");
+    const btnRetro = document.getElementById("synth-retro");
+
+    btnPiano.addEventListener("click", () => {
+      audio.setInstrument("piano");
+      btnPiano.classList.add("primary");
+      btnRetro.classList.remove("primary");
+    });
+
+    btnRetro.addEventListener("click", () => {
+      audio.setInstrument("retro");
+      btnRetro.classList.add("primary");
+      btnPiano.classList.remove("primary");
+    });
+  </script>
+</body>
+</html>

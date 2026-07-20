@@ -1,0 +1,11 @@
+{
+  "Title": "免費用網頁工具推薦：線上畫路線並下載 GPX",
+  "日期": "2026-07-15",
+  "URL": "",
+  "摘要": "本文推薦三個免註冊的線上畫路線工具：gpx.studio 支援豐富的編輯功能、OnTheGoMap 直覺快速，以及 BRouter-web 具備多模式路徑避讓規畫。均支援自動貼合道路並一鍵匯出 GPX。",
+  "category": "科技",
+  "tags": ["GPX", "地圖規劃", "線上工具", "健行", "科技"],
+  "importance": "中",
+  "content": "### 這幾個免費用網頁工具最推，可以直接在瀏覽器上點擊地圖畫路線，並一鍵下載成 GPX：\n\n1. **[gpx.studio](https://gpx.studio/)** *(最推薦)*\n   - **特色**：強大的線上 GPX 編輯器。免註冊直接點地圖就能畫，支援自動貼合道路。你還可以用它來編輯、合併、裁剪舊的 GPX，甚至能自動補上高度資訊（DEM）。\n\n2. **[OnTheGoMap](https://onthegomap.com/)**\n   - **特色**：極速、直覺。點幾下就會自動依路徑粘合道路，非常適合拿來規劃平地跑步、單車或河濱健行路線，按一下「Export」就能直接載下 GPX。\n\n3. **[BRouter-web](https://brouter.de/brouter-web/)**\n   - **特色**：老牌的路由規劃工具，你可以針對「健行」、「越野單車」或「公路單車」等不同模式，讓系統幫你避開大路或走特定小徑，規畫完一樣能匯出 GPX。\n\n---\n\n### 來源連結\n* [gpx.studio 官網](https://gpx.studio/)\n* [OnTheGoMap 官網](https://onthegomap.com/)\n* [BRouter-web 官網](https://brouter.de/brouter-web/)",
+  "mindmap": "mindmap\n  root((GPX 畫路線工具))\n    gpx studio\n      最推薦\n      支援自動貼合道路\n      可編輯合併裁剪\n      可補高度資訊\n    OnTheGoMap\n      極速防呆\n      自動粘合道路\n      適合跑步單車健行\n    BRouter_web\n      老牌規劃工具\n      多種模式選擇\n      可避開大路特定小徑"
+}
