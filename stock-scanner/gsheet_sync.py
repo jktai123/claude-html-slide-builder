@@ -6,29 +6,20 @@ import logging
 logger = logging.getLogger(__name__)
 
 DOC_ID = "1jx9hL4CZuyET00_6LYbcz4d23WLv7iMsLbcPR3xqGbo"
-SHEET_NAME = "底背離"
+SHEET_BOTTOM = "底背離"
+SHEET_TOP = "頭背離"
 SAVE_SCRIPT = "/Users/jktai/.gemini/config/skills/google-sheet-writer/scripts/save_to_gsheet.js"
 
-def sync_to_google_sheet(results, output_dir):
-    """
-    將掃描結果格式化並同步上傳至 Google Sheet 試算表
-    - 標題欄位: code (取代 代號), 名稱, 市場, 收盤價, 漲跌幅%, 日均量(張), 訊號類型, 背離細節
-    - code 內容強制加上單引號 "'" 確保寫入為純文字格式
-    """
-    if not results:
-        logger.info("⚠️ 無資料可同步至 Google Sheet")
-        return
-
-    sheet_data = []
-    for r in results:
-        detail_parts = []
+def _format_row(r, is_bottom=True):
+    detail_parts = []
+    if is_bottom:
         if r.get("bot_macd_details"):
             d = r["bot_macd_details"]
             detail_parts.append(f"底MACD(價:{d['prev_price']}→{d['curr_price']}, 柱:{d['prev_ind']}→{d['curr_ind']})")
         if r.get("bot_kd_details"):
             d = r["bot_kd_details"]
             detail_parts.append(f"底KD(價:{d['prev_price']}→{d['curr_price']}, K:{d['prev_ind']}→{d['curr_ind']})")
-
+    else:
         if r.get("top_macd_details"):
             d = r["top_macd_details"]
             detail_parts.append(f"頂MACD(價:{d['prev_price']}→{d['curr_price']}, 柱:{d['prev_ind']}→{d['curr_ind']})")
@@ -36,34 +27,81 @@ def sync_to_google_sheet(results, output_dir):
             d = r["top_kd_details"]
             detail_parts.append(f"頂KD(價:{d['prev_price']}→{d['curr_price']}, K:{d['prev_ind']}→{d['curr_ind']})")
 
-        sheet_data.append({
-            "code": f"'{r['code']}",
-            "名稱": r["name"],
-            "市場": r["market"],
-            "收盤價": r["close"],
-            "漲跌幅%": r["change_pct"],
-            "日均量(張)": r["volume_lots"],
-            "背離方向": r.get("direction", "底背離"),
-            "訊號類型": r["signal_type"],
-            "背離細節": " / ".join(detail_parts),
-        })
+    # 提取該指標種類名稱
+    sig_name = r["signal_type"]
+    if is_bottom:
+        sig_name = sig_name.replace("底", "").replace("頂", "").strip()
+    else:
+        sig_name = sig_name.replace("底", "").replace("頂", "").strip()
 
-    json_path = os.path.join(output_dir, "gsheet_sync_data.json")
-    with open(json_path, "w", encoding="utf-8") as f:
-        json.dump(sheet_data, f, ensure_ascii=False, indent=2)
+    return {
+        "code": f"'{r['code']}",
+        "名稱": r["name"],
+        "市場": r["market"],
+        "收盤價": r["close"],
+        "漲跌幅%": r["change_pct"],
+        "日均量(張)": r["volume_lots"],
+        "訊號類型": sig_name if sig_name else r["signal_type"],
+        "背離細節": " / ".join(detail_parts),
+    }
 
-    logger.info(f"📊 正在同步 {len(sheet_data)} 筆資料至 Google Sheet (Sheet: {SHEET_NAME})...")
+def sync_to_google_sheet(results, output_dir):
+    """
+    將掃描結果拆分為「底背離」與「頭背離」兩個獨立工作表，寫入指定的 Google Sheet
+    - 工作表「底背離」
+    - 工作表「頭背離」
+    - 欄位: code (純文字格式), 名稱, 市場, 收盤價, 漲跌幅%, 日均量(張), 訊號類型, 背離細節
+    """
+    if not results:
+        logger.info("⚠️ 無資料可同步至 Google Sheet")
+        return
 
-    cmd = [
-        "node", SAVE_SCRIPT,
-        "--docId", DOC_ID,
-        "--sheet", SHEET_NAME,
-        "--file", json_path,
-        "--mode", "overwrite"
-    ]
+    bottom_rows = []
+    top_rows = []
 
-    try:
-        res = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        logger.info(f"✅ Google Sheet 同步完成：\n{res.stdout.strip()}")
-    except subprocess.CalledProcessError as e:
-        logger.error(f"❌ Google Sheet 同步失敗：{e.stderr or e.stdout}")
+    for r in results:
+        dir_str = r.get("direction", "")
+        if "底背離" in dir_str:
+            bottom_rows.append(_format_row(r, is_bottom=True))
+        if "頭背離" in dir_str:
+            top_rows.append(_format_row(r, is_bottom=False))
+
+    # 1. 同步「底背離」工作表
+    if bottom_rows:
+        bot_json = os.path.join(output_dir, "gsheet_bottom_data.json")
+        with open(bot_json, "w", encoding="utf-8") as f:
+            json.dump(bottom_rows, f, ensure_ascii=False, indent=2)
+
+        logger.info(f"📊 正在同步 {len(bottom_rows)} 筆底背離資料至 Google Sheet (Sheet: {SHEET_BOTTOM})...")
+        cmd_bot = [
+            "node", SAVE_SCRIPT,
+            "--docId", DOC_ID,
+            "--sheet", SHEET_BOTTOM,
+            "--file", bot_json,
+            "--mode", "overwrite"
+        ]
+        try:
+            res = subprocess.run(cmd_bot, capture_output=True, text=True, check=True)
+            logger.info(f"✅ 「底背離」Sheet 同步完成：\n{res.stdout.strip()}")
+        except subprocess.CalledProcessError as e:
+            logger.error(f"❌ 「底背離」Sheet 同步失敗：{e.stderr or e.stdout}")
+
+    # 2. 同步「頭背離」工作表
+    if top_rows:
+        top_json = os.path.join(output_dir, "gsheet_top_data.json")
+        with open(top_json, "w", encoding="utf-8") as f:
+            json.dump(top_rows, f, ensure_ascii=False, indent=2)
+
+        logger.info(f"📊 正在同步 {len(top_rows)} 筆頭背離資料至 Google Sheet (Sheet: {SHEET_TOP})...")
+        cmd_top = [
+            "node", SAVE_SCRIPT,
+            "--docId", DOC_ID,
+            "--sheet", SHEET_TOP,
+            "--file", top_json,
+            "--mode", "overwrite"
+        ]
+        try:
+            res = subprocess.run(cmd_top, capture_output=True, text=True, check=True)
+            logger.info(f"✅ 「頭背離」Sheet 同步完成：\n{res.stdout.strip()}")
+        except subprocess.CalledProcessError as e:
+            logger.error(f"❌ 「頭背離」Sheet 同步失敗：{e.stderr or e.stdout}")
