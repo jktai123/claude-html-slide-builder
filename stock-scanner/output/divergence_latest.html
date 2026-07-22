@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>台股底背離掃描 2026-07-22</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--bg2:#111827;--card:#1a2035;--bdr:#2a3555;--t1:#e8ecf4;--t2:#8892a8;--t3:#5a6580;--red:#ef4444;--grn:#22c55e;--gold:#f59e0b;--blue:#3b82f6;--purp:#a855f7}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh}
+.hero{background:linear-gradient(135deg,#0a0e1a,#1a1040,#0a0e1a);border-bottom:1px solid var(--bdr);padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(139,92,246,.08),transparent 50%),radial-gradient(circle at 70% 80%,rgba(34,197,94,.06),transparent 50%);pointer-events:none}
+.hc{max-width:1400px;margin:0 auto;position:relative;z-index:1}
+h1{font-size:1.8rem;font-weight:700;background:linear-gradient(135deg,#e8ecf4,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.4rem}
+.sub{color:var(--t2);font-size:.95rem}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;max-width:1400px;margin:-1.5rem auto 2rem;padding:0 2rem;position:relative;z-index:2}
+.sc{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:1.1rem 1.4rem;transition:transform .2s,box-shadow .2s}
+.sc:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
+.sc .lb{font-size:.78rem;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.2rem}
+.sc .vl{font-size:1.7rem;font-weight:700;font-family:'JetBrains Mono',monospace}
+.vl.gd{color:var(--gold)}.vl.gn{color:var(--grn)}.vl.bl{color:var(--blue)}.vl.pp{color:var(--purp)}
+.mc{max-width:1400px;margin:0 auto;padding:0 2rem 3rem}
+.tc{background:var(--card);border:1px solid var(--bdr);border-radius:12px;overflow:hidden}
+.th{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid var(--bdr);flex-wrap:wrap;gap:.5rem}
+.th h2{font-size:1rem;font-weight:600}
+.fg{display:flex;gap:.4rem}
+.fb{padding:.35rem .7rem;border-radius:6px;border:1px solid var(--bdr);background:0;color:var(--t2);font-size:.8rem;cursor:pointer;transition:all .2s;font-family:inherit}
+.fb:hover,.fb.on{background:var(--bg2);color:var(--t1);border-color:var(--purp)}
+table{width:100%;border-collapse:collapse}
+thead th{background:var(--bg2);padding:.75rem 1rem;text-align:left;font-size:.76rem;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--bdr);cursor:pointer;user-select:none;white-space:nowrap;transition:color .2s}
+thead th:hover{color:var(--t1)}
+.si{margin-left:.2rem;opacity:.3;font-size:.7rem}
+th.sd .si{opacity:1;color:var(--purp)}
+tbody tr{border-bottom:1px solid rgba(42,53,85,.5);transition:background .15s}
+tbody tr:hover{background:#1e2a45}
+td{padding:.65rem 1rem;font-size:.87rem}
+.n{font-family:'JetBrains Mono',monospace;text-align:right;font-size:.84rem}
+.pos{color:var(--red)}.neg{color:var(--grn)}
+.sl{color:var(--blue);text-decoration:none;font-family:'JetBrains Mono',monospace;font-weight:500;transition:color .2s}
+.sl:hover{color:var(--purp);text-decoration:underline}
+.badge{display:inline-block;padding:.22rem .55rem;border-radius:100px;font-size:.74rem;font-weight:600}
+.badge-dual{background:rgba(245,158,11,.18);color:var(--gold);border:1px solid rgba(245,158,11,.3)}
+.badge-macd{background:rgba(34,197,94,.14);color:var(--grn);border:1px solid rgba(34,197,94,.25)}
+.badge-kd{background:rgba(59,130,246,.14);color:var(--blue);border:1px solid rgba(59,130,246,.25)}
+.det{font-size:.76rem;color:var(--t2);line-height:1.5}
+.det-m{color:#6ee7b7}.det-k{color:#93c5fd}
+td a[title]{text-decoration:none;font-size:1.1rem;margin-right:.2rem;opacity:.7;transition:opacity .2s}
+td a[title]:hover{opacity:1}
+.empty{text-align:center;padding:4rem 2rem;color:var(--t3)}.ei{font-size:3rem;margin-bottom:1rem}
+.ft{max-width:1400px;margin:0 auto;padding:1rem 2rem;text-align:center;color:var(--t3);font-size:.76rem}
+@media(max-width:768px){.hero{padding:1.5rem 1rem 1rem}.sg{padding:0 1rem;grid-template-columns:repeat(2,1fr)}.mc{padding:0 1rem 2rem}.tc{overflow-x:auto}table{min-width:900px}}
+</style>
+</head>
+<body>
+<div class="hero"><div class="hc">
+<h1>📉 台股底背離掃描報表</h1>
+<div class="sub">掃描日期：2026-07-22 ｜ MACD + KD 雙指標偵測 ｜ 資料來源：Yahoo Finance</div>
+</div></div>
+
+<div class="sg">
+<div class="sc"><div class="lb">掃描股票數</div><div class="vl pp">1943</div></div>
+<div class="sc"><div class="lb">底背離訊號</div><div class="vl gd">53</div></div>
+<div class="sc"><div class="lb">🔥 雙指標共振</div><div class="vl gd">35</div></div>
+<div class="sc"><div class="lb">MACD 底背離</div><div class="vl gn">12</div></div>
+<div class="sc"><div class="lb">KD 底背離</div><div class="vl bl">6</div></div>
+</div>
+
+<div class="mc"><div class="tc">
+<div class="th">
+<h2>底背離股票清單</h2>
+<div class="fg">
+<button class="fb on" onclick="F('all')">全部</button>
+<button class="fb" onclick="F('雙指標')">🔥 雙指標</button>
+<button class="fb" onclick="F('MACD')">📗 MACD</button>
+<button class="fb" onclick="F('KD')">📘 KD</button>
+</div>
+</div>
+<table id="T"><thead><tr><th onclick="S(0)">代號 <span class="si">⇅</span></th><th onclick="S(1)">名稱 <span class="si">⇅</span></th><th onclick="S(2)">市場 <span class="si">⇅</span></th><th onclick="S(3)">收盤價 <span class="si">⇅</span></th><th onclick="S(4)">漲跌幅 <span class="si">⇅</span></th><th onclick="S(5)">日均量(張) <span class="si">⇅</span></th><th onclick="S(6)">訊號 <span class="si">⇅</span></th><th>背離細節</th><th>查看</th></tr></thead><tbody><tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1234" target="_blank" class="sl">1234</a></td>
+<td>黑松</td><td>上市</td>
+<td class="n">33.30</td>
+<td class="n neg">-1.48%</td>
+<td class="n">174</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:33.06→33.0 柱:0.04→0.05</span><br><span class="det-k">KD 價:33.06→33.0 K:64.82→70.46</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1234" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/1234" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1316" target="_blank" class="sl">1316</a></td>
+<td>上曜</td><td>上市</td>
+<td class="n">10.40</td>
+<td class="n pos">+0.97%</td>
+<td class="n">1,601</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:10.1→10.0 柱:-0.04→-0.02</span><br><span class="det-k">KD 價:10.1→10.0 K:11.93→17.8</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1316" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/1316" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1512" target="_blank" class="sl">1512</a></td>
+<td>瑞利</td><td>上市</td>
+<td class="n">6.65</td>
+<td class="n neg">-0.45%</td>
+<td class="n">104</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:6.69→6.56 柱:-0.01→0.02</span><br><span class="det-k">KD 價:6.69→6.56 K:14.58→51.35</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1512" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/1512" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1526" target="_blank" class="sl">1526</a></td>
+<td>日馳</td><td>上市</td>
+<td class="n">16.25</td>
+<td class="n neg">-3.27%</td>
+<td class="n">702</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:14.05→13.8 柱:0.0→0.01</span><br><span class="det-k">KD 價:14.05→13.8 K:24.63→29.97</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1526" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/1526" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1570" target="_blank" class="sl">1570</a></td>
+<td>力肯</td><td>上櫃</td>
+<td class="n">37.10</td>
+<td class="n neg">-0.40%</td>
+<td class="n">131</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:38.03→36.65 柱:-0.97→-0.2</span><br><span class="det-k">KD 價:38.03→36.65 K:23.53→27.22</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1570" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/1570" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1732" target="_blank" class="sl">1732</a></td>
+<td>毛寶</td><td>上市</td>
+<td class="n">27.00</td>
+<td class="n pos">+1.50%</td>
+<td class="n">234</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:26.0→25.4 柱:-0.04→-0.03</span><br><span class="det-k">KD 價:26.0→25.4 K:21.7→44.42</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1732" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/1732" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1780" target="_blank" class="sl">1780</a></td>
+<td>立弘</td><td>上櫃</td>
+<td class="n">22.70</td>
+<td class="n pos">+0.67%</td>
+<td class="n">160</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:24.05→21.5 柱:-0.37→-0.11</span><br><span class="det-k">KD 價:24.05→21.5 K:19.44→20.84</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1780" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/1780" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2007" target="_blank" class="sl">2007</a></td>
+<td>燁興</td><td>上市</td>
+<td class="n">7.12</td>
+<td class="n neg">-0.84%</td>
+<td class="n">328</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:7.06→7.01 柱:-0.04→-0.01</span><br><span class="det-k">KD 價:7.06→7.01 K:10.05→23.04</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2007" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2007" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2014" target="_blank" class="sl">2014</a></td>
+<td>中鴻</td><td>上市</td>
+<td class="n">17.15</td>
+<td class="n pos">+1.18%</td>
+<td class="n">3,258</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:17.0→16.65 柱:-0.08→-0.04</span><br><span class="det-k">KD 價:17.0→16.65 K:12.19→21.93</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2014" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2014" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2027" target="_blank" class="sl">2027</a></td>
+<td>大成鋼</td><td>上市</td>
+<td class="n">43.75</td>
+<td class="n pos">+6.32%</td>
+<td class="n">15,692</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:38.0→37.86 柱:-0.45→-0.15</span><br><span class="det-k">KD 價:38.0→37.86 K:13.63→24.99</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2027" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2027" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2028" target="_blank" class="sl">2028</a></td>
+<td>威致</td><td>上市</td>
+<td class="n">15.60</td>
+<td class="n neg">-0.95%</td>
+<td class="n">112</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:15.65→15.2 柱:-0.04→-0.01</span><br><span class="det-k">KD 價:15.65→15.2 K:27.96→40.06</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2028" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2028" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2032" target="_blank" class="sl">2032</a></td>
+<td>新鋼</td><td>上市</td>
+<td class="n">16.05</td>
+<td class="n pos">+0.94%</td>
+<td class="n">371</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:16.0→15.6 柱:-0.19→-0.1</span><br><span class="det-k">KD 價:16.0→15.6 K:18.13→24.19</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2032" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2032" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2069" target="_blank" class="sl">2069</a></td>
+<td>運錩</td><td>上市</td>
+<td class="n">18.65</td>
+<td class="n neg">-0.53%</td>
+<td class="n">242</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:18.05→17.6 柱:-0.1→-0.07</span><br><span class="det-k">KD 價:18.05→17.6 K:13.27→19.88</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2069" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2069" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2072" target="_blank" class="sl">2072</a></td>
+<td>世紀風電</td><td>上市</td>
+<td class="n">143.50</td>
+<td class="n pos">+0.00%</td>
+<td class="n">466</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:143.5→138.0 柱:-2.73→-0.2</span><br><span class="det-k">KD 價:143.5→138.0 K:3.52→19.2</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2072" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2072" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2362" target="_blank" class="sl">2362</a></td>
+<td>藍天</td><td>上市</td>
+<td class="n">43.30</td>
+<td class="n pos">+0.12%</td>
+<td class="n">1,182</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:40.9→40.4 柱:-0.75→-0.29</span><br><span class="det-k">KD 價:40.9→40.4 K:7.92→21.26</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2362" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2362" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2514" target="_blank" class="sl">2514</a></td>
+<td>龍邦</td><td>上市</td>
+<td class="n">12.70</td>
+<td class="n neg">-1.17%</td>
+<td class="n">254</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:12.85→12.45 柱:-0.08→-0.04</span><br><span class="det-k">KD 價:12.85→12.45 K:17.24→23.18</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2514" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2514" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2614" target="_blank" class="sl">2614</a></td>
+<td>東森</td><td>上市</td>
+<td class="n">18.25</td>
+<td class="n pos">+0.00%</td>
+<td class="n">456</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:18.0→17.85 柱:-0.06→0.0</span><br><span class="det-k">KD 價:18.0→17.85 K:9.82→27.04</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2614" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2614" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3038" target="_blank" class="sl">3038</a></td>
+<td>全台</td><td>上市</td>
+<td class="n">20.80</td>
+<td class="n pos">+0.48%</td>
+<td class="n">221</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:21.45→20.3 柱:-0.18→-0.11</span><br><span class="det-k">KD 價:21.45→20.3 K:17.79→22.97</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3038" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/3038" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3086" target="_blank" class="sl">3086</a></td>
+<td>華義*</td><td>上櫃</td>
+<td class="n">29.85</td>
+<td class="n pos">+0.51%</td>
+<td class="n">271</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:32.4→28.0 柱:-0.45→-0.27</span><br><span class="det-k">KD 價:32.4→28.0 K:4.36→10.66</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3086" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/3086" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3088" target="_blank" class="sl">3088</a></td>
+<td>艾訊</td><td>上櫃</td>
+<td class="n">147.50</td>
+<td class="n pos">+6.50%</td>
+<td class="n">1,318</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:134.5→128.0 柱:-1.38→-1.14</span><br><span class="det-k">KD 價:134.5→128.0 K:39.0→43.3</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3088" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/3088" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3167" target="_blank" class="sl">3167</a></td>
+<td>大量</td><td>上市</td>
+<td class="n">699.00</td>
+<td class="n neg">-4.12%</td>
+<td class="n">2,896</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:761.3→731.0 柱:-15.35→-3.93</span><br><span class="det-k">KD 價:761.3→731.0 K:10.25→27.68</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3167" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/3167" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3501" target="_blank" class="sl">3501</a></td>
+<td>維熹</td><td>上市</td>
+<td class="n">40.15</td>
+<td class="n neg">-0.37%</td>
+<td class="n">368</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:39.7→39.2 柱:-0.1→0.03</span><br><span class="det-k">KD 價:39.7→39.2 K:11.88→23.33</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3501" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/3501" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3701" target="_blank" class="sl">3701</a></td>
+<td>大眾控</td><td>上市</td>
+<td class="n">39.75</td>
+<td class="n pos">+0.63%</td>
+<td class="n">823</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:42.3→39.0 柱:-0.18→0.04</span><br><span class="det-k">KD 價:42.3→39.0 K:11.08→19.24</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3701" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/3701" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=4142" target="_blank" class="sl">4142</a></td>
+<td>國光生</td><td>上市</td>
+<td class="n">17.05</td>
+<td class="n pos">+0.29%</td>
+<td class="n">1,115</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:16.8→16.65 柱:-0.06→-0.05</span><br><span class="det-k">KD 價:16.8→16.65 K:8.76→31.06</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=4142" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/4142" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=4441" target="_blank" class="sl">4441</a></td>
+<td>振大環球</td><td>上市</td>
+<td class="n">174.00</td>
+<td class="n neg">-1.97%</td>
+<td class="n">104</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:184.0→172.0 柱:-1.56→-1.14</span><br><span class="det-k">KD 價:184.0→172.0 K:18.0→18.11</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=4441" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/4441" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=4562" target="_blank" class="sl">4562</a></td>
+<td>穎漢</td><td>上市</td>
+<td class="n">32.20</td>
+<td class="n pos">+1.74%</td>
+<td class="n">503</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:32.75→31.95 柱:-0.49→-0.01</span><br><span class="det-k">KD 價:32.75→31.95 K:7.73→19.1</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=4562" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/4562" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=4755" target="_blank" class="sl">4755</a></td>
+<td>三福化</td><td>上市</td>
+<td class="n">122.50</td>
+<td class="n pos">+0.00%</td>
+<td class="n">495</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:127.0→125.0 柱:-0.77→0.03</span><br><span class="det-k">KD 價:127.0→125.0 K:24.38→36.07</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=4755" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/4755" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=5531" target="_blank" class="sl">5531</a></td>
+<td>鄉林</td><td>上市</td>
+<td class="n">7.75</td>
+<td class="n neg">-1.02%</td>
+<td class="n">456</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:7.83→7.69 柱:-0.02→-0.02</span><br><span class="det-k">KD 價:7.83→7.69 K:9.73→26.44</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=5531" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/5531" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=6117" target="_blank" class="sl">6117</a></td>
+<td>迎廣</td><td>上市</td>
+<td class="n">67.60</td>
+<td class="n pos">+0.75%</td>
+<td class="n">235</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:71.6→65.8 柱:-0.61→-0.23</span><br><span class="det-k">KD 價:71.6→65.8 K:13.34→19.67</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=6117" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/6117" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=6550" target="_blank" class="sl">6550</a></td>
+<td>北極星藥業-KY</td><td>上市</td>
+<td class="n">12.05</td>
+<td class="n neg">-2.82%</td>
+<td class="n">1,250</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:12.65→12.05 柱:-0.08→0.01</span><br><span class="det-k">KD 價:12.65→12.05 K:18.22→19.4</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=6550" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/6550" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=6605" target="_blank" class="sl">6605</a></td>
+<td>帝寶</td><td>上市</td>
+<td class="n">135.50</td>
+<td class="n pos">+3.44%</td>
+<td class="n">644</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:125.12→125.0 柱:-1.28→-0.51</span><br><span class="det-k">KD 價:125.12→125.0 K:14.0→31.32</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=6605" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/6605" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=6838" target="_blank" class="sl">6838</a></td>
+<td>台新藥</td><td>上市</td>
+<td class="n">23.85</td>
+<td class="n pos">+1.71%</td>
+<td class="n">141</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:23.45→22.8 柱:-0.07→-0.03</span><br><span class="det-k">KD 價:23.45→22.8 K:11.43→18.32</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=6838" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/6838" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=7821" target="_blank" class="sl">7821</a></td>
+<td>神數</td><td>上市</td>
+<td class="n">40.50</td>
+<td class="n neg">-1.22%</td>
+<td class="n">136</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:40.8→39.55 柱:-0.13→-0.02</span><br><span class="det-k">KD 價:40.8→39.55 K:15.75→20.84</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=7821" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/7821" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=8271" target="_blank" class="sl">8271</a></td>
+<td>宇瞻</td><td>上市</td>
+<td class="n">196.50</td>
+<td class="n pos">+2.61%</td>
+<td class="n">2,628</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:174.0→166.0 柱:-1.76→-0.95</span><br><span class="det-k">KD 價:174.0→166.0 K:22.13→28.53</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=8271" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/8271" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="雙指標">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=9919" target="_blank" class="sl">9919</a></td>
+<td>康那香</td><td>上市</td>
+<td class="n">14.50</td>
+<td class="n pos">+3.20%</td>
+<td class="n">592</td>
+<td><span class="badge badge-dual">雙指標</span></td>
+<td class="det"><span class="det-m">MACD 價:13.55→13.5 柱:-0.03→-0.0</span><br><span class="det-k">KD 價:13.55→13.5 K:20.96→26.91</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=9919" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/9919" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="MACD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1605" target="_blank" class="sl">1605</a></td>
+<td>華新</td><td>上市</td>
+<td class="n">33.50</td>
+<td class="n pos">+1.67%</td>
+<td class="n">20,859</td>
+<td><span class="badge badge-macd">MACD</span></td>
+<td class="det"><span class="det-m">MACD 價:33.2→32.25 柱:-0.59→-0.43</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1605" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/1605" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="MACD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2049" target="_blank" class="sl">2049</a></td>
+<td>上銀</td><td>上市</td>
+<td class="n">320.50</td>
+<td class="n pos">+5.08%</td>
+<td class="n">2,885</td>
+<td><span class="badge badge-macd">MACD</span></td>
+<td class="det"><span class="det-m">MACD 價:303.23→300.0 柱:-3.21→-1.16</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2049" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2049" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="MACD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2392" target="_blank" class="sl">2392</a></td>
+<td>正崴</td><td>上市</td>
+<td class="n">36.00</td>
+<td class="n pos">+1.84%</td>
+<td class="n">1,750</td>
+<td><span class="badge badge-macd">MACD</span></td>
+<td class="det"><span class="det-m">MACD 價:35.47→34.02 柱:-0.35→-0.27</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2392" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2392" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="MACD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2450" target="_blank" class="sl">2450</a></td>
+<td>神腦</td><td>上市</td>
+<td class="n">28.70</td>
+<td class="n neg">-0.69%</td>
+<td class="n">115</td>
+<td><span class="badge badge-macd">MACD</span></td>
+<td class="det"><span class="det-m">MACD 價:28.75→28.6 柱:-0.05→-0.04</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2450" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2450" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="MACD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2609" target="_blank" class="sl">2609</a></td>
+<td>陽明</td><td>上市</td>
+<td class="n">51.40</td>
+<td class="n pos">+0.98%</td>
+<td class="n">19,139</td>
+<td><span class="badge badge-macd">MACD</span></td>
+<td class="det"><span class="det-m">MACD 價:48.1→47.25 柱:-0.18→-0.15</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2609" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2609" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="MACD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3533" target="_blank" class="sl">3533</a></td>
+<td>嘉澤</td><td>上市</td>
+<td class="n">2010.00</td>
+<td class="n neg">-0.99%</td>
+<td class="n">792</td>
+<td><span class="badge badge-macd">MACD</span></td>
+<td class="det"><span class="det-m">MACD 價:2075.0→1840.0 柱:-14.37→-13.52</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3533" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/3533" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="MACD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=4576" target="_blank" class="sl">4576</a></td>
+<td>大銀微系統</td><td>上市</td>
+<td class="n">198.00</td>
+<td class="n pos">+3.66%</td>
+<td class="n">1,601</td>
+<td><span class="badge badge-macd">MACD</span></td>
+<td class="det"><span class="det-m">MACD 價:198.29→190.0 柱:-1.1→-0.89</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=4576" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/4576" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="MACD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=6830" target="_blank" class="sl">6830</a></td>
+<td>汎銓</td><td>上市</td>
+<td class="n">370.50</td>
+<td class="n pos">+6.93%</td>
+<td class="n">1,043</td>
+<td><span class="badge badge-macd">MACD</span></td>
+<td class="det"><span class="det-m">MACD 價:456.0→355.5 柱:-20.85→-3.29</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=6830" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/6830" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="MACD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=6937" target="_blank" class="sl">6937</a></td>
+<td>天虹</td><td>上市</td>
+<td class="n">288.00</td>
+<td class="n pos">+7.26%</td>
+<td class="n">533</td>
+<td><span class="badge badge-macd">MACD</span></td>
+<td class="det"><span class="det-m">MACD 價:247.18→233.5 柱:-1.79→-0.99</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=6937" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/6937" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="MACD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=8028" target="_blank" class="sl">8028</a></td>
+<td>昇陽半導體</td><td>上市</td>
+<td class="n">308.00</td>
+<td class="n pos">+0.98%</td>
+<td class="n">7,765</td>
+<td><span class="badge badge-macd">MACD</span></td>
+<td class="det"><span class="det-m">MACD 價:284.0→276.0 柱:-6.07→-3.32</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=8028" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/8028" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="MACD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=8213" target="_blank" class="sl">8213</a></td>
+<td>志超</td><td>上市</td>
+<td class="n">32.25</td>
+<td class="n pos">+2.54%</td>
+<td class="n">630</td>
+<td><span class="badge badge-macd">MACD</span></td>
+<td class="det"><span class="det-m">MACD 價:32.48→31.56 柱:-0.43→-0.23</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=8213" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/8213" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="MACD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=9943" target="_blank" class="sl">9943</a></td>
+<td>好樂迪</td><td>上市</td>
+<td class="n">52.80</td>
+<td class="n neg">-0.19%</td>
+<td class="n">109</td>
+<td><span class="badge badge-macd">MACD</span></td>
+<td class="det"><span class="det-m">MACD 價:52.81→52.6 柱:-0.06→-0.06</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=9943" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/9943" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="KD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1101" target="_blank" class="sl">1101</a></td>
+<td>台泥</td><td>上市</td>
+<td class="n">23.85</td>
+<td class="n neg">-0.83%</td>
+<td class="n">28,503</td>
+<td><span class="badge badge-kd">KD</span></td>
+<td class="det"><span class="det-k">KD 價:22.9→22.4 K:12.2→15.45</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1101" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/1101" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="KD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1338" target="_blank" class="sl">1338</a></td>
+<td>廣華-KY</td><td>上市</td>
+<td class="n">16.10</td>
+<td class="n neg">-0.62%</td>
+<td class="n">153</td>
+<td><span class="badge badge-kd">KD</span></td>
+<td class="det"><span class="det-k">KD 價:16.15→15.7 K:35.53→37.3</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1338" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/1338" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="KD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1731" target="_blank" class="sl">1731</a></td>
+<td>美吾華</td><td>上市</td>
+<td class="n">20.60</td>
+<td class="n neg">-0.48%</td>
+<td class="n">158</td>
+<td><span class="badge badge-kd">KD</span></td>
+<td class="det"><span class="det-k">KD 價:20.45→20.4 K:41.43→45.04</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=1731" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/1731" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="KD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2501" target="_blank" class="sl">2501</a></td>
+<td>國建</td><td>上市</td>
+<td class="n">22.30</td>
+<td class="n neg">-0.45%</td>
+<td class="n">3,614</td>
+<td><span class="badge badge-kd">KD</span></td>
+<td class="det"><span class="det-k">KD 價:22.3→21.5 K:19.16→22.65</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2501" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2501" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="KD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2916" target="_blank" class="sl">2916</a></td>
+<td>滿心</td><td>上櫃</td>
+<td class="n">39.65</td>
+<td class="n pos">+0.38%</td>
+<td class="n">142</td>
+<td><span class="badge badge-kd">KD</span></td>
+<td class="det"><span class="det-k">KD 價:40.85→39.2 K:15.24→27.0</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=2916" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/2916" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+<tr data-sig="KD">
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3083" target="_blank" class="sl">3083</a></td>
+<td>網龍</td><td>上櫃</td>
+<td class="n">25.60</td>
+<td class="n neg">-0.19%</td>
+<td class="n">128</td>
+<td><span class="badge badge-kd">KD</span></td>
+<td class="det"><span class="det-k">KD 價:27.31→25.28 K:8.62→9.15</span></td>
+<td><a href="https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=3083" target="_blank" title="Goodinfo">📊</a> <a href="https://tw.stock.yahoo.com/quote/3083" target="_blank" title="Yahoo">📈</a></td>
+</tr>
+</tbody></table>
+</div></div>
+
+<div class="ft">
+<p>⚠️ 本報表僅供技術分析參考，不構成投資建議。底背離為技術面訊號，需搭配基本面與量能判斷。</p>
+<p>Generated by 台股底背離掃描工具 · 2026-07-22</p>
+</div>
+
+<script>
+let sd={};
+function S(c){const t=document.getElementById('T');if(!t)return;const b=t.querySelector('tbody'),rs=Array.from(b.querySelectorAll('tr')),hs=t.querySelectorAll('thead th');sd[c]=!sd[c];const a=sd[c];hs.forEach((h,i)=>h.classList.toggle('sd',i===c));rs.sort((x,y)=>{let av=x.cells[c].textContent.trim(),bv=y.cells[c].textContent.trim();const an=parseFloat(av.replace(/[,%]/g,'')),bn=parseFloat(bv.replace(/[,%]/g,''));if(!isNaN(an)&&!isNaN(bn))return a?an-bn:bn-an;return a?av.localeCompare(bv,'zh-TW'):bv.localeCompare(av,'zh-TW')});rs.forEach(r=>b.appendChild(r))}
+function F(t){const tbl=document.getElementById('T');if(!tbl)return;tbl.querySelectorAll('tbody tr').forEach(r=>{r.style.display=t==='all'?'':r.dataset.sig===t?'':'none'});document.querySelectorAll('.fb').forEach(b=>b.classList.toggle('on',t==='all'?b.textContent.includes('全部'):b.textContent.includes(t)))}
+</script>
+</body>
+</html>
