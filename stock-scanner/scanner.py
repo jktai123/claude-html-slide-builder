@@ -500,6 +500,13 @@ def main():
     out = generate_report(results, scan_date, total)
     logger.info(f"📄 報表已輸出: {out}")
 
+    # 3.5 同步至 Google Sheet
+    try:
+        from gsheet_sync import sync_to_google_sheet
+        sync_to_google_sheet(results, OUTPUT_DIR)
+    except Exception as e:
+        logger.error(f"❌ Google Sheet 同步模組執行出錯: {e}")
+
     # 4. 終端摘要
     print(f"\n{'='*55}")
     print(f"  📊 底背離掃描結果 — {scan_date}")
