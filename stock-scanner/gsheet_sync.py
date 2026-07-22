@@ -22,12 +22,19 @@ def sync_to_google_sheet(results, output_dir):
     sheet_data = []
     for r in results:
         detail_parts = []
-        if r.get("macd_details"):
-            d = r["macd_details"]
-            detail_parts.append(f"MACD(價:{d['prev_price']}→{d['curr_price']}, 柱:{d['prev_ind']}→{d['curr_ind']})")
-        if r.get("kd_details"):
-            d = r["kd_details"]
-            detail_parts.append(f"KD(價:{d['prev_price']}→{d['curr_price']}, K:{d['prev_ind']}→{d['curr_ind']})")
+        if r.get("bot_macd_details"):
+            d = r["bot_macd_details"]
+            detail_parts.append(f"底MACD(價:{d['prev_price']}→{d['curr_price']}, 柱:{d['prev_ind']}→{d['curr_ind']})")
+        if r.get("bot_kd_details"):
+            d = r["bot_kd_details"]
+            detail_parts.append(f"底KD(價:{d['prev_price']}→{d['curr_price']}, K:{d['prev_ind']}→{d['curr_ind']})")
+
+        if r.get("top_macd_details"):
+            d = r["top_macd_details"]
+            detail_parts.append(f"頂MACD(價:{d['prev_price']}→{d['curr_price']}, 柱:{d['prev_ind']}→{d['curr_ind']})")
+        if r.get("top_kd_details"):
+            d = r["top_kd_details"]
+            detail_parts.append(f"頂KD(價:{d['prev_price']}→{d['curr_price']}, K:{d['prev_ind']}→{d['curr_ind']})")
 
         sheet_data.append({
             "code": f"'{r['code']}",
@@ -36,6 +43,7 @@ def sync_to_google_sheet(results, output_dir):
             "收盤價": r["close"],
             "漲跌幅%": r["change_pct"],
             "日均量(張)": r["volume_lots"],
+            "背離方向": r.get("direction", "底背離"),
             "訊號類型": r["signal_type"],
             "背離細節": " / ".join(detail_parts),
         })

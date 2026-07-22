@@ -151,7 +151,7 @@ def calc_kd(high: pd.Series, low: pd.Series, close: pd.Series):
 # ════════════════════════════════════════════════════════════
 
 def _find_pivot_lows(vals, wl=5, wr=3):
-    """找局部最低點索引"""
+    """找局部最低點索引 (用於底背離)"""
     pivots = []
     n = len(vals)
     for i in range(wl, n - wr):
@@ -171,10 +171,30 @@ def _find_pivot_lows(vals, wl=5, wr=3):
     return pivots
 
 
-def detect_divergence(df: pd.DataFrame, indicator_col: str, lookback: int = DIVERGENCE_LOOKBACK):
+def _find_pivot_highs(vals, wl=5, wr=3):
+    """找局部最高點索引 (用於頂背離/頭背離)"""
+    pivots = []
+    n = len(vals)
+    for i in range(wl, n - wr):
+        hi = True
+        for j in range(i - wl, i):
+            if vals[j] >= vals[i]:
+                hi = False
+                break
+        if not hi:
+            continue
+        for j in range(i + 1, i + wr + 1):
+            if vals[j] >= vals[i]:
+                hi = False
+                break
+        if hi:
+            pivots.append(i)
+    return pivots
+
+
+def detect_bottom_divergence(df: pd.DataFrame, indicator_col: str, lookback: int = DIVERGENCE_LOOKBACK):
     """
-    偵測底背離。
-    回傳 (bool, details_dict | None)
+    偵測底背離 (Bullish Divergence)：價格破新低 (Low)，指標未破新低 (Higher Low)。
     """
     if len(df) < lookback:
         return False, None
@@ -188,7 +208,6 @@ def detect_divergence(df: pd.DataFrame, indicator_col: str, lookback: int = DIVE
     if len(price_pivots) < 2:
         return False, None
 
-    # 從最新的低點往前找配對
     for i in range(len(price_pivots) - 1, 0, -1):
         curr = price_pivots[i]
         prev = price_pivots[i - 1]
@@ -198,7 +217,6 @@ def detect_divergence(df: pd.DataFrame, indicator_col: str, lookback: int = DIVE
         if (lookback - 1 - curr) > MAX_RECENT_BARS:
             continue
 
-        # 底背離：價格更低，指標更高
         if prices[curr] < prices[prev] and indicator[curr] > indicator[prev]:
             return True, {
                 "prev_date": dates[prev].strftime("%m/%d"),
@@ -212,30 +230,69 @@ def detect_divergence(df: pd.DataFrame, indicator_col: str, lookback: int = DIVE
     return False, None
 
 
+def detect_top_divergence(df: pd.DataFrame, indicator_col: str, lookback: int = DIVERGENCE_LOOKBACK):
+    """
+    偵測頂背離 / 頭背離 (Bearish Divergence)：價格過新高 (High)，指標未過新高 (Lower High)。
+    """
+    if len(df) < lookback:
+        return False, None
+
+    recent = df.iloc[-lookback:]
+    prices = recent["High"].values.astype(float)
+    indicator = recent[indicator_col].values.astype(float)
+    dates = recent.index
+
+    price_pivots = _find_pivot_highs(prices, PIVOT_WINDOW_LEFT, PIVOT_WINDOW_RIGHT)
+    if len(price_pivots) < 2:
+        return False, None
+
+    for i in range(len(price_pivots) - 1, 0, -1):
+        curr = price_pivots[i]
+        prev = price_pivots[i - 1]
+
+        if curr - prev < MIN_PIVOT_GAP:
+            continue
+        if (lookback - 1 - curr) > MAX_RECENT_BARS:
+            continue
+
+        # 頂背離：價格更高 (Higher High)，指標更低 (Lower High)
+        if prices[curr] > prices[prev] and indicator[curr] < indicator[prev]:
+            return True, {
+                "prev_date": dates[prev].strftime("%m/%d"),
+                "curr_date": dates[curr].strftime("%m/%d"),
+                "prev_price": round(float(prices[prev]), 2),
+                "curr_price": round(float(prices[curr]), 2),
+                "prev_ind": round(float(indicator[prev]), 2),
+                "curr_ind": round(float(indicator[curr]), 2),
+            }
+
+    return False, None
+
+
+# 保留相容性
+detect_divergence = detect_bottom_divergence
+
+
 # ════════════════════════════════════════════════════════════
 # 下載 & 掃描
 # ════════════════════════════════════════════════════════════
 
 def _download_and_scan(stock: dict):
-    """下載單檔並偵測底背離"""
+    """下載單檔並偵測底背離與頭背離 (頂背離)"""
     code, name, ticker = stock["code"], stock["name"], stock["ticker"]
     try:
-        # 用 Ticker.history() 而非 yf.download()，後者不 thread-safe
         data = yf.Ticker(ticker).history(period=LOOKBACK_PERIOD, auto_adjust=True)
         if data is None or data.empty or len(data) < DIVERGENCE_LOOKBACK:
             return None
 
-        # 確認欄位存在
         for col in ("Open", "High", "Low", "Close", "Volume"):
             if col not in data.columns:
                 return None
 
-        # 成交量門檻
         avg_vol = data["Volume"].tail(20).mean()
         if pd.isna(avg_vol) or avg_vol < MIN_VOLUME_LOTS * 1000:
             return None
 
-        # 技術指標
         macd_line, sig_line, hist = calc_macd(data["Close"])
         k_line, d_line = calc_kd(data["High"], data["Low"], data["Close"])
         data["Histogram"] = hist
@@ -245,19 +302,57 @@ def _download_and_scan(stock: dict):
         if len(data) < DIVERGENCE_LOOKBACK:
             return None
 
-        # 偵測
-        m_ok, m_det = detect_divergence(data, "Histogram")
-        k_ok, k_det = detect_divergence(data, "K")
+        # 偵測底背離
+        bot_m_ok, bot_m_det = detect_bottom_divergence(data, "Histogram")
+        bot_k_ok, bot_k_det = detect_bottom_divergence(data, "K")
 
-        if not m_ok and not k_ok:
+        # 偵測頭背離 (頂背離)
+        top_m_ok, top_m_det = detect_top_divergence(data, "Histogram")
+        top_k_ok, top_k_det = detect_top_divergence(data, "K")
+
+        if not (bot_m_ok or bot_k_ok or top_m_ok or top_k_ok):
             return None
+
+        # 判斷背離方向與形態
+        div_direction = []
+        if bot_m_ok or bot_k_ok:
+            div_direction.append("底背離")
+        if top_m_ok or top_k_ok:
+            div_direction.append("頭背離")
+        direction_str = " / ".join(div_direction)
+
+        # 訊號細分描述
+        sub_signals = []
+        if bot_m_ok and bot_k_ok:
+            sub_signals.append("底雙指標")
+        elif bot_m_ok:
+            sub_signals.append("底MACD")
+        elif bot_k_ok:
+            sub_signals.append("底KD")
+
+        if top_m_ok and top_k_ok:
+            sub_signals.append("頂雙指標")
+        elif top_m_ok:
+            sub_signals.append("頂MACD")
+        elif top_k_ok:
+            sub_signals.append("頂KD")
+
+        sig = " + ".join(sub_signals)
+
+        # 訊號強度排序 (雙指標最高)
+        strength = 0
+        if "雙指標" in sig:
+            strength += 3
+        elif "MACD" in sig:
+            strength += 2
+        else:
+            strength += 1
+        if "底背離" in direction_str:
+            strength += 10
 
         last = data.iloc[-1]
         prev_close = data["Close"].iloc[-2] if len(data) > 1 else last["Close"]
         chg = float((last["Close"] - prev_close) / prev_close * 100)
-
-        sig = "雙指標" if m_ok and k_ok else ("MACD" if m_ok else "KD")
-        strength = 3 if sig == "雙指標" else (2 if sig == "MACD" else 1)
 
         return {
             "code": code,
@@ -266,10 +361,16 @@ def _download_and_scan(stock: dict):
             "close": round(float(last["Close"]), 2),
             "change_pct": round(chg, 2),
             "volume_lots": int(avg_vol / 1000),
+            "direction": direction_str,
             "signal_type": sig,
             "signal_strength": strength,
-            "macd_details": m_det,
-            "kd_details": k_det,
+            "bot_macd_details": bot_m_det,
+            "bot_kd_details": bot_k_det,
+            "top_macd_details": top_m_det,
+            "top_kd_details": top_k_det,
+            # 相容性欄位
+            "macd_details": bot_m_det or top_m_det,
+            "kd_details": bot_k_det or top_k_det,
         }
     except Exception:
         return None
@@ -306,50 +407,64 @@ def scan_all(stocks, workers=MAX_WORKERS):
 # ════════════════════════════════════════════════════════════
 
 def _build_html(results, scan_date, total_scanned):
-    dual = sum(1 for r in results if r["signal_type"] == "雙指標")
-    macd_n = sum(1 for r in results if r["signal_type"] == "MACD")
-    kd_n = sum(1 for r in results if r["signal_type"] == "KD")
+    bot_n = sum(1 for r in results if "底背離" in r.get("direction", "底背離"))
+    top_n = sum(1 for r in results if "頭背離" in r.get("direction", ""))
+    dual_n = sum(1 for r in results if "雙指標" in r["signal_type"])
 
     rows = ""
     for r in results:
-        badge_cls = {"雙指標": "badge-dual", "MACD": "badge-macd", "KD": "badge-kd"}[r["signal_type"]]
+        sig_str = r["signal_type"]
+        dir_str = r.get("direction", "底背離")
+
+        if "頭背離" in dir_str and "底背離" in dir_str:
+            badge_cls = "badge-dual"
+        elif "頭背離" in dir_str:
+            badge_cls = "badge-top"
+        elif "雙指標" in sig_str:
+            badge_cls = "badge-dual"
+        elif "MACD" in sig_str:
+            badge_cls = "badge-macd"
+        else:
+            badge_cls = "badge-kd"
+
         chg_cls = "pos" if r["change_pct"] >= 0 else "neg"
         chg_sign = "+" if r["change_pct"] >= 0 else ""
 
         detail_parts = []
-        if r["macd_details"]:
-            d = r["macd_details"]
-            detail_parts.append(
-                f'<span class="det-m">MACD 價:{d["prev_price"]}→{d["curr_price"]} '
-                f'柱:{d["prev_ind"]}→{d["curr_ind"]}</span>'
-            )
-        if r["kd_details"]:
-            d = r["kd_details"]
-            detail_parts.append(
-                f'<span class="det-k">KD 價:{d["prev_price"]}→{d["curr_price"]} '
-                f'K:{d["prev_ind"]}→{d["curr_ind"]}</span>'
-            )
+        if r.get("bot_macd_details"):
+            d = r["bot_macd_details"]
+            detail_parts.append(f'<span class="det-m">📉底MACD 價:{d["prev_price"]}→{d["curr_price"]} 柱:{d["prev_ind"]}→{d["curr_ind"]}</span>')
+        if r.get("bot_kd_details"):
+            d = r["bot_kd_details"]
+            detail_parts.append(f'<span class="det-k">📉底KD 價:{d["prev_price"]}→{d["curr_price"]} K:{d["prev_ind"]}→{d["curr_ind"]}</span>')
+        if r.get("top_macd_details"):
+            d = r["top_macd_details"]
+            detail_parts.append(f'<span class="det-top">📈頭MACD 價:{d["prev_price"]}→{d["curr_price"]} 柱:{d["prev_ind"]}→{d["curr_ind"]}</span>')
+        if r.get("top_kd_details"):
+            d = r["top_kd_details"]
+            detail_parts.append(f'<span class="det-top">📈頭KD 價:{d["prev_price"]}→{d["curr_price"]} K:{d["prev_ind"]}→{d["curr_ind"]}</span>')
+
         detail_html = "<br>".join(detail_parts)
 
         gi = f"https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID={r['code']}"
         yh = f"https://tw.stock.yahoo.com/quote/{r['code']}"
 
-        rows += f"""<tr data-sig="{r['signal_type']}">
+        rows += f"""<tr data-dir="{dir_str}" data-sig="{sig_str}">
 <td><a href="{gi}" target="_blank" class="sl">{r['code']}</a></td>
 <td>{r['name']}</td><td>{r['market']}</td>
 <td class="n">{r['close']:.2f}</td>
 <td class="n {chg_cls}">{chg_sign}{r['change_pct']:.2f}%</td>
 <td class="n">{r['volume_lots']:,}</td>
-<td><span class="badge {badge_cls}">{r['signal_type']}</span></td>
+<td><span class="badge badge-dir">{dir_str}</span> <span class="badge {badge_cls}">{sig_str}</span></td>
 <td class="det">{detail_html}</td>
 <td><a href="{gi}" target="_blank" title="Goodinfo">📊</a> <a href="{yh}" target="_blank" title="Yahoo">📈</a></td>
 </tr>\n"""
 
-    empty = "" if results else '<div class="empty"><div class="ei">🔍</div>今日未偵測到底背離訊號</div>'
+    empty = "" if results else '<div class="empty"><div class="ei">🔍</div>今日未偵測到背離訊號</div>'
     tbl_open = '<table id="T"><thead><tr>' if results else ""
     headers = ""
     if results:
-        for i, h in enumerate(["代號", "名稱", "市場", "收盤價", "漲跌幅", "日均量(張)", "訊號", "背離細節", "查看"]):
+        for i, h in enumerate(["代號", "名稱", "市場", "收盤價", "漲跌幅", "日均量(張)", "背離類型", "背離細節", "查看"]):
             sortable = f' onclick="S({i})"' if i < 7 else ""
             arrow = ' <span class="si">⇅</span>' if i < 7 else ""
             headers += f"<th{sortable}>{h}{arrow}</th>"
@@ -396,11 +511,13 @@ td{{padding:.65rem 1rem;font-size:.87rem}}
 .sl{{color:var(--blue);text-decoration:none;font-family:'JetBrains Mono',monospace;font-weight:500;transition:color .2s}}
 .sl:hover{{color:var(--purp);text-decoration:underline}}
 .badge{{display:inline-block;padding:.22rem .55rem;border-radius:100px;font-size:.74rem;font-weight:600}}
+.badge-dir{{background:rgba(168,85,247,.18);color:var(--purp);border:1px solid rgba(168,85,247,.3)}}
+.badge-top{{background:rgba(239,68,68,.18);color:var(--red);border:1px solid rgba(239,68,68,.3)}}
 .badge-dual{{background:rgba(245,158,11,.18);color:var(--gold);border:1px solid rgba(245,158,11,.3)}}
 .badge-macd{{background:rgba(34,197,94,.14);color:var(--grn);border:1px solid rgba(34,197,94,.25)}}
 .badge-kd{{background:rgba(59,130,246,.14);color:var(--blue);border:1px solid rgba(59,130,246,.25)}}
 .det{{font-size:.76rem;color:var(--t2);line-height:1.5}}
-.det-m{{color:#6ee7b7}}.det-k{{color:#93c5fd}}
+.det-m{{color:#6ee7b7}}.det-k{{color:#93c5fd}}.det-top{{color:#fca5a5}}
 td a[title]{{text-decoration:none;font-size:1.1rem;margin-right:.2rem;opacity:.7;transition:opacity .2s}}
 td a[title]:hover{{opacity:1}}
 .empty{{text-align:center;padding:4rem 2rem;color:var(--t3)}}.ei{{font-size:3rem;margin-bottom:1rem}}
@@ -410,40 +527,40 @@ td a[title]:hover{{opacity:1}}
 </head>
 <body>
 <div class="hero"><div class="hc">
-<h1>📉 台股底背離掃描報表</h1>
-<div class="sub">掃描日期：{scan_date} ｜ MACD + KD 雙指標偵測 ｜ 資料來源：Yahoo Finance</div>
+<h1>📉📈 台股底背離 / 頭背離自動掃描報表</h1>
+<div class="sub">掃描日期：{scan_date} ｜ MACD + KD 雙指標高低轉折偵測 ｜ 資料來源：Yahoo Finance</div>
 </div></div>
 
 <div class="sg">
 <div class="sc"><div class="lb">掃描股票數</div><div class="vl pp">{total_scanned}</div></div>
-<div class="sc"><div class="lb">底背離訊號</div><div class="vl gd">{len(results)}</div></div>
-<div class="sc"><div class="lb">🔥 雙指標共振</div><div class="vl gd">{dual}</div></div>
-<div class="sc"><div class="lb">MACD 底背離</div><div class="vl gn">{macd_n}</div></div>
-<div class="sc"><div class="lb">KD 底背離</div><div class="vl bl">{kd_n}</div></div>
+<div class="sc"><div class="lb">總背離訊號</div><div class="vl gd">{len(results)}</div></div>
+<div class="sc"><div class="lb">📉 底背離 (抄底)</div><div class="vl gn">{bot_n}</div></div>
+<div class="sc"><div class="lb">📈 頭背離 (避險/警訊)</div><div class="vl" style="color:var(--red)">{top_n}</div></div>
+<div class="sc"><div class="lb">🔥 雙指標共振</div><div class="vl gd">{dual_n}</div></div>
 </div>
 
 <div class="mc"><div class="tc">
 <div class="th">
-<h2>底背離股票清單</h2>
+<h2>背離股票清單</h2>
 <div class="fg">
 <button class="fb on" onclick="F('all')">全部</button>
+<button class="fb" onclick="F('底背離')">📉 底背離</button>
+<button class="fb" onclick="F('頭背離')">📈 頭背離</button>
 <button class="fb" onclick="F('雙指標')">🔥 雙指標</button>
-<button class="fb" onclick="F('MACD')">📗 MACD</button>
-<button class="fb" onclick="F('KD')">📘 KD</button>
 </div>
 </div>
 {empty}{tbl_open}{headers}{tbl_close}
 </div></div>
 
 <div class="ft">
-<p>⚠️ 本報表僅供技術分析參考，不構成投資建議。底背離為技術面訊號，需搭配基本面與量能判斷。</p>
-<p>Generated by 台股底背離掃描工具 · {scan_date}</p>
+<p>⚠️ 本報表僅供技術分析參考，不構成投資建議。底背離/頭背離為技術面轉折訊號，需搭配基本面與量能判斷。</p>
+<p>Generated by 台股底背離/頭背離自動掃描工具 · {scan_date}</p>
 </div>
 
 <script>
 let sd={{}};
 function S(c){{const t=document.getElementById('T');if(!t)return;const b=t.querySelector('tbody'),rs=Array.from(b.querySelectorAll('tr')),hs=t.querySelectorAll('thead th');sd[c]=!sd[c];const a=sd[c];hs.forEach((h,i)=>h.classList.toggle('sd',i===c));rs.sort((x,y)=>{{let av=x.cells[c].textContent.trim(),bv=y.cells[c].textContent.trim();const an=parseFloat(av.replace(/[,%]/g,'')),bn=parseFloat(bv.replace(/[,%]/g,''));if(!isNaN(an)&&!isNaN(bn))return a?an-bn:bn-an;return a?av.localeCompare(bv,'zh-TW'):bv.localeCompare(av,'zh-TW')}});rs.forEach(r=>b.appendChild(r))}}
-function F(t){{const tbl=document.getElementById('T');if(!tbl)return;tbl.querySelectorAll('tbody tr').forEach(r=>{{r.style.display=t==='all'?'':r.dataset.sig===t?'':'none'}});document.querySelectorAll('.fb').forEach(b=>b.classList.toggle('on',t==='all'?b.textContent.includes('全部'):b.textContent.includes(t)))}}
+function F(t){{const tbl=document.getElementById('T');if(!tbl)return;tbl.querySelectorAll('tbody tr').forEach(r=>{{let show=false;if(t==='all')show=true;else if(t==='底背離')show=r.dataset.dir.includes('底背離');else if(t==='頭背離')show=r.dataset.dir.includes('頭背離');else if(t==='雙指標')show=r.dataset.sig.includes('雙指標');r.style.display=show?'':'none'}});document.querySelectorAll('.fb').forEach(b=>b.classList.toggle('on',b.textContent.includes(t)))}}
 </script>
 </body>
 </html>"""
@@ -508,34 +625,28 @@ def main():
         logger.error(f"❌ Google Sheet 同步模組執行出錯: {e}")
 
     # 4. 終端摘要
+    bot_list = [r for r in results if "底背離" in r.get("direction", "底背離")]
+    top_list = [r for r in results if "頭背離" in r.get("direction", "")]
+
     print(f"\n{'='*55}")
-    print(f"  📊 底背離掃描結果 — {scan_date}")
+    print(f"  📊 底背離 / 頭背離掃描結果 — {scan_date}")
     print(f"{'='*55}")
-    print(f"  掃描: {total} 檔 ｜ 偵測到: {len(results)} 檔\n")
+    print(f"  掃描: {total} 檔 ｜ 共偵測到: {len(results)} 檔 (底背離: {len(bot_list)} 檔 / 頭背離: {len(top_list)} 檔)\n")
 
-    dual = [r for r in results if r["signal_type"] == "雙指標"]
-    if dual:
-        print("  🔥 雙指標底背離（MACD + KD）:")
-        for r in dual:
-            print(f"     {r['code']} {r['name']:　<6} ${r['close']:.2f}  ({r['market']})")
+    if bot_list:
+        print(f"  📉 底背離前 10 檔標的 (看多轉折):")
+        for r in bot_list[:10]:
+            print(f"     {r['code']} {r['name']:　<6} ${r['close']:.2f}  ({r['market']} / {r['signal_type']})")
+        if len(bot_list) > 10:
+            print(f"     ... 還有 {len(bot_list)-10} 檔底背離，詳見報表")
         print()
 
-    macd_only = [r for r in results if r["signal_type"] == "MACD"]
-    if macd_only:
-        print(f"  📗 MACD 底背離 ({len(macd_only)} 檔):")
-        for r in macd_only[:10]:
-            print(f"     {r['code']} {r['name']:　<6} ${r['close']:.2f}")
-        if len(macd_only) > 10:
-            print(f"     ... 還有 {len(macd_only)-10} 檔，詳見報表")
-        print()
-
-    kd_only = [r for r in results if r["signal_type"] == "KD"]
-    if kd_only:
-        print(f"  📘 KD 底背離 ({len(kd_only)} 檔):")
-        for r in kd_only[:10]:
-            print(f"     {r['code']} {r['name']:　<6} ${r['close']:.2f}")
-        if len(kd_only) > 10:
-            print(f"     ... 還有 {len(kd_only)-10} 檔，詳見報表")
+    if top_list:
+        print(f"  📈 頭背離前 10 檔標的 (看空/警戒轉折):")
+        for r in top_list[:10]:
+            print(f"     {r['code']} {r['name']:　<6} ${r['close']:.2f}  ({r['market']} / {r['signal_type']})")
+        if len(top_list) > 10:
+            print(f"     ... 還有 {len(top_list)-10} 檔頭背離，詳見報表")
         print()
 
     print(f"  📄 完整報表: {out}")
