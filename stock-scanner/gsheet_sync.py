@@ -5,7 +5,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-DOC_ID = "1jx9hL4CZuyET00_6LYbcz4d23WLv7iMsLbcPR3xqGbo"
+DOC_ID = "1fbuwUUIrugob2CxjE7S7RPYYHuF-8wVQpJQNV9OJIL4"
 SHEET_BOTTOM = "底背離"
 SHEET_TOP = "頭背離"
 SAVE_SCRIPT = "/Users/jktai/.gemini/config/skills/google-sheet-writer/scripts/save_to_gsheet.js"
