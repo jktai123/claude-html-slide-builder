@@ -523,11 +523,13 @@ td a[title]:hover{{opacity:1}}
 .empty{{text-align:center;padding:4rem 2rem;color:var(--t3)}}.ei{{font-size:3rem;margin-bottom:1rem}}
 .ft{{max-width:1400px;margin:0 auto;padding:1rem 2rem;text-align:center;color:var(--t3);font-size:.76rem}}
 @media(max-width:768px){{.hero{{padding:1.5rem 1rem 1rem}}.sg{{padding:0 1rem;grid-template-columns:repeat(2,1fr)}}.mc{{padding:0 1rem 2rem}}.tc{{overflow-x:auto}}table{{min-width:900px}}}}
+.btn-link{{display:inline-block;padding:.2rem .6rem;margin-left:.6rem;border-radius:8px;font-size:.9rem;font-weight:600;background:rgba(168,85,247,.25);color:#c084fc;border:1px solid rgba(168,85,247,.4);text-decoration:none;vertical-align:middle;transition:all .2s}}
+.btn-link:hover{{background:rgba(168,85,247,.4);color:#fff;transform:translateY(-1px)}}
 </style>
 </head>
 <body>
 <div class="hero"><div class="hc">
-<h1>📉📈 台股底背離 / 頭背離自動掃描報表</h1>
+<h1>📉📈 台股底背離 / 頭背離自動掃描報表 <a href="https://www.jktai123.com/stock/Q%E5%85%B1%E7%94%A82.html" target="_blank" class="btn-link">線圖 ↗</a></h1>
 <div class="sub">掃描日期：{scan_date} ｜ MACD + KD 雙指標高低轉折偵測 ｜ 資料來源：Yahoo Finance</div>
 </div></div>
 
