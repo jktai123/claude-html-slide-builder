@@ -1,21 +1,22 @@
 #!/bin/bash
 # 台股背離自動掃描與發佈腳本
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin:$PATH"
+export PATH="/Volumes/Haggis2T/Anaconda/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin:$PATH"
 
 SCANNER_DIR="/Volumes/1T_HDD_2/Antigravity/20260625_html簡報/stock-scanner"
 PUBLISH_SCRIPT="/Users/jktai/.gemini/config/skills/publish-to-github-io/scripts/publish.py"
 SVN12_DIR="/Users/jktai/web/svn12.github.io"
+PYTHON_BIN="/Volumes/Haggis2T/Anaconda/anaconda3/bin/python3"
 
 echo "==========================================" >> "$SCANNER_DIR/output/cron_run.log"
 echo "🚀 [$(date '+%Y-%m-%d %H:%M:%S')] 開始執行每日台股背離自動掃描..." >> "$SCANNER_DIR/output/cron_run.log"
 
 # 1. 執行掃描 (全檔，15 workers)
 cd "$SCANNER_DIR"
-python3 scanner.py --workers 15 >> "$SCANNER_DIR/output/cron_run.log" 2>&1
+"$PYTHON_BIN" scanner.py --workers 15 >> "$SCANNER_DIR/output/cron_run.log" 2>&1
 
 # 2. 發佈至 GitHub Pages (svn12.github.io)
-python3 "$PUBLISH_SCRIPT" \
+"$PYTHON_BIN" "$PUBLISH_SCRIPT" \
   --src "$SCANNER_DIR/output" \
   --dest-dir "stock-scanner" \
   --title "台股底背離 / 頭背離每日自動掃描報表 (MACD + KD)" \
