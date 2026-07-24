@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """
-LINE Official Account (Channel 2007061990) -> Gemini 2.5 Flash AI Summarizer -> Notion Summary Server
+LINE Official Account (Channel 2007061990) -> Gemini 2.5 Flash Multimodal AI Summarizer -> Notion Summary Server
+Supports: Text, URLs, Audio (NotebookLM/Gemini), Images (OCR & Vision)
 """
 import os
 import sys
 import json
 import re
+import base64
 import urllib.request
 import subprocess
 import requests
@@ -29,7 +31,7 @@ NOTION_SCRIPT_PATH = os.path.abspath(
     os.path.join(os.path.dirname(__file__), ".agents/skills/notion-summary/scripts/notion_summary.py")
 )
 
-app = FastAPI(title="LINE Notion NotebookLM & AI Server")
+app = FastAPI(title="LINE Notion NotebookLM & Multimodal AI Server")
 configuration = Configuration(access_token=LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
@@ -51,21 +53,21 @@ def fetch_url_content(url: str) -> str:
         print(f"Error fetching URL content for {url}: {e}", flush=True)
     return ""
 
-def summarize_with_gemini(raw_text: str, source_url: str = "", msg_type: str = "text") -> dict:
-    """Call Gemini 2.5 Flash API to produce full structured Notion JSON."""
+def summarize_with_gemini(raw_text: str = "", source_url: str = "", msg_type: str = "text", image_bytes: bytes = None) -> dict:
+    """Call Gemini 2.5 Flash API to produce full structured Notion JSON for text, URL, audio, or image."""
     today_str = datetime.now().strftime("%Y-%m-%d")
     
     if not GEMINI_API_KEY:
         print("Warning: GEMINI_API_KEY not set. Using fallback payload.", flush=True)
         return {
-            "Title": raw_text.split("\n")[0][:30] or "LINE 隨手記",
+            "Title": (raw_text.split("\n")[0][:30] if raw_text else "LINE 多模隨手記"),
             "日期": today_str,
             "URL": source_url,
-            "摘要": raw_text[:90],
+            "摘要": raw_text[:90] if raw_text else "收到圖片/多媒體訊息",
             "category": "生活",
             "tags": ["LINE", msg_type],
             "importance": "中",
-            "content": raw_text,
+            "content": raw_text or "多媒體內容",
             "mindmap": "mindmap\n  root((LINE筆記))\n    內容解析",
             "transcript": "",
             "images": []
@@ -73,7 +75,32 @@ def summarize_with_gemini(raw_text: str, source_url: str = "", msg_type: str = "
         
     api_endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={GEMINI_API_KEY}"
     
-    prompt = f"""你是一位專業內容分類與摘要專家。請針對以下提供的訊息或文章內容進行深入解析與摘要，並嚴格只輸出 JSON 物件：
+    parts = []
+    if image_bytes:
+        b64_str = base64.b64encode(image_bytes).decode("utf-8")
+        parts.append({
+            "inlineData": {
+                "mimeType": "image/jpeg",
+                "data": b64_str
+            }
+        })
+        prompt = f"""你是一位專業圖像分析與視覺歸檔專家。請詳細分析這張圖片（包含圖中文字 OCR 辨識、視覺重點、圖表或照片主題），進行深入解析與摘要，並嚴格只輸出 JSON 物件：
+{{
+  "Title": "圖片主題與文字(OCR)精確繁體中文標題",
+  "日期": "{today_str}",
+  "URL": "",
+  "摘要": "使用繁體中文，100 字以內精煉圖片內容與 OCR 重點摘要",
+  "category": "科技/投資/教會/生活 中選擇最符合的一項",
+  "tags": ["圖片", "OCR", "標籤3", "標籤4", "標籤5"] (最多 5 個相關繁體中文標籤),
+  "importance": "高/中/低",
+  "content": "### 圖片視覺與 OCR 辨識解析\\n\\n1. **辨識出的完整文字 (OCR)**\\n2. **圖片視覺與主題重點**\\n3. **關鍵總結**",
+  "mindmap": "Mermaid mindmap 語法",
+  "transcript": "",
+  "images": []
+}}
+"""
+    else:
+        prompt = f"""你是一位專業內容分類與摘要專家。請針對以下提供的訊息或文章內容進行深入解析與摘要，並嚴格只輸出 JSON 物件：
 {{
   "Title": "繁體中文文章/內容完整標題 (避免廣泛通稱，需精確表達核心議題)",
   "日期": "{today_str}",
@@ -92,8 +119,9 @@ def summarize_with_gemini(raw_text: str, source_url: str = "", msg_type: str = "
 {raw_text[:3500]}
 """
 
+    parts.append({"text": prompt})
     req_body = {
-        "contents": [{"parts": [{"text": prompt}]}],
+        "contents": [{"parts": parts}],
         "generationConfig": {"responseMimeType": "application/json"}
     }
 
@@ -104,7 +132,7 @@ def summarize_with_gemini(raw_text: str, source_url: str = "", msg_type: str = "
             data=json.dumps(req_body).encode("utf-8"), 
             headers={"Content-Type": "application/json"}
         )
-        with urllib.request.urlopen(req, timeout=20) as resp:
+        with urllib.request.urlopen(req, timeout=25) as resp:
             resp_data = json.loads(resp.read().decode("utf-8"))
             ai_json_str = resp_data["candidates"][0]["content"]["parts"][0]["text"]
             parsed_payload = json.loads(ai_json_str)
@@ -117,11 +145,11 @@ def summarize_with_gemini(raw_text: str, source_url: str = "", msg_type: str = "
             "Title": "LINE 隨手記",
             "日期": today_str,
             "URL": source_url,
-            "摘要": raw_text[:90],
+            "摘要": raw_text[:90] if raw_text else "圖片分析處理中",
             "category": "生活",
             "tags": ["LINE", msg_type],
             "importance": "中",
-            "content": raw_text,
+            "content": raw_text or "圖片內容",
             "mindmap": "mindmap\n  root((LINE筆記))",
             "transcript": "",
             "images": []
@@ -192,8 +220,15 @@ def process_line_event(event: dict):
         try:
             raw_text = ""
             source_url = ""
+            image_bytes = None
 
-            if msg_type == "audio":
+            if msg_type == "image":
+                print(f"Downloading Image message ID: {msg_id}", flush=True)
+                image_bytes = line_blob_api.get_message_content(msg_id)
+                print(f"Image downloaded successfully ({len(image_bytes)} bytes). Analyzing with Gemini 2.5 Flash Vision...", flush=True)
+                ai_payload = summarize_with_gemini(raw_text="", source_url="", msg_type="image", image_bytes=image_bytes)
+
+            elif msg_type == "audio":
                 print(f"Downloading Audio file message ID: {msg_id}", flush=True)
                 audio_bytes = line_blob_api.get_message_content(msg_id)
                 local_audio = f"/tmp/line_audio_{msg_id}.m4a"
@@ -205,7 +240,9 @@ def process_line_event(event: dict):
                 raw_text = transcript
                 if os.path.exists(local_audio):
                     os.remove(local_audio)
-                    
+                ai_payload = summarize_with_gemini(raw_text=raw_text, source_url="", msg_type="audio")
+                ai_payload["transcript"] = raw_text
+
             elif msg_type == "text":
                 text_content = msg.get("text", "").strip()
                 # Check for URL anywhere in the message text
@@ -220,12 +257,7 @@ def process_line_event(event: dict):
                         raw_text = text_content
                 else:
                     raw_text = text_content
-
-            # 🤖 AI 處理：呼叫 Gemini 2.5 Flash 生成豐富摘要與標籤
-            print("Generating AI Summary via Gemini API...", flush=True)
-            ai_payload = summarize_with_gemini(raw_text, source_url, msg_type)
-            if msg_type == "audio":
-                ai_payload["transcript"] = raw_text
+                ai_payload = summarize_with_gemini(raw_text=raw_text, source_url=source_url, msg_type="text")
 
             print(f"AI Payload Generated: Title='{ai_payload.get('Title')}', Category='{ai_payload.get('category')}', Tags={ai_payload.get('tags')}", flush=True)
 
@@ -253,7 +285,7 @@ def process_line_event(event: dict):
                     "type": "box",
                     "layout": "vertical",
                     "contents": [
-                        { "type": "text", "text": "📌 Notion 自動歸檔成功 (AI 極速摘要)", "weight": "bold", "color": "#1DB446", "size": "sm" },
+                        { "type": "text", "text": "📌 Notion 自動歸檔成功 (Gemini AI 視覺與摘要)", "weight": "bold", "color": "#1DB446", "size": "sm" },
                         { "type": "text", "text": page_title[:30], "weight": "bold", "size": "lg", "margin": "xs", "wrap": True }
                     ]
                 },
@@ -301,7 +333,7 @@ def process_line_event(event: dict):
 
 @app.get("/")
 async def root_get():
-    return {"status": "ok", "message": "LINE Notion Server is running 24/7!"}
+    return {"status": "ok", "message": "LINE Notion Server is running 24/7 with Multimodal Gemini AI!"}
 
 @app.post("/")
 @app.post("/callback")
