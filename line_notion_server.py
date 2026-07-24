@@ -299,6 +299,11 @@ def process_line_event(event: dict):
                     )
                 )
 
+@app.get("/")
+async def root_get():
+    return {"status": "ok", "message": "LINE Notion Server is running 24/7!"}
+
+@app.post("/")
 @app.post("/callback")
 async def callback(request: Request, background_tasks: BackgroundTasks):
     body = await request.body()
